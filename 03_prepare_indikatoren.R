@@ -1327,7 +1327,7 @@ nested_list$`Bauen und Wohnen`$`Gebäude und Wohnungen`[["Wohnungen nach Zimmerz
     name %in% c("3_zimmerwohnung","4_zimmerwohnung")~"3-4-Zimmerwohnungen",
     name %in% c("5_zimmerwohnung")~"5-Zimmerwohnungen",
     name %in% c("6plus_zimmerwohnung")~"Wohnungen mit 6 und mehr Zimmern",
-    TRUE~NA
+    TRUE~NA_character_
   )) %>%
   group_by(bfs_nr_gemeinde,jahr,filter1) %>%
   summarise(value = sum(as.numeric(value))) %>%
@@ -1351,7 +1351,7 @@ nested_list$`Bauen und Wohnen`$`Gebäude und Wohnungen`[["Neu erstellte Wohnunge
     name %in% c("3_zimmerwohnung","4_zimmerwohnung")~"3-4-Zimmerwohnungen",
     name %in% c("5_zimmerwohnung")~"5-Zimmerwohnungen",
     name %in% c("6plus_zimmerwohnung")~"Wohnungen mit 6 und mehr Zimmern",
-    TRUE~NA
+    TRUE~NA_character_
   )) %>%
   group_by(bfs_nr_gemeinde,jahr,filter1) %>%
   summarise(value = sum(as.numeric(value))) %>%
@@ -1472,7 +1472,7 @@ flaeche_data <- flaeche_data_raw %>%
     str_detect(`Standardnomenklatur (NOAS04)`,"Bestockte Flächen")~"Waldfläche",
     str_detect(`Standardnomenklatur (NOAS04)`,"Unproduktive Flächen")~"Unproduktive Fläche",
     str_detect(`Standardnomenklatur (NOAS04)`,"Landwirtschaftsflächen")~"Landwirtschaftsfläche",
-    TRUE~NA
+    TRUE~NA_character_
   )) %>%
   mutate(jahr = case_when(
     Periode == "1979/85"~"1984",
