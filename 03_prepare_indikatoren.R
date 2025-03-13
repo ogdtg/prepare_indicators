@@ -6,14 +6,15 @@
 #   }
 #   library(package, character.only = TRUE)
 # }
-install.packages("BFS")
+# install.packages("BFS")
 library(dplyr)
 library(httr)
 library(jsonlite)
 library(tidyr)
 library(BFS)
 library(stringr)
-
+library(purrr)
+library(lubridate)
 
 # packages <- c("dplyr", "BFS", "httr","jsonlite","tidyr")
 # lapply(packages, install_and_load)
@@ -25,12 +26,13 @@ library(stringr)
 
 
 # Datenbezug von data.tg.ch -----------------------------------------------
-
+print("# Datenbezug von data.tg.ch -----------------------------------------------")
 # Benötigte Daten
 ids <- c("sk-stat-4","sk-stat-52","sk-stat-62","sk-stat-69","sk-stat-70","sk-stat-57","sk-stat-59","sk-stat-56","sk-stat-54","sk-stat-55","sk-stat-80","sk-stat-98","sk-stat-97","sk-stat-93","sk-stat-92","sk-stat-90","sk-stat-9","sk-stat-11","sk-stat-123","sk-stat-120","sk-stat-50","sk-stat-1")
 
 
 ## Hilfsfunktionen ---------------------------------------------------------
+print("## Hilfsfunktionen ---------------------------------------------------------")
 
 
 # Summarise von denen deren Werte man einfach addieren/mitteln kann
@@ -199,7 +201,7 @@ create_data_source_element <- function(ids,ods_catalog = catalog){
 
 data_source_list <- readRDS("data/data_source_list.rds")
 additional_data <- readRDS("data/additional_data.rds")
-
+nested_list <- readRDS("data/nested_list.rds")
 filter_fields <- readRDS("data/filter_fields.rds")
 
 join_vars <- c("jahr", "bfs_nr_gemeinde", "name_gemeinde", "bfs_nr_bezirk", "name_bezirk_long", "name_bezirk")
@@ -216,6 +218,8 @@ bezirk_data <- readRDS("data/bezirk_data.rds")
 
 
 ## Bezug und teilweise Pivotierung -----------------------------------------
+
+print("## Bezug und teilweise Pivotierung -----------------------------------------")
 themenatlas_data_new <- lapply(unique(ids), get_data_from_ogd)
 
 # Create a named vector for mapping
@@ -255,10 +259,12 @@ names(themenatlas_data_long) <- ids
 names(all_data) <- ids
 # Bevölkerung und Soziales ------------------------------------------------
 
+print("## Bevölkerung und Soziales ---------------------------------------------------------")
 
 
 ## Bevölkerungsstand -------------------------------------------------------------
 
+print("## Bevölkerungsstand ---------------------------------------------------------")
 
 # nested_list <- list(
 #   "Bevölkerung und Soziales" = list(
@@ -293,7 +299,8 @@ bev_alter_id <-  catalog %>%
   pull(dataset_id)
 
 
-# ZUSATZ: Bev nach Einzelaltersjahren -------------------------------------
+### ZUSATZ: Bev nach Einzelaltersjahren -------------------------------------
+print("## ZUSATZ: Bev nach Einzelaltersjahren ---------------------------------------------------------")
 
 
 additional_data <-list(`Bevölkerung und Soziales`=list())
@@ -370,6 +377,7 @@ bev_mean_alter <- bev_alter %>%
 
 
 ### Durchschnittsalter  --------
+print("### Durchschnittsalter  ---------")
 
 
 
@@ -392,6 +400,7 @@ nested_list$`Bevölkerung und Soziales`$Bevölkerungsstand$`Durchschnittsalter d
 
 
 ### Bevölkerungsverteilung nach Geschlecht ---------------------------------------
+print("### Bevölkerungsverteilung nach Geschlecht ---------------------------------------")
 
 
 bev_ausl_id <-  catalog %>%
@@ -427,6 +436,7 @@ nested_list$`Bevölkerung und Soziales`$Bevölkerungsstand$`Bevölkerungsverteil
 
 
 ### Bevölkerungsverteilung nach Altersklasse ---------------------------------------
+print("### Bevölkerungsverteilung nach Altersklasse ---------------------------------------")
 
 
 nested_list$`Bevölkerung und Soziales`$Bevölkerungsstand$`Bevölkerungsverteilung nach Altersklasse` <- bev_ageclass %>%
@@ -437,6 +447,7 @@ nested_list$`Bevölkerung und Soziales`$Bevölkerungsstand$`Bevölkerungsverteil
 
 
 ### Bevölkerungsverteilung nach Konfession ---------------------------------------
+print("### Bevölkerungsverteilung nach Konfession ---------------------------------------")
 
 nested_list$`Bevölkerung und Soziales`$Bevölkerungsstand$`Bevölkerungsverteilung nach Konfession` <- bev_konf %>%
   select(bfs_nr_gemeinde,jahr,konfession_bezeichnung,value,share) %>%
@@ -445,6 +456,7 @@ nested_list$`Bevölkerung und Soziales`$Bevölkerungsstand$`Bevölkerungsverteil
 
 
 ### Bevölkerungsverteilung nach Nationalität ---------------------------------------
+print("### Bevölkerungsverteilung nach Nationalität ---------------------------------------")
 
 nested_list$`Bevölkerung und Soziales`$Bevölkerungsstand$`Bevölkerungsverteilung nach Nationalität` <- bev_ausl %>%
   select(bfs_nr_gemeinde,jahr,nationalitaet_bezeichnung,value,share) %>%
@@ -452,6 +464,7 @@ nested_list$`Bevölkerung und Soziales`$Bevölkerungsstand$`Bevölkerungsverteil
   summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
 
 ### Gesamtbevölkerung ---------------------------------------
+print("### Gesamtbevölkerung ---------------------------------------")
 
 nested_list$`Bevölkerung und Soziales`$Bevölkerungsstand$Gesamtbevölkerung <- bev_ausl %>%
   group_by(bfs_nr_gemeinde,jahr) %>%
@@ -464,6 +477,7 @@ nested_list$`Bevölkerung und Soziales`$Bevölkerungsstand$Gesamtbevölkerung <-
 
 
 # Bevölkerungsentwicklung -------------------------------------------------
+print("# Bevölkerungsentwicklung -------------------------------------------------")
 
 bevent_id <- catalog %>%
   filter(metas.default.title=="Ständige Wohnbevölkerung der Thurgauer Gemeinden") %>%
@@ -494,16 +508,19 @@ bevent <- themenatlas_data_long[[bevent_id]] %>%
   rename(filter1 = "name")
 
 ### Bevölkerungsentwicklung (Vorjahr/5 Jahre) ---------------------------------------
+print("### Bevölkerungsentwicklung (Vorjahr/5 Jahre) ---------------------------------------")
 
 nested_list$`Bevölkerung und Soziales`$Bevölkerungsentwicklung$`Bevölkerungsentwicklung (Vorjahr/5 Jahre)` <- bevent %>%
   select(-name_gemeinde)
 
 ## Bevölkerungsbewegung -------------------------------------------------
+print("## Bevölkerungsbewegung -------------------------------------------------")
 
 
 
 
 ### Geburten ----------------------------------------------------------------
+print("### Geburten ----------------------------------------------------------------")
 
 
 nested_list$`Bevölkerung und Soziales`$Bevölkerungsbewegung$Lebendgeburten <- bfs_get_data(number_bfs = "px-x-0102020204_102",language= "de",query= list(`Kanton (-) / Bezirk (>>) / Gemeinde (......)` = bezirk_data$bfs_nr_gemeinde)) %>%
@@ -551,6 +568,7 @@ nested_list$`Bevölkerung und Soziales`$Bevölkerungsbewegung$Scheidungen <- bfs
 
 
 ### Wanderungssaldo ---------------------------------------
+print("### Wanderungssaldo ---------------------------------------")
 
 wanderung_metadata <- bfs_get_metadata(number_bfs = "px-x-0103010200_121",language="de")
 
@@ -601,6 +619,7 @@ nested_list$`Bevölkerung und Soziales`$Bevölkerungsbewegung$Wanderungssaldo <-
   summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
 
 ### Zuzüge ---------------------------------------
+print("### Zuzüge ---------------------------------------")
 
 
 nested_list$`Bevölkerung und Soziales`$Bevölkerungsbewegung$Zuzüge <- wanderungssaldo_data %>%
@@ -612,6 +631,7 @@ nested_list$`Bevölkerung und Soziales`$Bevölkerungsbewegung$Zuzüge <- wanderu
   summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
 
 ### Wegzüge ---------------------------------------
+print("### Wegzüge ---------------------------------------")
 
 nested_list$`Bevölkerung und Soziales`$Bevölkerungsbewegung$Wegzüge <- wanderungssaldo_data %>%
   rename(value = "wegzuege",
@@ -626,6 +646,7 @@ nested_list$`Bevölkerung und Soziales`$Bevölkerungsbewegung$Wegzüge <- wander
   summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
 
 ## Haushalte ---------------------------------------------------------------
+print("## Haushalte ---------------------------------------------------------------")
 
 hh_data <- bfs_get_data(number_bfs = "px-x-0102020000_402",language = "de",query = list(`Kanton (-) / Bezirk (>>) / Gemeinde (......)`=bezirk_data$bfs_nr_gemeinde,
                                                                                         Haushaltsgrösse=c("1", "2", "3", "4", "5", "6"))) %>%
@@ -643,11 +664,16 @@ haushalte <- hh_data %>%
 
 
 ### Haushalte nach Haushaltsgrösse ---------------------------------------
+print("### Haushalte nach Haushaltsgrösse ---------------------------------------")
+
 
 nested_list$`Bevölkerung und Soziales`$Haushalte[["Haushalte nach Haushaltsgrösse"]] <- haushalte %>%
   summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
 
 ### Haushalte insgsesamt ---------------------------------------
+print("### Haushalte insgsesamt ---------------------------------------")
+
+
 
 nested_list$`Bevölkerung und Soziales`$Haushalte[["Haushalte insgesamt"]] <- haushalte %>%
   group_by(jahr,bfs_nr_gemeinde) %>%
@@ -657,9 +683,11 @@ nested_list$`Bevölkerung und Soziales`$Haushalte[["Haushalte insgesamt"]] <- ha
 
 
 ## Sozialhife --------------------------------------------------------------
+print("## Sozialhife ---------------------------------------------------------------")
 
 
 ### Brutto ausgaben ---------------------------------------------------------
+print("### Brutto ausgaben ---------------------------------------------------------")
 
 
 soz_brutto <- themenatlas_data_long[["sk-stat-54"]]
@@ -677,6 +705,7 @@ nested_list$`Bevölkerung und Soziales`$Sozialhilfe[["Brutto Sozialhilfeausgaben
   summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
 
 ### Netto Ausgaben ----------------------------------------------------------
+print("### Netto Ausgaben ----------------------------------------------------------")
 
 
 soz_netto <- themenatlas_data_long[["sk-stat-55"]]
@@ -707,10 +736,12 @@ nested_list$`Bevölkerung und Soziales`$Sozialhilfe[["Sozialhilfequote"]] <- soz
 
 
 # Wirtschaft und Arbeit ---------------------------------------------------
+print("# Wirtschaft und Arbeit ---------------------------------------------------")
 
 
 
 ## Beschäftigte ------------------------------------------------------------
+print("## Beschäftigte ------------------------------------------------------------")
 
 besch_id <- catalog %>%
   filter(metas.default.title=="Beschäftigte nach Sektoren und Politischen Gemeinden Kanton Thurgau") %>%
@@ -762,6 +793,7 @@ besch_ent <- besch %>%
 
 
 ### Veränderung Beschäftigte total gegenüber vor 5 Jahren --------------------------------------------------------
+print("### Veränderung Beschäftigte total gegenüber vor 5 Jahren --------------------------------------------------------")
 
 
 
@@ -776,6 +808,7 @@ nested_list$`Wirtschaft und Arbeit`$Beschäftigte[["Veränderung Beschäftigte t
   select(jahr,bfs_nr_gemeinde,value,share)
 
 ### Vorjahresveränderung Beschäftigte total --------------------------------------------------------
+print("### Vorjahresveränderung Beschäftigte total --------------------------------------------------------")
 
 
 nested_list$`Wirtschaft und Arbeit`$Beschäftigte[["Vorjahresveränderung Beschäftigte total"]] <- besch_ent %>%
@@ -791,6 +824,7 @@ nested_list$`Wirtschaft und Arbeit`$Beschäftigte[["Vorjahresveränderung Besch�
 
 
 ### Veränderung Beschäftigte nach Sektor gegenüber vor 5 Jahren (in % Punkten) --------------------------------------------------------
+print("### Veränderung Beschäftigte nach Sektor gegenüber vor 5 Jahren (in % Punkten) --------------------------------------------------------")
 
 nested_list$`Wirtschaft und Arbeit`$Beschäftigte[["Veränderung Beschäftigte nach Sektor gegenüber vor 5 Jahren (in % Punkten)"]] <- besch_ent %>%
   select(jahr,sektor,bfs_nr_gemeinde,change_fuenf) %>%
@@ -799,6 +833,7 @@ nested_list$`Wirtschaft und Arbeit`$Beschäftigte[["Veränderung Beschäftigte n
 
 
 ### Vorjahresveränderung Beschäftigte nach Sektor (in %) --------------------------------------------------------
+print("### Vorjahresveränderung Beschäftigte nach Sektor (in %) --------------------------------------------------------")
 
 
 nested_list$`Wirtschaft und Arbeit`$Beschäftigte[["Vorjahresveränderung Beschäftigte nach Sektor (in %)"]] <- besch_ent %>%
@@ -809,6 +844,7 @@ nested_list$`Wirtschaft und Arbeit`$Beschäftigte[["Vorjahresveränderung Besch�
 
 
 ### Beschäftigte total --------------------------------------------------------
+print("### Beschäftigte total --------------------------------------------------------")
 
 nested_list$`Wirtschaft und Arbeit`$Beschäftigte[["Beschäftigte total"]] <- besch_ent %>%
   group_by(bfs_nr_gemeinde,jahr) %>%
@@ -817,6 +853,7 @@ nested_list$`Wirtschaft und Arbeit`$Beschäftigte[["Beschäftigte total"]] <- be
   summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
 
 ### Beschäftigte nach Sektor --------------------------------------------------------
+print("### Beschäftigte nach Sektor --------------------------------------------------------")
 
 
 nested_list$`Wirtschaft und Arbeit`$Beschäftigte[["Beschäftigte nach Sektor"]] <- besch_ent %>%
@@ -827,6 +864,7 @@ nested_list$`Wirtschaft und Arbeit`$Beschäftigte[["Beschäftigte nach Sektor"]]
 # Warum einmal Veränderung in % Punkte (5 Jahre) und einmal in % (ein Jahr)????
 
 ## Arbeitsstätten ----------------------------------------------------------
+print("## Arbeitsstätten ----------------------------------------------------------")
 
 arbst_it <-catalog %>%
   filter(metas.default.title=="Arbeitsstätten nach Sektoren und Politischen Gemeinden Kanton Thurgau") %>%
@@ -876,6 +914,7 @@ arbst_ent <- arbst %>%
 
 
 ### Veränderung Arbeitsstätten total gegenüber vor 5 Jahren --------------------------------------------------------
+print("### Veränderung Arbeitsstätten total gegenüber vor 5 Jahren --------------------------------------------------------")
 
 
 nested_list$`Wirtschaft und Arbeit`$Arbeitsstätten[["Veränderung Arbeitsstätten total gegenüber vor 5 Jahren"]] <- arbst_ent %>%
@@ -890,6 +929,7 @@ nested_list$`Wirtschaft und Arbeit`$Arbeitsstätten[["Veränderung Arbeitsstätt
 
 
 ### Vorjahresveränderung Arbeitsstätten total --------------------------------------------------------
+print("### Vorjahresveränderung Arbeitsstätten total --------------------------------------------------------")
 
 
 nested_list$`Wirtschaft und Arbeit`$Arbeitsstätten[["Vorjahresveränderung Arbeitsstätten total"]] <- arbst_ent %>%
@@ -904,6 +944,7 @@ nested_list$`Wirtschaft und Arbeit`$Arbeitsstätten[["Vorjahresveränderung Arbe
 
 
 ### Veränderung Arbeitsstätten nach Sektor gegenüber vor 5 Jahren (in % Punkten) --------------------------------------------------------
+print("### Veränderung Arbeitsstätten nach Sektor gegenüber vor 5 Jahren (in % Punkten) --------------------------------------------------------")
 
 
 nested_list$`Wirtschaft und Arbeit`$Arbeitsstätten[["Veränderung Arbeitsstätten nach Sektor gegenüber vor 5 Jahren (in % Punkten)"]] <- arbst_ent %>%
@@ -913,6 +954,7 @@ nested_list$`Wirtschaft und Arbeit`$Arbeitsstätten[["Veränderung Arbeitsstätt
 
 
 ### Vorjahresveränderung Arbeitsstätten nach Sektor (in %) --------------------------------------------------------
+print("### Vorjahresveränderung Arbeitsstätten nach Sektor (in %) --------------------------------------------------------")
 
 
 nested_list$`Wirtschaft und Arbeit`$Arbeitsstätten[["Vorjahresveränderung Arbeitsstätten nach Sektor (in %)"]] <- arbst_ent %>%
@@ -923,6 +965,7 @@ nested_list$`Wirtschaft und Arbeit`$Arbeitsstätten[["Vorjahresveränderung Arbe
 
 
 ### Arbeitsstätten total --------------------------------------------------------
+print("### Arbeitsstätten --------------------------------------------------------")
 
 
 nested_list$`Wirtschaft und Arbeit`$Arbeitsstätten[["Arbeitsstätten total"]] <- arbst_ent %>%
@@ -933,6 +976,7 @@ nested_list$`Wirtschaft und Arbeit`$Arbeitsstätten[["Arbeitsstätten total"]] <
 
 
 ### Arbeitsstätten nach Sektor --------------------------------------------------------
+print("### Arbeitsstätten Sektor--------------------------------------------------------")
 
 
 nested_list$`Wirtschaft und Arbeit`$Arbeitsstätten[["Arbeitsstätten nach Sektor"]] <- arbst_ent %>%
@@ -947,6 +991,7 @@ nested_list$`Wirtschaft und Arbeit`$Arbeitsstätten[["Arbeitsstätten nach Sekto
 
 ## Grenzgänger -------------------------------------------------------------
 
+print("### Grenzgänger--------------------------------------------------------")
 
 
 
@@ -985,11 +1030,16 @@ nested_list$`Wirtschaft und Arbeit`[["Grenzgänger/innen"]][["Anteil Grenzgänge
 
 
 ## Arbeitslosigkeit --------------------------------------------------------
+print("### Arbeitslosigkeit--------------------------------------------------------")
 
 # Warum nirgends veröffentlicht ausser als Internettabelle?
 
 
 ## Neu gegründete Unternehmen ----------------------------------------------
+
+print("### Neu gegründete Unternehmen--------------------------------------------------------")
+
+
 unternehmen_metadata <- bfs_get_metadata(number_bfs = "px-x-0602030000_205",language="de")
 
 
@@ -1034,10 +1084,12 @@ unternehmen_bestand <- unternehmen_data %>%
 
 
 # Bauen und Wohnen --------------------------------------------------------
+print("### Bauen und Wohnen--------------------------------------------------------")
 
 
 
 ## Leerstand Wohnungen -----------------------------------------------------
+print("### Leerstand Wohnungen--------------------------------------------------------")
 
 
 
@@ -1050,6 +1102,7 @@ leerstand_id <-catalog %>%
 leerstand <- themenatlas_data_long[[leerstand_id]]
 
 ### Leer stehende Wohnungen total --------------------------------------------------------
+print("### Leer stehende Wohnungen total--------------------------------------------------------")
 
 
 nested_list$`Bauen und Wohnen`$`Leer stehende Wohnungen`[["Leer stehende Wohnungen total"]] <- leerstand %>%
@@ -1059,6 +1112,7 @@ nested_list$`Bauen und Wohnen`$`Leer stehende Wohnungen`[["Leer stehende Wohnung
 
 
 ### Leerwohnungsziffer --------------------------------------------------------
+print("### Leerwohnungsziffer--------------------------------------------------------")
 
 
 nested_list$`Bauen und Wohnen`$`Leer stehende Wohnungen`[["Leerwohnungsziffer"]] <- leerstand %>%
@@ -1067,6 +1121,7 @@ nested_list$`Bauen und Wohnen`$`Leer stehende Wohnungen`[["Leerwohnungsziffer"]]
 
 
 ## Bauinvestitionen --------------------------------------------------------
+print("### Bauinvestitionen--------------------------------------------------------")
 
 bau1_meta <- bfs_get_metadata("px-x-0904010000_203",language = "de")
 
@@ -1077,8 +1132,8 @@ reshape_metadata  <- function(metadata){
   names(metadata$values) <- metadata$code
   names(metadata$valueTexts) <- metadata$code
 
-  df1 <- map2_df(names(metadata$values), metadata$values, ~ tibble(code = .x, value = .y))
-  df2 <- map2_df(names(metadata$valueTexts), metadata$valueTexts, ~ tibble( text = .y))
+  df1 <- purrr::map2_df(names(metadata$values), metadata$values, ~ tibble(code = .x, value = .y))
+  df2 <- purrr::map2_df(names(metadata$valueTexts), metadata$valueTexts, ~ tibble( text = .y))
 
   bind_cols(df1,df2)
 
@@ -1107,6 +1162,7 @@ bau_data <- bau_data_full %>%
 
 
 ### Bauinvestitionen nach Kategorie --------------------------------------------------------
+print("### Bauinvestitionen nach Kategorie--------------------------------------------------------")
 
 
 nested_list$`Bauen und Wohnen`$Bauinvestitionen[["Bauinvestitionen nach Kategorie"]] <- bau_data %>%
@@ -1121,6 +1177,7 @@ nested_list$`Bauen und Wohnen`$Bauinvestitionen[["Bauinvestitionen nach Kategori
 
 
 ### Bauinvestitionen nach Art der Auftraggeber --------------------------------------------------------
+print("### Bauinvestitionen nach Art der Auftraggeber--------------------------------------------------------")
 
 
 nested_list$`Bauen und Wohnen`$Bauinvestitionen[["Bauinvestitionen nach Art der Auftraggeber"]] <- bau_data %>%
@@ -1135,6 +1192,7 @@ nested_list$`Bauen und Wohnen`$Bauinvestitionen[["Bauinvestitionen nach Art der 
 
 
 ### Bauinvestitionen total --------------------------------------------------------
+print("### Bauinvestitionen total--------------------------------------------------------")
 
 
 nested_list$`Bauen und Wohnen`$Bauinvestitionen[["Bauinvestitionen total"]] <- bau_data %>%
@@ -1152,6 +1210,7 @@ bau_join <- bau_data %>%
 
 
 ### Bauinvestitionen im Vorjahresvergleich --------------------------------------------------------
+print("### Bauinvestitionen Vorjahresvergleich--------------------------------------------------------")
 
 
 nested_list$`Bauen und Wohnen`$Bauinvestitionen[["Bauinvestitionen im Vorjahresvergleich"]] <- bau_data %>%
@@ -1170,6 +1229,8 @@ nested_list$`Bauen und Wohnen`$Bauinvestitionen[["Bauinvestitionen im Vorjahresv
 
 
 ## Gebäude und Wohnungen ---------------------------------------------------
+print("### Gebäude und Wohnungenh--------------------------------------------------------")
+
 geb_meta <- bfs_get_metadata("px-x-0902010000_103",language = "de")
 geb_meta_re <- reshape_metadata(geb_meta)
 
@@ -1193,6 +1254,7 @@ geb_data <- geb_data_full %>%
 
 
 ### Wohngebäude total --------------------------------------------------------
+print("### Wohngebäude total--------------------------------------------------------")
 
 
 
@@ -1203,6 +1265,7 @@ nested_list$`Bauen und Wohnen`$`Gebäude und Wohnungen`[["Wohngebäude total"]] 
   summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
 
 ### Wohngebäude nach Bauperiode --------------------------------------------------------
+print("### Wohngebäude nach Bauperiode--------------------------------------------------------")
 
 
 nested_list$`Bauen und Wohnen`$`Gebäude und Wohnungen`[["Wohngebäude nach Bauperiode"]] <- geb_data %>%
@@ -1216,6 +1279,7 @@ nested_list$`Bauen und Wohnen`$`Gebäude und Wohnungen`[["Wohngebäude nach Baup
   summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
 
 ### Wohngebäude nach Kategorie des Gebäudes --------------------------------------------------------
+print("###  Wohngebäude nach Kategorie des Gebäudes--------------------------------------------------------")
 
 
 nested_list$`Bauen und Wohnen`$`Gebäude und Wohnungen`[["Wohngebäude nach Kategorie des Gebäudes"]] <- geb_data %>%
@@ -1230,6 +1294,7 @@ nested_list$`Bauen und Wohnen`$`Gebäude und Wohnungen`[["Wohngebäude nach Kate
 
 
 ### Neu erstellte Wohngebäude --------------------------------------------------------
+print("###  Neu erstellte Wohngebäude--------------------------------------------------------")
 
 neu_wohnung_id <-catalog %>%
   filter(metas.default.title=="Neu erstellte Wohnungen nach Anzahl Zimmer nach Politischer Gemeinde") %>%
@@ -1251,6 +1316,7 @@ nested_list$`Bauen und Wohnen`$`Gebäude und Wohnungen`[["Neu erstellte Wohngeb�
   summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
 
 ### Wohnungen nach Zimmerzahl --------------------------------------------------------
+print("###  Wohnungen nach Zimmerzahl--------------------------------------------------------")
 
 
 nested_list$`Bauen und Wohnen`$`Gebäude und Wohnungen`[["Wohnungen nach Zimmerzahl"]] <- all_data[["sk-stat-90"]] %>%
@@ -1269,6 +1335,7 @@ nested_list$`Bauen und Wohnen`$`Gebäude und Wohnungen`[["Wohnungen nach Zimmerz
   summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
 
 ### Wohnungen total --------------------------------------------------------
+print("###  Wohnungen total--------------------------------------------------------")
 
 
 nested_list$`Bauen und Wohnen`$`Gebäude und Wohnungen`[["Wohnungen total"]] <- nested_list$`Bauen und Wohnen`$`Gebäude und Wohnungen`[["Wohnungen nach Zimmerzahl"]] %>%
@@ -1292,6 +1359,7 @@ nested_list$`Bauen und Wohnen`$`Gebäude und Wohnungen`[["Neu erstellte Wohnunge
   summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
 
 ### Neu erstellte Wohnungen total --------------------------------------------------------
+print("###  Neu erstellte Wohnungen total--------------------------------------------------------")
 
 
 nested_list$`Bauen und Wohnen`$`Gebäude und Wohnungen`[["Neu erstellte Wohnungen total"]] <- nested_list$`Bauen und Wohnen`$`Gebäude und Wohnungen`[["Neu erstellte Wohnungen nach Zimmerzahl"]] %>%
@@ -1302,6 +1370,7 @@ nested_list$`Bauen und Wohnen`$`Gebäude und Wohnungen`[["Neu erstellte Wohnunge
 
 
 ### Anteil neu erstellter Wohnungen am Wohnungsbestand des Vorjahres --------------------------------------------------------
+print("### Anteil neu erstellter Wohnungen am Wohnungsbestand des Vorjahres--------------------------------")
 
 
 nested_list$`Bauen und Wohnen`$`Gebäude und Wohnungen`[["Anteil neu erstellter Wohnungen am Wohnungsbestand des Vorjahres"]] <- nested_list$`Bauen und Wohnen`$`Gebäude und Wohnungen`[["Neu erstellte Wohnungen total"]] %>%
@@ -1325,6 +1394,7 @@ energie_geb_data <- bfs_get_data(number = "px-x-0902010000_104", language = "de"
 
 
 ### Wohngebäude nach Energiequelle der Heizung --------------------------------------------------------
+print("### Wohngebäude nach Energiequelle der Heizung ----------------")
 
 nested_list$`Bauen und Wohnen`$`Gebäude und Wohnungen`[["Wohngebäude nach Energiequelle der Heizung"]] <- energie_geb_data %>%
   mutate(bfs_nr_gemeinde = str_extract(`Kanton (-) / Bezirk (>>) / Gemeinde (......)`,"\\d\\d\\d\\d")) %>%
@@ -1339,10 +1409,12 @@ nested_list$`Bauen und Wohnen`$`Gebäude und Wohnungen`[["Wohngebäude nach Ener
 
 
 # Raum und Umwelt ---------------------------------------------------------
+print("### Raum und Umwelt -----------------------")
 
 
 ## Flächennutzung ---------------------------------------------------------
 
+print("### Flächennutzung-----------------------")
 
 flaeche_meta <- bfs_get_metadata("px-x-0202020000_102",language = "de")
 
@@ -1428,6 +1500,7 @@ landflaeche <- flaeche_data %>%
 
 
 ### Fläche nach Flächenart --------------------------------------------------------
+print("### Fläche nach Flächenart -------------------------")
 
 
 nested_list$`Raum und Umwelt`$Flächennutzung[["Fläche nach Flächenart"]] <- flaeche_data %>%
@@ -1437,6 +1510,7 @@ nested_list$`Raum und Umwelt`$Flächennutzung[["Fläche nach Flächenart"]] <- f
   summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
 
 ### Fläche total --------------------------------------------------------
+print("### Fläche total -------------------------")
 
 
 nested_list$`Raum und Umwelt`$Flächennutzung[["Fläche total"]] <- flaeche_data %>%
@@ -1445,12 +1519,14 @@ nested_list$`Raum und Umwelt`$Flächennutzung[["Fläche total"]] <- flaeche_data
   summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
 
 ### Landfläche --------------------------------------------------------
+print("### Landfläche -----------------------")
 
 
 nested_list$`Raum und Umwelt`$Flächennutzung[["Landfläche"]] <- landflaeche %>%
   summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
 
 ### Bevölkerungsdichte --------------------------------------------------------
+print("### Bevölkerungsdichte -----------------")
 
 
 nested_list$`Raum und Umwelt`$Flächennutzung[["Bevölkerungsdichte"]] <- nested_list$`Bevölkerung und Soziales`$Bevölkerungsstand$Gesamtbevölkerung %>%
@@ -1465,13 +1541,17 @@ nested_list$`Raum und Umwelt`$Flächennutzung[["Bevölkerungsdichte"]] <- nested
 
 
 # Staat und Politik -------------------------------------------------------
+print("# Staat und Politik -----------------")
 
 
 ## Grossratswahlen ---------------------------------------------------------
+print("## Grossratswahlen --------------")
 
 
 
 ### Parteistärken -----------------------------------------------------------
+print("### Parteistärken ---------------")
+
 parstrk <- all_data[["sk-stat-9"]]
 
 start_index <- which(names(parstrk)=="jahr")
@@ -1492,6 +1572,7 @@ nested_list$`Staat und Politik`$Grossratswahlen[["Parteistärken nach Partei"]] 
 
 
 ### Veränderung Parteistärken im Vorjahresvergleich (%-Punkte) -----------------------------------------------------------
+print("### Veränderung Parteistärken im Vorjahresvergleich (%-Punkte)")
 
 nested_list$`Staat und Politik`$Grossratswahlen[["Veränderung Parteistärken im Vorjahresvergleich (%-Punkte)"]] <- nested_list$`Staat und Politik`$Grossratswahlen[["Parteistärken nach Partei"]] %>%
   mutate(jahr = as.numeric(jahr)) %>%   # Ensure 'jahr' is numeric
@@ -1510,6 +1591,7 @@ nested_list$`Staat und Politik`$Grossratswahlen[["Veränderung Parteistärken im
 
 
 ### Wahlbeteiligung -----------------------------------------------------------
+print("### Wahlbeteiligung --------")
 
 
 nested_list$`Staat und Politik`$Grossratswahlen[["Wahlbeteiligung"]] <- all_data[["sk-stat-11"]] %>%
@@ -1521,8 +1603,10 @@ nested_list$`Staat und Politik`$Grossratswahlen[["Wahlbeteiligung"]] <- all_data
 
 
 ## Nationalratswahlen -----------------------------------------------------
+print("### Nationalratswahlen --------")
 
 ### Parteistärken -----------------------------------------------------------
+print("### Parteistärken --------")
 
 nested_list$`Staat und Politik`$Nationalratswahlen[["Parteistärken nach Partei"]] <- all_data[["sk-stat-123"]] %>%
   mutate(value = as.numeric(parteistaerke_percent)) %>%
@@ -1531,6 +1615,7 @@ nested_list$`Staat und Politik`$Nationalratswahlen[["Parteistärken nach Partei"
 
 
 ### Veränderung Parteistärken im Vorjahresvergleich (%-Punkte) -----------------------------------------------------------
+print("### Veränderung Parteistärken im Vorjahresvergleich (%-Punkte) --------")
 
 nested_list$`Staat und Politik`$Nationalratswahlen[["Veränderung Parteistärken im Vorjahresvergleich (%-Punkte)"]] <- nested_list$`Staat und Politik`$Nationalratswahlen[["Parteistärken nach Partei"]] %>%
   mutate(jahr = as.numeric(jahr)) %>%   # Ensure 'jahr' is numeric
@@ -1548,6 +1633,7 @@ nested_list$`Staat und Politik`$Nationalratswahlen[["Veränderung Parteistärken
 
 
 ### Wahlbeteiligung -----------------------------------------------------------
+print("### Wahlbeteiligung --------")
 
 nested_list$`Staat und Politik`$Nationalratswahlen[["Wahlbeteiligung"]] <- all_data[["sk-stat-120"]] %>%
   mutate(value = as.numeric(wahlbeteiligung_percent)) %>%
@@ -1557,6 +1643,7 @@ nested_list$`Staat und Politik`$Nationalratswahlen[["Wahlbeteiligung"]] <- all_d
 
 
 ## Eidg. Abstimmungen ------------------------------------------------------
+print("### Eidg. Abstimmunge --------")
 
 eidg_abst <- all_data[["sk-stat-50"]] %>%
   mutate(tag = as.Date(tag)) %>%
@@ -1603,6 +1690,7 @@ nested_list$`Staat und Politik`$`2019 bis 2022: Kantonale Abstimmungen` <- NULL
 
 
 ## Kantonale Abstimmungen ------------------------------------------------------
+print("### Kantonale Abstimmunge --------")
 
 kant_abst <- all_data[["sk-stat-52"]] %>%
   mutate(tag = as.Date(tag)) %>%
@@ -1643,12 +1731,14 @@ for (year in year_vec_kt){
 
 
 ## Steuerkraft und Steuerfüsse ------------------------------------------------------
+print("### Steuerkraft und Steuerfüsse --------")
 
 
 
 
 
 ### Gesamtsteuerfuss --------------------------------------------------------
+print("### Gesamtsteuerfuss --------")
 
 nested_list$`Staat und Politik`$`Steuerkraft und Steuerfüsse`[["Gesamtsteuerfuss"]] <- all_data[["sk-stat-70"]] %>%
   pivot_longer(cols = c(gesamtsteuerfuss_evang,gesamtsteuerfuss_kath,gesamtsteuerfuss_konfessionslos, gesamtsteuerfuss_jp)) %>%
@@ -1664,6 +1754,7 @@ nested_list$`Staat und Politik`$`Steuerkraft und Steuerfüsse`[["Gesamtsteuerfus
 
 
 ### Gemeindesteuerfuss --------------------------------------------------------
+print("### Gemeindesteuerfuss --------")
 
 nested_list$`Staat und Politik`$`Steuerkraft und Steuerfüsse`[["Gemeindesteuerfuss"]] <- all_data[["sk-stat-69"]] %>%
   mutate(value = as.numeric(gemeindesteuerfuss)) %>%
@@ -1673,6 +1764,7 @@ nested_list$`Staat und Politik`$`Steuerkraft und Steuerfüsse`[["Gemeindesteuerf
 
 
 ### Veränderung Gemeindesteuerfuss --------------------------------------------------------
+print("### Veränderung Gemeindesteuerfuss --------")
 
 nested_list$`Staat und Politik`$`Steuerkraft und Steuerfüsse`[["Veränderung der Gemeindesteuerfüsse im Vergleich zu vor 10 Jahren (%-Punkte)"]] <- nested_list$`Staat und Politik`$`Steuerkraft und Steuerfüsse`[["Gemeindesteuerfuss"]] %>%
   mutate(zehn_jahre = jahr-10) %>%
@@ -1686,6 +1778,7 @@ nested_list$`Staat und Politik`$`Steuerkraft und Steuerfüsse`[["Veränderung de
 
 
 ### Steuerkraft --------------------------------------------------------
+print("### Steuerkraft --------")
 
 
 # Wie berechnen?
@@ -1693,6 +1786,8 @@ nested_list$`Staat und Politik`$`Steuerkraft und Steuerfüsse`[["Veränderung de
 
 
 ## Finanzausgleich ---------------------------------------------------------
+print("### Finanzausgleich --------")
+
 nested_list$`Staat und Politik`$Finanzausgleich[["Gesamtauswirkung Finanzausgleich (positive Werte: Abschöpfung, negative Werte: Auszahlung) (CHF)"]] <- all_data[["sk-stat-1"]] %>%
   mutate(value = as.numeric(auszahlung_abschoepfung_in_chf)) %>%
   select(bfs_nr_gemeinde,jahr,value) %>%
@@ -1705,6 +1800,7 @@ nested_list$`Staat und Politik`$Finanzausgleich[["Gesamtauswirkung Finanzausglei
 
 
 # Gemeindefinanzkennzahlen ------------------------------------------------
+print("### Gemeindefinanzkennzahlen --------")
 
 nested_list$`Staat und Politik`$Gemeindefinanzkennzahlen[["Gemeindefinanzkennzahlen"]] <- themenatlas_data_long[["sk-stat-4"]] %>%
   mutate(filter1 = case_when(
