@@ -570,7 +570,7 @@ nested_list$`Bevölkerung und Soziales`$Bevölkerungsbewegung$Scheidungen <- bfs
 ### Wanderungssaldo ---------------------------------------
 print("### Wanderungssaldo ---------------------------------------")
 
-wanderung_metadata <- bfs_get_metadata(number_bfs = "px-x-0103010200_121",language="de")
+wanderung_metadata <- bfs_get_metadata("px-x-0103010200_121",language = "de")
 
 
 wanderungen_lookup <- tibble(value = wanderung_metadata$values[[2]],text = wanderung_metadata$valueTexts[[2]]) %>%
