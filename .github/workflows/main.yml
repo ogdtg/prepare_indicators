@@ -1,6 +1,6 @@
 name: Prepare Indikatoren
 'on':
-  schedule: {34 2 * * *}
+  schedule: '34 2 * * *'
   workflow_dispatch: ~
 jobs:
   run_script:
