@@ -12,6 +12,7 @@ library(httr)
 library(jsonlite)
 library(tidyr)
 library(BFS)
+library(stringr)
 
 
 # packages <- c("dplyr", "BFS", "httr","jsonlite","tidyr")
