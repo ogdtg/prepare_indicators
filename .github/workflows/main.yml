@@ -16,7 +16,7 @@ jobs:
         run: Rscript 03_prepare_indikatoren.R
       - name: Set up Git
         run: |-
-          git config --global --add safe.directory /__w/0/0
+          git config --global --add safe.directory /__w/prepare_indicators/prepare_indicators
           git config --global user.name "GitHub Actions"
           git config --global user.email "username@users.noreply.github.com"
       - name: Check if there are changes to commit
