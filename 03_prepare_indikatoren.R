@@ -350,7 +350,7 @@ bev_alter <- themenatlas_data_long[[bev_alter_id]] %>%
     alter_code<20~ "unter 20 Jahre",
     alter_code>=20 & alter_code<=64 ~ "20-64-Jährige",
     alter_code>64 ~ "über 64 Jahre",
-    TRUE~NA
+    TRUE~NA_character_
   )) %>%
   group_by(bfs_nr_gemeinde,jahr) %>%
   mutate(total = sum(value)) %>%
