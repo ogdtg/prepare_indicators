@@ -1,14 +1,21 @@
 # Erstellung Indikatoren
 
-install_and_load <- function(package) {
-  if (!requireNamespace(package, quietly = TRUE)) {
-    install.packages(package, dependencies = TRUE)
-  }
-  library(package, character.only = TRUE)
-}
+# install_and_load <- function(package) {
+#   if (!requireNamespace(package, quietly = TRUE)) {
+#     install.packages(package, dependencies = TRUE)
+#   }
+#   library(package, character.only = TRUE)
+# }
+install.packages("BFS")
+library(dplyr)
+library(httr)
+library(jsonlite)
+library(tidyr)
+library(BFS)
 
-packages <- c("dplyr", "BFS", "httr","jsonlite","tidyr")
-lapply(packages, install_and_load)
+
+# packages <- c("dplyr", "BFS", "httr","jsonlite","tidyr")
+# lapply(packages, install_and_load)
 
 
 # source("prepare_indikator_list.R")
