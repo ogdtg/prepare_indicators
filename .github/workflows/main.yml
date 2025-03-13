@@ -1,5 +1,5 @@
 name: Prepare Indikatoren
-'on':
+on:
   schedule: '34 2 * * *'
   workflow_dispatch: ~
 jobs:
