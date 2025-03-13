@@ -6,7 +6,7 @@
 #   }
 #   library(package, character.only = TRUE)
 # }
-# install.packages("BFS")
+install.packages("BFS")
 library(dplyr)
 library(httr)
 library(jsonlite)
