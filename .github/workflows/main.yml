@@ -34,4 +34,4 @@ jobs:
       - name: Push changes
         if: ${{ steps.changes_check.outputs.changes == 'true' }}
         run: git push
-    container: rocker/tidyverse:4.3.3
+    container: rocker/geospatial:4.3.3
