@@ -14,10 +14,7 @@ Bauen und Wohnen|Gebäude und Wohnungen|Wohnungen nach Zimmerzahl|Wohnungen nach
 Bauen und Wohnen|Gebäude und Wohnungen|Wohnungen total|Wohnungen nach Zimmerzahl und Politischer Gemeinde (Bestand)|sk-stat-90|https://data.tg.ch/explore/dataset/sk-stat-90/table/
 Bauen und Wohnen|Gebäude und Wohnungen|Neu erstellte Wohnungen nach Zimmerzahl|Neu erstellte Wohnungen nach Anzahl Zimmer nach Politischer Gemeinde|sk-stat-92|https://data.tg.ch/explore/dataset/sk-stat-92/table/
 Bauen und Wohnen|Gebäude und Wohnungen|Neu erstellte Wohnungen total|Neu erstellte Wohnungen nach Anzahl Zimmer nach Politischer Gemeinde|sk-stat-92|https://data.tg.ch/explore/dataset/sk-stat-92/table/
-Bauen und Wohnen|Gebäude und Wohnungen|Anteil neu erstellter Wohnungen am Wohnungsbestand des Vorjahres|Neu erstellte Wohnungen nach Anzahl Zimmer nach Politischer Gemeinde
-Wohnungen nach Zimmerzahl und Politischer Gemeinde (Bestand)|sk-stat-92
-sk-stat-90|https://data.tg.ch/explore/dataset/sk-stat-92/table/
-https://data.tg.ch/explore/dataset/sk-stat-90/table/
+Bauen und Wohnen|Gebäude und Wohnungen|Anteil neu erstellter Wohnungen am Wohnungsbestand des Vorjahres|Neu erstellte Wohnungen nach Anzahl Zimmer nach Politischer Gemeinde, Wohnungen nach Zimmerzahl und Politischer Gemeinde (Bestand)|sk-stat-92, sk-stat-90|https://data.tg.ch/explore/dataset/sk-stat-92/table/, https://data.tg.ch/explore/dataset/sk-stat-90/table/
 Bauen und Wohnen|Gebäude und Wohnungen|Wohngebäude nach Energiequelle der Heizung|Gebäude nach institutionellen Gliederungen, Energiequelle der Heizung, Gebäudekategorie und Bauperiode|px-x-0902010000_104|https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0902010000_104/-/px-x-0902010000_104.px/
 Bevölkerung und Soziales|Bevölkerungsstand|Durchschnittsalter der Bevölkerung|Ständige Wohnbevölkerung Kanton Thurgau ab 2015 nach Gemeinden und Einzelaltersjahren|sk-stat-57|https://data.tg.ch/explore/dataset/sk-stat-57/table/
 Bevölkerung und Soziales|Bevölkerungsstand|Durchschnittsalter der Rentnerinnen und Rentner|Ständige Wohnbevölkerung Kanton Thurgau ab 2015 nach Gemeinden und Einzelaltersjahren|sk-stat-57|https://data.tg.ch/explore/dataset/sk-stat-57/table/
@@ -32,10 +29,7 @@ Bevölkerung und Soziales|Bevölkerungsbewegung|Zuzüge|Wanderung der ständigen
 Bevölkerung und Soziales|Bevölkerungsbewegung|Wegzüge|Wanderung der ständigen Wohnbevölkerung nach institutionellen Gliederungen, Staatsangehörigkeit (Auswahl), Geschlecht und Migrationstyp|px-x-0103010200_121|https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0103010200_121/-/px-x-0103010200_121.px/
 Bevölkerung und Soziales|Bevölkerungsbewegung|Lebendgeburten|Lebendgeburten nach institutionellen Gliederungen, Geschlecht und Staatsangehörigkeit (Kategorie) des Kindes sowie nach Altersklasse der Mutter|px-x-0102020204_102|https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020204_102/-/px-x-0102020204_102.px/
 Bevölkerung und Soziales|Bevölkerungsbewegung|Todesfälle|Todesfälle nach institutionellen Gliederungen, Geschlecht, Staatsangehörigkeit (Kategorie), Zivilstand und Altersklasse|px-x-0102020206_102|https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020206_102/-/px-x-0102020206_102.px/
-Bevölkerung und Soziales|Bevölkerungsbewegung|Geburtensaldo|Todesfälle nach institutionellen Gliederungen, Geschlecht, Staatsangehörigkeit (Kategorie), Zivilstand und Altersklasse
-Lebendgeburten nach institutionellen Gliederungen, Geschlecht und Staatsangehörigkeit (Kategorie) des Kindes sowie nach Altersklasse der Mutter|px-x-0102020206_102
-px-x-0102020204_102|https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020206_102/-/px-x-0102020206_102.px/
-https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020204_102/-/px-x-0102020204_102.px/
+Bevölkerung und Soziales|Bevölkerungsbewegung|Geburtensaldo|Todesfälle nach institutionellen Gliederungen, Geschlecht, Staatsangehörigkeit (Kategorie), Zivilstand und Altersklasse, Lebendgeburten nach institutionellen Gliederungen, Geschlecht und Staatsangehörigkeit (Kategorie) des Kindes sowie nach Altersklasse der Mutter|px-x-0102020206_102, px-x-0102020204_102|https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020206_102/-/px-x-0102020206_102.px/, https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020204_102/-/px-x-0102020204_102.px/
 Bevölkerung und Soziales|Bevölkerungsbewegung|Heiraten|Heiraten nach institutionellen Gliederungen und Staatsangehörigkeit (Kategorie) der Ehepartner|px-x-0102020202_102|https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020202_102/-/px-x-0102020202_102.px/
 Bevölkerung und Soziales|Bevölkerungsbewegung|Scheidungen|Scheidungen nach institutionellen Gliederungen, Ehedauer und Staatsangehörigkeit (Kategorie) der Ehepartner bei der Scheidung|px-x-0102020203_103|https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020203_103/-/px-x-0102020203_103.px/
 Bevölkerung und Soziales|Haushalte|Haushalte nach Haushaltsgrösse|Privathaushalte nach institutionellen Gliederungen und Haushaltsgrösse|px-x-0102020000_402|https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020000_402/-/px-x-0102020000_402.px/
@@ -50,10 +44,7 @@ Bevölkerung und Soziales|Krebsneuerkrankungen||||
 Raum und Umwelt|Flächennutzung|Fläche nach Flächenart|Arealstatistik: Standardnomenklatur (NOAS04) nach Bezirk und Gemeinde, in Hektaren|px-x-0202020000_102|https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0202020000_102/-/px-x-0202020000_102.px/
 Raum und Umwelt|Flächennutzung|Fläche total|Arealstatistik: Standardnomenklatur (NOAS04) nach Bezirk und Gemeinde, in Hektaren|px-x-0202020000_102|https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0202020000_102/-/px-x-0202020000_102.px/
 Raum und Umwelt|Flächennutzung|Landfläche|Arealstatistik: Standardnomenklatur (NOAS04) nach Bezirk und Gemeinde, in Hektaren|px-x-0202020000_102|https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0202020000_102/-/px-x-0202020000_102.px/
-Raum und Umwelt|Flächennutzung|Bevölkerungsdichte|Arealstatistik: Standardnomenklatur (NOAS04) nach Bezirk und Gemeinde, in Hektaren
-Ständige Wohnbevölkerung Kanton Thurgau ab 2015 nach Gemeinden, Geschlecht und Staatsangehörigkeit|px-x-0202020000_102
-sk-stat-59|https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0202020000_102/-/px-x-0202020000_102.px/
-https://data.tg.ch/explore/dataset/sk-stat-59/table/
+Raum und Umwelt|Flächennutzung|Bevölkerungsdichte|Arealstatistik: Standardnomenklatur (NOAS04) nach Bezirk und Gemeinde, in Hektaren, Ständige Wohnbevölkerung Kanton Thurgau ab 2015 nach Gemeinden, Geschlecht und Staatsangehörigkeit|px-x-0202020000_102, sk-stat-59|https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0202020000_102/-/px-x-0202020000_102.px/, https://data.tg.ch/explore/dataset/sk-stat-59/table/
 Staat und Politik|Grossratswahlen|Parteistärken nach Partei|Grossratswahlen Kanton Thurgau: Parteistärken nach Gemeinden|sk-stat-9|https://data.tg.ch/explore/dataset/sk-stat-9/table/
 Staat und Politik|Grossratswahlen|Veränderung Parteistärken im Vorjahresvergleich (%-Punkte)|Grossratswahlen Kanton Thurgau: Parteistärken nach Gemeinden|sk-stat-9|https://data.tg.ch/explore/dataset/sk-stat-9/table/
 Staat und Politik|Grossratswahlen|Wahlbeteiligung|Grossratswahlen Kanton Thurgau: Wahlberechtigte und Wahlbeteiligung nach Gemeinden|sk-stat-11|https://data.tg.ch/explore/dataset/sk-stat-11/table/
@@ -250,8 +241,5 @@ Wirtschaft und Arbeit|Arbeitsstätten|Vorjahresveränderung Arbeitsstätten nach
 Wirtschaft und Arbeit|Arbeitsstätten|Arbeitsstätten total|Arbeitsstätten nach Sektoren und Politischen Gemeinden Kanton Thurgau|sk-stat-97|https://data.tg.ch/explore/dataset/sk-stat-97/table/
 Wirtschaft und Arbeit|Arbeitsstätten|Arbeitsstätten nach Sektor|Arbeitsstätten nach Sektoren und Politischen Gemeinden Kanton Thurgau|sk-stat-97|https://data.tg.ch/explore/dataset/sk-stat-97/table/
 Wirtschaft und Arbeit|Grenzgänger/innen|Grenzgänger/innen total|Ausländische Grenzgänger/innen nach Arbeitsgemeinde und Geschlecht|px-x-0302010000_101|https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0302010000_101/-/px-x-0302010000_101.px/
-Wirtschaft und Arbeit|Grenzgänger/innen|Anteil Grenzgänger/innen am Total der Beschäftigten|Beschäftigte nach Sektoren und Politischen Gemeinden Kanton Thurgau
-Ausländische Grenzgänger/innen nach Arbeitsgemeinde und Geschlecht|sk-stat-98
-px-x-0302010000_101|https://data.tg.ch/explore/dataset/sk-stat-98/table/
-https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0302010000_101/-/px-x-0302010000_101.px/
+Wirtschaft und Arbeit|Grenzgänger/innen|Anteil Grenzgänger/innen am Total der Beschäftigten|Beschäftigte nach Sektoren und Politischen Gemeinden Kanton Thurgau, Ausländische Grenzgänger/innen nach Arbeitsgemeinde und Geschlecht|sk-stat-98, px-x-0302010000_101|https://data.tg.ch/explore/dataset/sk-stat-98/table/, https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0302010000_101/-/px-x-0302010000_101.px/
 Bevölkerung und Soziales||Bevölkerung nach Altersklasse Geschlecht|Ständige Wohnbevölkerung Kanton Thurgau ab 2015 nach Gemeinden, Geschlecht und Fünfjahresaltersklassen|sk-stat-58|https://data.tg.ch/explore/dataset/sk-stat-58/table/
