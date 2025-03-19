@@ -1825,7 +1825,62 @@ saveRDS(data_source_list,"data/data_source_list.rds")
 
 
 
+md_list <- sapply(seq_along(data_source_list),function(i){
+  name <- names(data_source_list)[i] %>%
+    str_remove("nested_list\\$") %>%
+    str_remove("additional_data\\$") %>%
+    str_remove_all("`") %>%
+    str_split("\\$") %>%
+    unlist()
 
+  if (length(name)==3){
+    topic <- name[1]
+    subtopic <- name[2]
+    indicator <- name[3]
+
+
+  }
+
+  if (length(name)==2){
+    topic <- name[1]
+    subtopic <- ""
+    indicator <- name[2]
+
+
+  }
+
+
+
+
+  temp <- data_source_list[[i]]
+
+
+  if (!is.null(temp$id)){
+    temp_df <- data.frame(id = temp$id,
+                          url = temp$url) %>%
+      mutate(string = paste0("[",id,"]","(",url,")")) %>%
+      pull(string)
+  } else {
+    temp_df <- ""
+  }
+
+
+
+  #
+
+  paste0(topic,"|",subtopic,"|",indicator,"|",paste0(temp_df,collapse = ", "))
+})
+
+
+full_content <- paste0(md_list,collapse = "\n")
+
+
+full_table_md <- paste0("| Hauptkategorie | Unterkategorie | Indikator | Datensatz ID |\n",
+                        "|---------------|---------------|-----------|----------------|\n",
+                        full_content)
+
+
+writeLines(full_table_md, "README.md")
 
 
 # Probleme/Offene Fragen --------------------------------------------------
