@@ -1040,7 +1040,7 @@ print("### Arbeitslosigkeit-----------------------------------------------------
 print("### Neu gegründete Unternehmen--------------------------------------------------------")
 
 
-unternehmen_metadata <- bfs_get_metadata(number_bfs = "px-x-0602030000_205",language="de")
+unternehmen_metadata <- bfs_get_metadata( "px-x-0602030000_205",language="de")
 
 
 unternehmen_lookup <- tibble(value = unternehmen_metadata$values[[2]],text = unternehmen_metadata$valueTexts[[2]]) %>%
