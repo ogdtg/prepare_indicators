@@ -1820,15 +1820,175 @@ nested_list$`Staat und Politik`$Gemeindefinanzkennzahlen[["Gemeindefinanzkennzah
 
 saveRDS(nested_list,"data/nested_list.rds")
 saveRDS(additional_data,"data/additional_data.rds")
-saveRDS(data_source_list,"data/data_source_list.rds")
 
+# Schulgemeinden ----------------------------------------------------------
+
+
+
+# Beispieldaten für Schulgemeinden
+finanzlage_sg <-get_data_from_ogd("dek-av-30")
+
+
+sg_data_source <- create_data_source_element("dek-av-30")
+
+sg_list <- list(list(),list(),list())
+names(sg_list) <- c("PSG","SSG","VSG")
+
+
+create_indicator_sg <- function(sg,variable,data,sg_list,topic,subtopic,indicator){
+
+  temp <- data %>%
+    filter(str_detect(sg_bezeichnung,sg)) %>%
+    select(all_of(c("sg_id","jahr",variable))) %>%
+    setNames(c("bfs_nr_gemeinde","jahr","value"))
+
+  if (sum(is.na(temp$value))!=nrow(temp)){
+    sg_list[[topic]][[subtopic]][[indicator]] <- temp
+  }
+
+
+  return(sg_list)
+
+
+
+}
+
+
+get_list_paths <- function(lst, parent_path = "nested_list") {
+  paths <- c()
+
+  for (name in names(lst)) {
+    current_path <- ifelse(grepl(" ", name),
+                           paste0(parent_path, "$`", name, "`"),
+                           paste0(parent_path, "$", name))
+
+    if (is.data.frame(lst[[name]])) {
+      # Stop recursion and store path
+      paths <- c(paths, current_path)
+    } else if (is.list(lst[[name]])) {
+      # Recur if it's a list
+      paths <- c(paths, get_list_paths(lst[[name]], current_path))
+    }
+  }
+
+  return(paths)
+}
+
+
+for (i in seq_along(sg_list)){
+
+  sg_name <- names(sg_list)[i]
+
+  if (sg_name=="PSG"){
+    list_name <- "psg_list"
+  }
+  if (sg_name=="SSG"){
+    list_name <- "psg_list"
+  }
+  if (sg_name=="VSG"){
+    list_name <- "psg_list"
+  }
+
+
+
+  sg_list[[i]] <- create_indicator_sg(sg_name,"einwohner",finanzlage_sg,sg_list = sg_list[[i]],topic = "Bevölkerung und Soziales",subtopic = "Bevölkerungsstand",indicator = "Gesamtbevölkerung")
+
+  sg_list[[i]] <- create_indicator_sg(sg_name,"schueler",finanzlage_sg,sg_list = sg_list[[i]],topic = "Bevölkerung und Soziales",subtopic = "Bildung",indicator = "Anzahl Schülerinnen und Schüler im Durchschnitt der beiden Stichtage 15.2. und 15.9.")
+
+
+  sg_list[[i]] <- create_indicator_sg(sg_name,"schuelerproew",finanzlage_sg,sg_list = sg_list[[i]],topic = "Bevölkerung und Soziales",subtopic = "Bildung",indicator = "Anteil Schüler an der Anzahl Einwohner")
+
+
+  sg_list[[i]] <- create_indicator_sg(sg_name,"steuerkraft",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Steuerkraft und Steuerfüsse",indicator = "Steuerkraft 100%")
+
+  sg_list[[i]] <- create_indicator_sg(sg_name,"steuerkraftproew",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Steuerkraft und Steuerfüsse",indicator = "Steuerkraft pro Einwohner")
+
+  sg_list[[i]] <- create_indicator_sg(sg_name,"steuerfuss",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Steuerkraft und Steuerfüsse",indicator = "Steuerfuss in %")
+
+  sg_list[[i]] <- create_indicator_sg(sg_name,"steuerfuss_total",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Steuerkraft und Steuerfüsse",indicator = "Gesamtsteuerfuss Schule  in %")
+
+  sg_list[[i]] <- create_indicator_sg(sg_name,"gemeindesteuer",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Steuerkraft und Steuerfüsse",indicator = "Gemeindesteuerfuss in %")
+
+  sg_list[[i]] <- create_indicator_sg(sg_name,"schulsteuerfussinklgemeindesteuer",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Steuerkraft und Steuerfüsse",indicator = "Schulsteuerfuss inkl. Gemeindesteuer in %")
+
+  sg_list[[i]] <- create_indicator_sg(sg_name,"beitraege_basisjahr",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Beitragsleistungen",indicator = "Beitragsleistungen gemäss Basisjahr der Berechnungsparameter in CHF")
+
+  sg_list[[i]] <- create_indicator_sg(sg_name,"beitraege_basisjahr_steuerkraft",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Beitragsleistungen",indicator = "Beitragsleistungen gemäss Basisjahr der Berechnungsparameter im Verhältnis zur Steuerkraft 100%")
+
+
+  sg_list[[i]] <- create_indicator_sg(sg_name,"beitraege_rrb742",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Beitragsleistungen",indicator = "Beitragsleistungen periodisch abgegrenzt in CHF")
+
+  sg_list[[i]] <- create_indicator_sg(sg_name,"beitraege_rrb742_steuerkraft",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Beitragsleistungen",indicator = "Beitragsleistungen periodisch abgegrenzt im Verhältnis zur Steuerkraft 100%")
+
+  sg_list[[i]] <- create_indicator_sg(sg_name,"mittelfluss",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Beitragsleistungen",indicator = "Beitragsleistungen im Mittelflussjahr gerechnet")
+
+  sg_list[[i]] <- create_indicator_sg(sg_name,"nettoinvestitionen",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Nettoinvestitionen für das Verwaltungsvermögen im Rechnungsjahr")
+
+  sg_list[[i]] <- create_indicator_sg(sg_name,"nettoschuld",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Nettoschuld (-) / Nettovermögen (+) per 31.12. in CHF")
+
+  sg_list[[i]] <- create_indicator_sg(sg_name,"fiskalertrag",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Fiskalertrag in CHF")
+
+  sg_list[[i]] <- create_indicator_sg(sg_name,"nettoverschuldungsquotient",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Nettoverschuldungsquotient im Rechnungsjahr")
+
+  sg_list[[i]] <- create_indicator_sg(sg_name,"zinsbelastung",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Zinsbelastung im Rechnungsjahr in CHF")
+
+  sg_list[[i]] <- create_indicator_sg(sg_name,"laufender_ertrag",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Laufender Ertrag im Rechnungsjahr in CHF")
+
+  sg_list[[i]] <- create_indicator_sg(sg_name,"zinsbelastungsanteil",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Zinsbelastungsanteil im Rechnungsjahr")
+
+  sg_list[[i]] <- create_indicator_sg(sg_name,"verzinsliches_fremdkapital",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Bilanz",indicator = "Bilanzkontogruppen 201 und 206 per 31.12. in CHF")
+
+  sg_list[[i]] <- create_indicator_sg(sg_name,"zinsbelastungsrisiko",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Zinsbelastungsrisiko")
+
+
+  sg_list[[i]] <- create_indicator_sg(sg_name,"zinsrisiko",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Hypothetischer Prozentsatz für Zinsbelastungsrisiko")
+
+  sg_list[[i]] <- create_indicator_sg(sg_name,"gewinnverwendung",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Verbuchte Gewinnverwendung im Rechnungsjahr")
+
+  sg_list[[i]] <- create_indicator_sg(sg_name,"gewinnverwendung_erneuerungsfonds",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Verbuchte Einlagen in den Erneuerungsfonds Baufolgekosten")
+
+
+  sg_list[[i]] <- create_indicator_sg(sg_name,"aufwanddeckung",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Aufwanddeckung")
+
+  sg_list[[i]] <- create_indicator_sg(sg_name,"eigenkapital",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Bilanz",indicator = "Eigenkapital Bilanzkontogruppe 29 per 31.12.")
+
+  sg_list[[i]] <- create_indicator_sg(sg_name,"laufender_aufwand",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Laufender Aufwand im Rechnungsjahr")
+
+
+  sg_list[[i]] <- create_indicator_sg(sg_name,"bilanzsituation",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Eigenkapital im Verhältnis zur Steuerkraft 100% per 31.12.")
+
+  sg_list[[i]] <- create_indicator_sg(sg_name,"eigenkapitaldeckungsgrad",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Eigenkapitaldeckungsgrad")
+
+  sg_list[[i]] <- create_indicator_sg(sg_name,"erfolgvorgewinnverwendung",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Erfolgvorgewinnverwendung")
+
+  sg_list[[i]] <- create_indicator_sg(sg_name,"erfolg",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Erfolg im Rechnungsjahr in CHF")
+
+  sg_list[[i]] <- create_indicator_sg(sg_name,"bilanzueberschuss",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Bilanzüberschuss Kontogruppe 299")
+
+  sg_list[[i]] <- create_indicator_sg(sg_name,"vv",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Verwaltungsvermögen per 31.12.")
+
+
+  for (elem in get_list_paths(sg_list[[i]],list_name)){
+    data_source_list[[elem]] <- sg_data_source
+  }
+}
+
+
+
+saveRDS(sg_list[[1]],"data/psg_list.rds")
+saveRDS(sg_list[[2]],"data/ssg_list.rds")
+saveRDS(sg_list[[3]],"data/vsg_list.rds")
+
+
+
+saveRDS(data_source_list,"data/data_source_list.rds")
 
 
 
 md_list <- sapply(seq_along(data_source_list),function(i){
   name <- names(data_source_list)[i] %>%
-    str_remove("nested_list\\$") %>%
-    str_remove("additional_data\\$") %>%
+    str_remove("^[^$]*\\$") %>%
+    # str_remove("additional_data\\$") %>%
     str_remove_all("`") %>%
     str_split("\\$") %>%
     unlist()
