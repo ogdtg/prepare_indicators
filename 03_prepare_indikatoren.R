@@ -1838,7 +1838,7 @@ names(sg_list) <- c("PSG","SSG","VSG")
 create_indicator_sg <- function(sg,variable,data,sg_list,topic,subtopic,indicator){
 
   temp <- data %>%
-    filter(str_detect(sg_bezeichnung,sg)) %>%
+    filter(sgtyp2==sg) %>%
     select(all_of(c("sg_id","jahr",variable))) %>%
     setNames(c("bfs_nr_gemeinde","jahr","value"))
 
@@ -1980,6 +1980,13 @@ saveRDS(sg_list[[2]],"data/ssg_list.rds")
 saveRDS(sg_list[[3]],"data/vsg_list.rds")
 
 
+full_data <- list(psg_list=sg_list[[1]],
+                  ssg_list=sg_list[[2]],
+                  vsg_list=sg_list[[3]],
+                  nested_list=nested_list,
+                  additional_data=additional_data)
+
+saveRDS(full_data,"data/full_data.rds")
 
 saveRDS(data_source_list,"data/data_source_list.rds")
 
