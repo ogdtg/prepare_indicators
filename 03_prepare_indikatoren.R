@@ -523,6 +523,11 @@ print("## Bevölkerungsbewegung ------------------------------------------------
 print("### Geburten ----------------------------------------------------------------")
 
 
+bfs_get_data <- function(...){
+  Sys.sleep(2)
+  BFS::bfs_get_data(...)
+}
+
 nested_list$`Bevölkerung und Soziales`$Bevölkerungsbewegung$Lebendgeburten <- bfs_get_data(number_bfs = "px-x-0102020204_102",language= "de",query= list(`Kanton (-) / Bezirk (>>) / Gemeinde (......)` = bezirk_data$bfs_nr_gemeinde)) %>%
   mutate(bfs_nr_gemeinde = str_extract(`Kanton (-) / Bezirk (>>) / Gemeinde (......)`,"\\d\\d\\d\\d")) %>%
   select(bfs_nr_gemeinde,Jahr,Lebendgeburten) %>%
@@ -531,6 +536,8 @@ nested_list$`Bevölkerung und Soziales`$Bevölkerungsbewegung$Lebendgeburten <- 
   filter(jahr>=2009) %>%
   summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
 
+
+Sys.sl
 
 nested_list$`Bevölkerung und Soziales`$Bevölkerungsbewegung$Todesfälle <-  bfs_get_data(number_bfs = "px-x-0102020206_102",language= "de",query= list(`Kanton (-) / Bezirk (>>) / Gemeinde (......)` = bezirk_data$bfs_nr_gemeinde,
                                                                                         `Staatsangehörigkeit (Kategorie)`=c("-99999"))) %>%
