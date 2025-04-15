@@ -537,7 +537,6 @@ nested_list$`Bevölkerung und Soziales`$Bevölkerungsbewegung$Lebendgeburten <- 
   summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
 
 
-Sys.sl
 
 nested_list$`Bevölkerung und Soziales`$Bevölkerungsbewegung$Todesfälle <-  bfs_get_data(number_bfs = "px-x-0102020206_102",language= "de",query= list(`Kanton (-) / Bezirk (>>) / Gemeinde (......)` = bezirk_data$bfs_nr_gemeinde,
                                                                                         `Staatsangehörigkeit (Kategorie)`=c("-99999"))) %>%
