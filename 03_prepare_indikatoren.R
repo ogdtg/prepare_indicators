@@ -524,7 +524,7 @@ print("### Geburten ------------------------------------------------------------
 
 
 bfs_get_data <- function(...){
-  Sys.sleep(2)
+  Sys.sleep(5)
   BFS::bfs_get_data(...)
 }
 
