@@ -1,7 +1,5 @@
 name: Prepare Indikatoren
 on:
-  schedule:
-    - cron: '34 2 * * *'
   workflow_dispatch:
 jobs:
   run_script:
