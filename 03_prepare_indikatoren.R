@@ -654,19 +654,40 @@ nested_list$`Bevölkerung und Soziales`$Bevölkerungsbewegung$Wegzüge <- wander
 ## Haushalte ---------------------------------------------------------------
 print("## Haushalte ---------------------------------------------------------------")
 
-hh_data <- bfs_get_data(number_bfs = "px-x-0102020000_402",language = "de",query = list(`Kanton (-) / Bezirk (>>) / Gemeinde (......)`=bezirk_data$bfs_nr_gemeinde,
-                                                                                        Haushaltsgrösse=c("1", "2", "3", "4", "5", "6"))) %>%
-  mutate(bfs_nr_gemeinde = str_extract(`Kanton (-) / Bezirk (>>) / Gemeinde (......)`,"\\d\\d\\d\\d")) %>%
-  select(Jahr,bfs_nr_gemeinde,Haushaltsgrösse,Privathaushalte)
 
 
-haushalte <- hh_data %>%
-  group_by(Jahr,bfs_nr_gemeinde) %>%
-  mutate(share = Privathaushalte/sum(Privathaushalte)*100) %>%
+metadata <- BFS::bfs_get_sse_metadata("DF_STATPOP_PHH")
+
+metadata_red <- metadata |>
+  select(code,value,valueText)
+
+metadata_red_geo <- metadata_red |>
+  filter(code == "GEO_UNIT") |>
+  select(-code) |>
+  rename(bfs_nr_gemeinde ="value")
+
+
+metadata_red_hh <- metadata_red |>
+  filter(code == "HH_SIZE") |>
+  select(-code) |>
+  rename(filter1 ="value")
+
+hh_data <- BFS::bfs_get_sse_data("DF_STATPOP_PHH",language = "de",query = list(GEO_UNIT =bezirk_data$bfs_nr_gemeinde,
+                                                                    HH_SIZE=c("1", "2", "3", "4", "5", "60")))
+
+hh_data_mod <- hh_data |>
+  left_join(metadata_red_geo,by = c("GEO_UNIT"="valueText")) |>
+  left_join(metadata_red_hh,by = c("HH_SIZE"="valueText"))
+
+
+
+haushalte <- hh_data_mod %>%
+  group_by(TIME_PERIOD ,bfs_nr_gemeinde) %>%
+  mutate(share = value /sum(value )*100) %>%
   ungroup() %>%
-  rename(jahr = "Jahr",
-         value = "Privathaushalte") %>%
-  rename(filter1="Haushaltsgrösse")
+  rename(jahr = "TIME_PERIOD") %>%
+  # rename(filter1="Haushaltsgrösse") |>
+  select(jahr,bfs_nr_gemeinde,filter1,value,share)
 
 
 ### Haushalte nach Haushaltsgrösse ---------------------------------------
@@ -1000,26 +1021,26 @@ nested_list$`Wirtschaft und Arbeit`$Arbeitsstätten[["Arbeitsstätten nach Sekto
 print("### Grenzgänger--------------------------------------------------------")
 
 
+grenzgaenger_metadata <- bfs_get_sse_metadata("DF_GGS_2")
 
+grenzgaenger_metadata_red <- grenzgaenger_metadata |>
+  select(code,value,valueText)
 
-grenzgaenger_data <- bfs_get_data(number_bfs = "px-x-0302010000_101",language = "de",query = list(Arbeitsgemeinde=bezirk_data$bfs_nr_gemeinde,
-                                                                                                  Geschlecht=c("0"))) %>%
-  mutate(name_gemeinde = str_remove(Arbeitsgemeinde,"\\.\\.\\.\\.\\.\\.") %>% str_remove("\\(TG\\)") %>% str_trim()) %>%
-  mutate(jahr = str_extract(Quartal,"^\\d\\d\\d\\d")) %>%
-  mutate(quartal = str_extract(Quartal,"Q\\d")) %>%
-  rename(anzahl_gg = "Ausländische Grenzgänger/innen") %>%
-  select(jahr,quartal,name_gemeinde,anzahl_gg) %>%
-  mutate(name_gemeinde = case_when(
-    str_detect(name_gemeinde,"Basadingen-Schlattin")~"Basadingen-Schlattingen",
-    str_detect(name_gemeinde,"Zihlschlacht-Sitterd")~"Zihlschlacht-Sitterdorf",
-    TRUE~name_gemeinde
-  )) %>%
-  left_join(bezirk_data %>%
-              select(bfs_nr_gemeinde,name_gemeinde),"name_gemeinde") %>%
-  filter(quartal=="Q4") %>%
-  select(jahr,bfs_nr_gemeinde,value=anzahl_gg) %>%
+grenzgaenger_metadata_red_geo <- grenzgaenger_metadata_red |>
+  filter(code == "GDE_WORK") |>
+  select(-code) |>
+  rename(bfs_nr_gemeinde ="value")
+
+grenzgaenger_data <- bfs_get_sse_data(number_bfs = "DF_GGS_2",language = "de",query = list(GDE_WORK =bezirk_data$bfs_nr_gemeinde,
+                                                                                           SEX      =c("_T")),variable_value_type = "code") |>
+  mutate(jahr = str_extract(TIME_PERIOD ,"^\\d\\d\\d\\d")) |>
+  filter(str_detect(TIME_PERIOD,"Q4")) %>%
+  select(jahr,bfs_nr_gemeinde=GDE_WORK,value) %>%
   mutate(value = round(value,0),
          jahr = as.numeric(jahr))
+
+
+
 
 
 nested_list$`Wirtschaft und Arbeit`[["Grenzgänger/innen"]][["Grenzgänger/innen total"]] <- grenzgaenger_data %>%
@@ -1237,26 +1258,24 @@ nested_list$`Bauen und Wohnen`$Bauinvestitionen[["Bauinvestitionen im Vorjahresv
 ## Gebäude und Wohnungen ---------------------------------------------------
 print("### Gebäude und Wohnungenh--------------------------------------------------------")
 
-geb_meta <- bfs_get_metadata("px-x-0902010000_103",language = "de")
-geb_meta_re <- reshape_metadata(geb_meta)
+geb_meta <- bfs_get_sse_metadata("DF_GWS_REG1",language = "de")
+
+geb_meta_red <- geb_meta |>
+  filter(code =="GEMEINDENAME") |>
+  select(GEMEINDENAME=valueText,bfs_nr_gemeinde=value)
 
 
-geb_lookup <- tibble(value = geb_meta$values[[1]],text = geb_meta$valueTexts[[1]]) %>%
-  filter(str_extract(text,"\\d\\d\\d\\d") %in% bezirk_data$bfs_nr_gemeinde)
 
 
-geb_data_full <- bfs_get_data(number_bfs = "px-x-0902010000_103",language = "de",query = list(`Kanton (-) / Bezirk (>>) / Gemeinde (......)`=geb_lookup$value,
-                                                                                              Bauperiode = geb_meta$values[which(geb_meta$code=="Bauperiode")][[1]],
-                                                                                              `Gebäudekategorie` = geb_meta$values[which(geb_meta$code=="Gebäudekategorie")][[1]]))
+geb_data_full <- bfs_get_sse_data(number_bfs = "DF_GWS_REG1",language = "de",query = list(GEMEINDENAME=bezirk_data$bfs_nr_gemeinde))
 
 
 geb_data <- geb_data_full %>%
-  mutate(bfs_nr_gemeinde = str_extract(`Kanton (-) / Bezirk (>>) / Gemeinde (......)`,"\\d\\d\\d\\d")) %>%
-  select(-`Kanton (-) / Bezirk (>>) / Gemeinde (......)`) %>%
-  rename(kategorie = "Gebäudekategorie",
-         periode = "Bauperiode",
-         jahr = "Jahr",
-         value = "Gebäude")
+  filter(GBAUPS != "Total") |>
+  filter(GKATS != "Total") |>
+  left_join(geb_meta_red,"GEMEINDENAME") |>
+  select(jahr = TIME_PERIOD,bfs_nr_gemeinde,kategorie=GKATS,periode = GBAUPS,value)
+
 
 
 ### Wohngebäude total --------------------------------------------------------
@@ -1388,14 +1407,16 @@ nested_list$`Bauen und Wohnen`$`Gebäude und Wohnungen`[["Anteil neu erstellter 
   select(bfs_nr_gemeinde,jahr,share) %>%
   rename(value = "share")
 
-energie_geb_meta <- bfs_get_metadata("px-x-0902010000_104","de")
+energie_geb_meta <- bfs_get_sse_metadata("DF_GWS_REG3","de")
+
+energie_geb_meta_red <-energie_geb_meta |>
+  filter(code=="GEMEINDENAME") |>
+  select(GEMEINDENAME=valueText,bfs_nr_gemeinde=value)
+energie_geb_data <- bfs_get_sse_data(number = "DF_GWS_REG3", language = "de",
+                                 query = list(GEMEINDENAME =bezirk_data$bfs_nr_gemeinde))
 
 
-energie_geb_lookup <- tibble(value = energie_geb_meta$values[[1]],text = energie_geb_meta$valueTexts[[1]]) %>%
-  filter(str_extract(text,"\\d\\d\\d\\d") %in% bezirk_data$bfs_nr_gemeinde)
 
-energie_geb_data <- bfs_get_data(number = "px-x-0902010000_104", language = "de",
-                                 query = list(`Kanton (-) / Bezirk (>>) / Gemeinde (......)`=energie_geb_lookup$value))
 
 
 
@@ -1403,10 +1424,10 @@ energie_geb_data <- bfs_get_data(number = "px-x-0902010000_104", language = "de"
 print("### Wohngebäude nach Energiequelle der Heizung ----------------")
 
 nested_list$`Bauen und Wohnen`$`Gebäude und Wohnungen`[["Wohngebäude nach Energiequelle der Heizung"]] <- energie_geb_data %>%
-  mutate(bfs_nr_gemeinde = str_extract(`Kanton (-) / Bezirk (>>) / Gemeinde (......)`,"\\d\\d\\d\\d")) %>%
-  rename(jahr = "Jahr",
-         value = "Gebäude",
-         filter1 = "Energiequelle der Heizung") %>%
+  filter(GBAUPS=="Total" & GKATS=="Total") |>
+  left_join(energie_geb_meta_red,"GEMEINDENAME") |>
+  rename(jahr = "TIME_PERIOD",
+         filter1 = "GWAERZH") %>%
   group_by(bfs_nr_gemeinde,jahr) %>%
   mutate(share = value/sum(value)*100) %>%
   ungroup() %>%
@@ -1422,84 +1443,57 @@ print("### Raum und Umwelt -----------------------")
 
 print("### Flächennutzung-----------------------")
 
-flaeche_meta <- bfs_get_metadata("px-x-0202020000_102",language = "de")
+flaeche_meta <- bfs_get_sse_metadata("DF_AREA_NOAS",language = "de")
 
 
 flaeche_lookup <- tibble(text =flaeche_meta$valueTexts[2][[1]],value = flaeche_meta$values[2][[1]]) %>%
   filter(text %in% c("-a Siedlungsflächen","-b Landwirtschaftsflächen","-c Bestockte Flächen","-d Unproduktive Flächen"))
 
-flaeche_data_raw <- bfs_get_data(number_bfs = "px-x-0202020000_102",language = "de",query = list(`Bezirk (>>) / Gemeinde (......)`=bezirk_data$bfs_nr_gemeinde,
-                                                                                                 `Standardnomenklatur (NOAS04)`=flaeche_lookup$value))
 
+flaeche_meta_red <- flaeche_meta |>
+  filter(code=="REGION") |>
+  select(REGION=valueText,bfs_nr_gemeinde=value)
 
+flaeche_data_raw <- bfs_get_sse_data(number_bfs = "DF_AREA_NOAS",language = "de",query = list(REGION=bezirk_data$bfs_nr_gemeinde,NOAS=as.character(1:4))) |>
+  left_join(flaeche_meta_red,"REGION")
 
-flaeche_lookup <- tibble(text =flaeche_meta$valueTexts[2][[1]],value = flaeche_meta$values[2][[1]]) %>%
-  filter(text %in% c("-a Siedlungsflächen","-b Landwirtschaftsflächen","-c Bestockte Flächen","-d Unproduktive Flächen"))
+see_flaeche_mod <- bfs_get_sse_data(number_bfs = "DF_AREA_NOAS",language = "de",query = list(REGION=bezirk_data$bfs_nr_gemeinde,NOAS=c("413","414"))) |>
+  left_join(flaeche_meta_red,"REGION")
 
-# Fläche von Seen
-bodensee <- bfs_get_data(number_bfs = "px-x-0202020000_102",language = "de",query = list(`Bezirk (>>) / Gemeinde (......)`=bezirk_data$bfs_nr_gemeinde,
-                                                                                         `Standardnomenklatur (NOAS04)`=c("40130000","40140000"))) %>%
+flaeche_data <-flaeche_data_raw |>
   mutate(jahr = case_when(
-    Periode == "1979/85"~"1984",
-    Periode == "1992/97"~"1996",
-    Periode == "2013/18"~"2017",
-    Periode == "2004/09"~"2008",
-    Periode == "2020/25"~"2024",
-    TRUE~Periode
-  )) %>%
-  mutate(name_gemeinde = str_remove(`Bezirk (>>) / Gemeinde (......)`,"\\.\\.\\.\\.\\.\\.") %>% str_remove("\\(TG\\)") %>% str_trim()) %>%
-  mutate(name_gemeinde = case_when(
-    str_detect(name_gemeinde,"Basadingen-Schlattin")~"Basadingen-Schlattingen",
-    str_detect(name_gemeinde,"Zihlschlacht-Sitterd")~"Zihlschlacht-Sitterdorf",
-    TRUE~name_gemeinde
-  )) %>%
-  left_join(bezirk_data %>%
-              select(bfs_nr_gemeinde,name_gemeinde),"name_gemeinde") %>%
-  select(-`Bezirk (>>) / Gemeinde (......)`)  %>%
-  mutate(filter1 = "Unproduktive Fläche") %>%
-  rename(see = "Standardnomenklatur (NOAS04) nach Bezirk und Gemeinde, in Hektaren") %>%
-  select(bfs_nr_gemeinde,jahr,filter1,see) %>%
-  group_by(bfs_nr_gemeinde,jahr,filter1) %>%
-  summarise(see = sum(see)) %>%
+    PERIOD     == "1979-1985"~"1984",
+    PERIOD     == "1992-1997"~"1996",
+    PERIOD     == "2013-2018"~"2017",
+    PERIOD     == "2004-2009"~"2008",
+    PERIOD     == "2020-2025"~"2024",
+    TRUE~PERIOD
+  )) |>
+  select(bfs_nr_gemeinde,jahr,filter1=NOAS,value)
+
+see_flaeche <- see_flaeche_mod |>
+  mutate(jahr = case_when(
+    PERIOD     == "1979-1985"~"1984",
+    PERIOD     == "1992-1997"~"1996",
+    PERIOD     == "2013-2018"~"2017",
+    PERIOD     == "2004-2009"~"2008",
+    PERIOD     == "2020-2025"~"2024",
+    TRUE~PERIOD
+  )) |>
+  select(bfs_nr_gemeinde,jahr,filter1=NOAS,value) |>
+  group_by(bfs_nr_gemeinde,jahr) |>
+  summarise(see=sum(value)) |>
   ungroup()
-
-flaeche_data <- flaeche_data_raw %>%
-  mutate(name_gemeinde = str_remove(`Bezirk (>>) / Gemeinde (......)`,"\\.\\.\\.\\.\\.\\.") %>% str_remove("\\(TG\\)") %>% str_trim()) %>%
-  mutate(name_gemeinde = case_when(
-    str_detect(name_gemeinde,"Basadingen-Schlattin")~"Basadingen-Schlattingen",
-    str_detect(name_gemeinde,"Zihlschlacht-Sitterd")~"Zihlschlacht-Sitterdorf",
-    TRUE~name_gemeinde
-  )) %>%
-  left_join(bezirk_data %>%
-              select(bfs_nr_gemeinde,name_gemeinde),"name_gemeinde") %>%
-  select(-`Bezirk (>>) / Gemeinde (......)`) %>%
-  mutate(filter1 = case_when(
-    str_detect(`Standardnomenklatur (NOAS04)`,"Siedlungsflächen")~"Siedlungsfläche",
-    str_detect(`Standardnomenklatur (NOAS04)`,"Bestockte Flächen")~"Waldfläche",
-    str_detect(`Standardnomenklatur (NOAS04)`,"Unproduktive Flächen")~"Unproduktive Fläche",
-    str_detect(`Standardnomenklatur (NOAS04)`,"Landwirtschaftsflächen")~"Landwirtschaftsfläche",
-    TRUE~NA_character_
-  )) %>%
-  mutate(jahr = case_when(
-    Periode == "1979/85"~"1984",
-    Periode == "1992/97"~"1996",
-    Periode == "2013/18"~"2017",
-    Periode == "2004/09"~"2008",
-    Periode == "2020/25"~"2024",
-    TRUE~Periode
-  )) %>%
-  rename(value = "Standardnomenklatur (NOAS04) nach Bezirk und Gemeinde, in Hektaren") %>%
-  select(bfs_nr_gemeinde,jahr,filter1,value) %>%
-  filter(!is.na(value))
 
 
 landflaeche <- flaeche_data %>%
-  left_join(bodensee,by = c("jahr","bfs_nr_gemeinde","filter1")) %>%
+  group_by(bfs_nr_gemeinde,jahr) %>%
+  summarise(value = sum(value)) |>
+  ungroup() |>
+  left_join(see_flaeche,by = c("jahr","bfs_nr_gemeinde")) %>%
   mutate(see = replace_na(see,0)) %>%
   mutate(value = value -see) %>%
-  select(-see) %>%
-  group_by(bfs_nr_gemeinde,jahr) %>%
-  summarise(value = sum(value))
+  select(-see)
 
 
 
@@ -2043,6 +2037,59 @@ md_list <- sapply(seq_along(data_source_list),function(i){
 
   paste0(topic,"|",subtopic,"|",indicator,"|",paste0(temp_df,collapse = ", "))
 })
+
+
+save_nested_list <- function(nested_list, base_dir) {
+  mapping <- list()
+  counter <- 0L
+
+  walk_list <- function(lst, name_path) {
+    for (nm in names(lst)) {
+      item      <- lst[[nm]]
+      cur_names <- c(name_path, nm)
+
+      if (is.data.frame(item)) {
+        counter   <<- counter + 1L
+        id        <- sprintf("ds_%04d", counter)
+        save_path <- file.path(base_dir, paste0(id, ".rds"))
+
+        saveRDS(item, file = save_path)
+
+        mapping[[length(mapping) + 1]] <<- cur_names
+
+      } else if (is.list(item)) {
+        walk_list(item, cur_names)
+      }
+    }
+  }
+
+  dir.create(base_dir, recursive = TRUE, showWarnings = FALSE)
+  walk_list(nested_list, character(0))
+
+  # Build mapping with one column per level, NA-padded
+  max_depth <- max(lengths(mapping))
+
+  mapping_tbl <- purrr::map(mapping, function(x) {
+    length(x) <- max_depth
+    x
+  }) |>
+    do.call(rbind, args = _) |>
+    as.data.frame() |>
+    setNames(paste0("level_", seq_len(max_depth))) |>
+    tibble::as_tibble() |>
+    dplyr::mutate(id = sprintf("ds_%04d", dplyr::row_number()), .before = 1)
+
+  saveRDS(mapping_tbl, file = file.path(base_dir, "mapping.rds"))
+  readr::write_csv(mapping_tbl, file = file.path(base_dir, "mapping.csv"))
+
+  invisible(mapping_tbl)
+}
+
+
+# Usage
+dir.create("../prepare_indikatoren/nested_data")
+# save_nested_list(nested_list, base_dir = "../prepare_indikatoren/nested_data")
+mapping <- save_nested_list(nested_list, base_dir = "../prepare_indikatoren/nested_data")
 
 
 full_content <- paste0(md_list,collapse = "\n")

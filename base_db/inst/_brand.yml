@@ -1,0 +1,211 @@
+meta:
+  name: Kanton Thurgau
+  links:
+    home: https://www.tg.ch
+    storybook: https://design-system.ktg.lab360.dev/
+    Figma: https://www.figma.com/design/PRgSe0ybiL4y6bnggdk7Lq/tg.ch
+
+# logo:
+#   images:
+#     icon-color: logos/icon/brand-yml-icon-color.png
+#     wide-color: logos/wide/brand-yml-wide-color.png
+#     tall-color: logos/wide/brand-yml-tall-color.png
+#   small: icon-color
+#   medium: wide-color
+#   large: tall-color
+
+color:
+  palette:
+    green: "rgb(50, 122, 30)"
+    darkgreen: "rgb(18, 83, 27)"
+    blue: "rgb(24, 73, 200)"
+    lightblue: "rgb(222, 236, 253)"
+    yellow: "rgb(253, 227, 3)"
+    red: "rgb(242, 72, 34)"
+    purple: "rgb(137, 68, 224)"
+    black: "rgb(51, 51, 51)"
+    white: "#FFFFFF"
+    gray: "rgb(245, 245, 245)"
+  primary: blue
+  secondary: green
+  tertiary: yellow
+  danger: red
+  foreground: black
+  background: white
+
+typography:
+  fonts:
+    - family: aktiv-grotesk
+      source: file
+      files:
+        - path: app/www/fonts/AktivGrotesk_W_Md.woff2
+  base:
+    family: aktiv-grotesk
+
+defaults:
+  bootstrap:
+    defaults:
+      # bootstrap variable definitions
+      enable-rounded: false
+      # Override button variables to use green
+      btn-color: white !important
+      btn-hover-color: gray !important
+      table-hover-bg: "#DEECFD"
+    # use custom scss rules because btn-bg can't be accessed from brand.yml
+    rules: |
+      :root {
+        --bslib-dashboard-card-header-font-weight: 700 !important;
+        --bs-btn-bg: var(--brand-green) !important;
+        --bs-btn-hover-bg: var(--brand-darkgreen) !important;
+      }
+      .nav-tabs {
+        color: var(--brand-black);
+      }
+      .bslib-card {
+        background-color: var(--brand-gray) !important;
+      }
+      .bslib-card .bslib-sidebar-layout {
+        --bslib-sidebar-bg: var(--brand-gray);
+      }
+      .bslib-card .accordion-item,
+      .bslib-card .accordion-button,
+      .bslib-card aside.sidebar,
+      .bslib-card .sidebar-content {
+        background-color: var(--brand-gray) !important;
+      }
+      .bslib-card .nav-tabs {
+        justify-content: flex-end;
+        flex-wrap: nowrap;
+        background-color: var(--brand-gray) !important;
+      }
+      .bslib-card > .card-header.bslib-navs-card-title > .nav-tabs {
+        flex: 0 0 auto !important;
+      }
+      .bslib-card > .card-header.bslib-navs-card-title {
+        gap: 0.5rem;
+      }
+      /* tighten the gap between the tab strip and the plot/table content */
+      .bslib-card .tab-pane > .card-body,
+      .bslib-card .card-body > .card-body {
+        padding-top: 0.25rem;
+      }
+      .bslib-card .bslib-sidebar-layout > .main {
+        padding-top: 0;
+        gap: 0.5rem;
+      }
+      .nav-link {
+        color: var(--brand-black);
+        /*background-color: var(--brand-gray);*/
+        border-top-width: 5px !important;
+        border-bottom-color: transparent !important;
+      }
+      .nav-link:hover {
+        color: var(--brand-black);
+        border-top-color: var(--brand-yellow) !important;
+      }
+      .nav-link.active {
+        border-top-color: var(--brand-yellow) !important;
+        background-color: var(--brand-gray) !important;
+      }
+      .nav-link.disabled {
+        color: gray !important;
+      }
+      .container {
+        padding-top: 80px;
+        padding-bottom: 80px;
+      }
+      .bslib-grid {
+        margin-bottom: 80px;
+      }
+      .bslib-card[data-full-screen="true"] {
+        z-index: 1000004 !important;
+      }
+      #bslib-full-screen-overlay {
+        z-index: 1000003 !important;
+      }
+      .vscomp-toggle-button {
+        border-bottom-color: var(--brand-green) !important;
+        border-width: 1px !important;
+        font-family: aktiv-grotesk, sans-serif !important;
+        color: var(--brand-black) !important;
+      }
+      .vscomp-dropbox-container {
+        border-color: var(--brand-green) !important;
+        border-width: 2px !important;
+        z-index: 1000005 !important;
+      }
+      .vscomp-search-input {
+        font-family: aktiv-grotesk, sans-serif !important;
+        color: var(--brand-black) !important;
+      }
+      .vscomp-search-input:focus {
+        border-color: var(--brand-green) !important;
+      }
+      .vscomp-option.selected {
+        background-color: var(--brand-lightblue) !important;
+        color: var(--brand-black) !important;
+      }
+      .vscomp-option:hover {
+        background-color: var(--brand-lightblue) !important;
+      }
+      .vscomp-arrow {
+        color: var(--brand-green) !important;
+      }
+      .vscomp-options-container::-webkit-scrollbar {
+        width: 8px;
+      }
+      .vscomp-options-container::-webkit-scrollbar-track {
+        background: var(--brand-gray);
+      }
+      .vscomp-options-container::-webkit-scrollbar-thumb {
+        background-color: var(--brand-green);
+        border-radius: 4px;
+      }
+      .vscomp-options-container::-webkit-scrollbar-thumb:hover {
+        background-color: var(--brand-darkgreen);
+      }
+      .vscomp-options-container {
+        scrollbar-color: var(--brand-green) var(--brand-gray);
+        scrollbar-width: thin;
+      }
+      .full-bleed {
+        box-shadow: 0 0 0 100vmax rgb(222, 236, 253);
+        clip-path: inset(0 -100vmax);
+      }
+      body:has(.bslib-card[data-full-screen="true"]) .full-bleed {
+        clip-path: none;
+      }
+      // hide "Gebietsvergleich" option in accordion when Indikator is only available for Kantonebene
+      .lvl-can .accordion-item[data-value="Gebietsvergleich"] {
+        display: none;
+      }
+      .bslib-full-screen-enter.badge.rounded-pill {
+        background-color: var(--brand-gray) !important;
+        border: none !important;
+        box-shadow: none !important;
+      }
+
+      .accordion-item {
+        border-top-color: transparent;
+        border-left-color: transparent;
+        border-right-color: transparent;
+      }
+      /* Plot tab "Beschreibung" accordion: borderless, chevron next to text */
+      .plot-supl-accordion,
+      .plot-supl-accordion .accordion-item,
+      .plot-supl-accordion .accordion-button,
+      .plot-supl-accordion .accordion-button:focus {
+        border: none !important;
+        box-shadow: none !important;
+      }
+      .plot-supl-accordion {
+        margin-top: -0.75rem;
+      }
+      .plot-supl-accordion .accordion-button {
+        width: auto;
+        padding-top: 0;
+        padding-bottom: 0.25rem;
+      }
+      .plot-supl-accordion .accordion-button::after {
+        margin-left: 0.5rem;
+      }
