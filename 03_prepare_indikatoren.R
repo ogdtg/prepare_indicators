@@ -1,12 +1,35 @@
+# =============================================================================
 # Erstellung Indikatoren
+# =============================================================================
+#
+# Dieses Skript bezieht die Rohdaten (data.tg.ch und BFS), berechnet die
+# einzelnen Indikatoren und speichert jeden Indikator als eigenständigen
+# Datensatz ab. Die Zuordnung Datensatz <-> Indikator (inkl. Quellen) erfolgt
+# über eine Mapping-Tabelle (siehe `nested_data/mapping.csv`).
+#
+# Aufbau:
+#   1. Setup        – Pakete, Funktionen, Hilfsdaten
+#   2. Datenbezug   – Themenatlas (data.tg.ch)
+#   3. Indikatoren  – je Themenbereich ein Abschnitt mit `register_indicator()`
+#   4. Speichern    – flache Datensätze + Mapping + README
+#
+# Neue Indikatoren werden durch einen zusätzlichen `register_indicator()`-
+# Aufruf ergänzt, nicht mehr benötigte durch Entfernen des Aufrufs.
+# Die eigentliche Rechenlogik der Hilfsfunktionen liegt in `R/functions/`.
 
-# install_and_load <- function(package) {
-#   if (!requireNamespace(package, quietly = TRUE)) {
-#     install.packages(package, dependencies = TRUE)
-#   }
-#   library(package, character.only = TRUE)
-# }
-install.packages("BFS")
+# 1. Setup --------------------------------------------------------------------
+
+ensure_packages <- function(packages) {
+  for (pkg in packages) {
+    if (!requireNamespace(pkg, quietly = TRUE)) {
+      install.packages(pkg, dependencies = TRUE)
+    }
+  }
+}
+
+ensure_packages(c("dplyr", "httr", "jsonlite", "tidyr", "BFS", "stringr",
+                  "purrr", "lubridate", "glue", "readr", "tibble"))
+
 library(dplyr)
 library(httr)
 library(jsonlite)
@@ -15,2109 +38,1084 @@ library(BFS)
 library(stringr)
 library(purrr)
 library(lubridate)
+library(tibble)
 
-# packages <- c("dplyr", "BFS", "httr","jsonlite","tidyr")
-# lapply(packages, install_and_load)
-
-
-# source("prepare_indikator_list.R")
-
-
-
-
-# Datenbezug von data.tg.ch -----------------------------------------------
-print("# Datenbezug von data.tg.ch -----------------------------------------------")
-# Benötigte Daten
-ids <- c("sk-stat-4","sk-stat-52","sk-stat-62","sk-stat-69","sk-stat-70","sk-stat-57","sk-stat-59","sk-stat-56","sk-stat-54","sk-stat-55","sk-stat-80","sk-stat-98","sk-stat-97","sk-stat-93","sk-stat-92","sk-stat-90","sk-stat-9","sk-stat-11","sk-stat-123","sk-stat-120","sk-stat-50","sk-stat-1")
-
-
-## Hilfsfunktionen ---------------------------------------------------------
-print("## Hilfsfunktionen ---------------------------------------------------------")
-
-
-# Summarise von denen deren Werte man einfach addieren/mitteln kann
-summarise_bezirk <- function(data,type="sum",bezirk_data){
-
-  share=FALSE
-
-  if ("share" %in% colnames(data)){
-    share = TRUE
-  }
-
-  data_mod <- data %>%
-    left_join(bezirk_data,"bfs_nr_gemeinde")
-
-
-  if ("filter1" %in% colnames(data)){
-    data_mod <- data_mod %>%
-      group_by(jahr,bfs_nr_bezirk ,filter1)
-  } else {
-    data_mod <- data_mod %>%
-      group_by(jahr,bfs_nr_bezirk )
-  }
-
-
-  if (type == "sum"){
-    data_mod <- data_mod %>%
-      summarise(value = sum(value,na.rm = TRUE)) %>%
-      ungroup()
-
-    if (share){
-      if ("filter1" %in% colnames(data)){
-        data_mod <- data_mod %>%
-          group_by(jahr ,bfs_nr_bezirk) %>%
-          mutate(share = value/sum(value)*100) %>%
-          ungroup()
-      } else {
-        data_mod <- data_mod %>%
-          group_by(jahr) %>%
-          mutate(share = value/sum(value)*100) %>%
-          ungroup()
-      }
-    }
-  } else if (type == "mean"){
-    data_mod <- data_mod %>%
-      summarise(value = mean(value,na.rm=TRUE)) %>%
-      ungroup()
-  }
-
-  data_mod %>%
-    rename(bfs_nr_gemeinde = "bfs_nr_bezirk")
-
+# Funktionen aus R/functions/ laden
+for (f in list.files("R/functions", pattern = "\\.R$", full.names = TRUE)) {
+  source(f)
 }
 
-summarise_kanton <- function(data,type="sum"){
+reset_registry()
 
+## Hilfsdaten -----------------------------------------------------------------
 
-  share=FALSE
+join_vars <- c("jahr", "bfs_nr_gemeinde", "name_gemeinde",
+               "bfs_nr_bezirk", "name_bezirk_long", "name_bezirk")
 
-  if ("share" %in% colnames(data)){
-    share = TRUE
-  }
-
-  if ("filter1" %in% colnames(data)){
-    data_mod <- data %>%
-      group_by(jahr,filter1)
-  } else {
-    data_mod <- data %>%
-      group_by(jahr )
-  }
-
-
-  if (type == "sum"){
-    data_mod <- data_mod %>%
-      summarise(value = sum(value,na.rm = TRUE)) %>%
-      ungroup() %>%
-      mutate(bfs_nr_bezirk ="20")
-
-    if (share){
-      if ("filter1" %in% colnames(data)){
-        data_mod <- data_mod %>%
-          group_by(jahr ,bfs_nr_bezirk) %>%
-          mutate(share = value/sum(value)*100) %>%
-          ungroup()
-      } else {
-        data_mod <- data_mod %>%
-          mutate(share = 1) %>%
-          ungroup()
-      }
-    }
-  } else if (type == "mean"){
-    data_mod <- data_mod %>%
-      summarise(value = mean(value,na.rm = TRUE)) %>%
-      ungroup() %>%
-      mutate(bfs_nr_bezirk ="20")
-  }
-
-  data_mod %>%
-    rename(bfs_nr_gemeinde = "bfs_nr_bezirk")
-
-}
-
-
-summarise_bezirk_kanton <- function(data,type="sum",bezirk_data){
-  data_bez <- summarise_bezirk(data,type,bezirk_data)
-  data_kt <- summarise_kanton(data,type)
-
-  data %>%
-    bind_rows(data_bez) %>%
-    bind_rows(data_kt) %>%
-    arrange(jahr)
-}
-
-
-
-get_ogd_catalog <- function (){
-  res = httr::GET(paste0("https://", "data.tg.ch", "/api/explore/",
-                         "v2.1", "/catalog/exports/json"))
-  if (res$status_code != 200) {
-    stop(paste0("The API returned an error (HTTP ERROR ",
-                res$status_code, ") . Please visit ",  "data.tg.ch", " for more information"))
-  }
-  result = jsonlite::fromJSON(rawToChar(res$content), flatten = TRUE)
-  return(result)
-}
-
-
-get_data_from_ogd <- function (dataset_id){
-  res = httr::GET(glue::glue("https://data.tg.ch/api/v2/catalog/datasets/{dataset_id}/exports/json"))
-
-  result = jsonlite::fromJSON(rawToChar(res$content), flatten = TRUE)
-  return(result)
-}
-
-
-outersect <- function(x, y) {
-  sort(c(setdiff(x, y),
-         setdiff(y, x)))
-}
-
-
-
-create_data_source_element <- function(ids,ods_catalog = catalog){
-
-  id_vec <- c()
-  url_vec <- c()
-  title_vec <- c()
-  for (id in ids){
-    if (str_detect(id,"px")){
-      url = paste0("https://www.pxweb.bfs.admin.ch/pxweb/de/",id,"/-/",id,".px/")
-      title = bfs_get_catalog_data(order_nr =id)$title
-    } else {
-      url = paste0("https://data.tg.ch/explore/dataset/",id,"/table/")
-      title = catalog$metas.default.title[which(catalog$dataset_id==id)]
-    }
-    id_vec <- c(id_vec,id)
-    url_vec <- c(url_vec,url)
-    title_vec <- c(title_vec,title)
-
-  }
-
-  list(id = id_vec,
-       url = url_vec,
-       title = title_vec)
-}
-# Hilfsvariablen
-
-data_source_list <- readRDS("data/data_source_list.rds")
-additional_data <- readRDS("data/additional_data.rds")
-nested_list <- readRDS("data/nested_list.rds")
 filter_fields <- readRDS("data/filter_fields.rds")
+bezirk_data   <- readRDS("data/bezirk_data.rds")
+parteien      <- readRDS("data/parteien.rds")
 
-join_vars <- c("jahr", "bfs_nr_gemeinde", "name_gemeinde", "bfs_nr_bezirk", "name_bezirk_long", "name_bezirk")
-
-raum <- readRDS("data/raum_df.rds") %>%
-  distinct(name,unified_raum)
-
-zeit <- readRDS("data/zeit_df.rds") %>%
-  distinct(name,unified_zeit)
+raum <- readRDS("data/raum_df.rds") %>% distinct(name, unified_raum)
+zeit <- readRDS("data/zeit_df.rds") %>% distinct(name, unified_zeit)
 
 catalog <- get_ogd_catalog()
 
-bezirk_data <- readRDS("data/bezirk_data.rds")
+# 2. Datenbezug Themenatlas (data.tg.ch) --------------------------------------
+print("# Datenbezug von data.tg.ch ---------------------------------------------")
 
+ids <- c("sk-stat-4", "sk-stat-52", "sk-stat-62", "sk-stat-69", "sk-stat-70",
+         "sk-stat-57", "sk-stat-59", "sk-stat-56", "sk-stat-54", "sk-stat-55",
+         "sk-stat-80", "sk-stat-98", "sk-stat-97", "sk-stat-93", "sk-stat-92",
+         "sk-stat-90", "sk-stat-9", "sk-stat-11", "sk-stat-123", "sk-stat-120",
+         "sk-stat-50", "sk-stat-1")
 
-## Bezug und teilweise Pivotierung -----------------------------------------
+themenatlas      <- build_themenatlas(ids, raum, zeit, filter_fields, join_vars)
+all_data         <- themenatlas$all_data
+themenatlas_long <- themenatlas$long
 
-print("## Bezug und teilweise Pivotierung -----------------------------------------")
-themenatlas_data_new <- lapply(unique(ids), get_data_from_ogd)
+# =============================================================================
+# 3. Indikatoren
+# =============================================================================
 
-# Create a named vector for mapping
-raum_mapping <- setNames(raum$unified_raum, raum$name)
-zeit_mapping <- setNames(zeit$unified_zeit, zeit$name)
-# Replace column names if they exist in the mapping
+# -----------------------------------------------------------------------------
+# Bevölkerung und Soziales
+# -----------------------------------------------------------------------------
+print("## Bevölkerung und Soziales ---------------------------------------------")
 
-# Vereinheitlichte Namen zuweisen
-all_data <- lapply(themenatlas_data_new,function(df){
-  colnames(df) <- ifelse(colnames(df) %in% names(raum_mapping),
-                         raum_mapping[colnames(df)],
-                         colnames(df))
+bev_alter_id <- lookup_dataset_id(
+  "Ständige Wohnbevölkerung Kanton Thurgau ab 2015 nach Gemeinden und Einzelaltersjahren",
+  catalog)
+bev_ausl_id  <- lookup_dataset_id(
+  "Ständige Wohnbevölkerung Kanton Thurgau ab 2015 nach Gemeinden, Geschlecht und Staatsangehörigkeit",
+  catalog)
 
-  colnames(df) <- ifelse(colnames(df) %in% names(zeit_mapping),
-                         zeit_mapping[colnames(df)],
-                         colnames(df))
-  df
-})
-
-
-themenatlas_data_long <- lapply(all_data,function(x){
-  tryCatch({
-    x[c("bfs_nr_bezirk","name_bezirk_long","name_bezirk","bezirk_name","bezirk_nr","bezirk")] <- NULL
-    vars_to_pivot <- intersect(names(x),filter_fields$name)
-    raum_zeit_var <- intersect(names(x),join_vars)
-    value_vars <- outersect(names(x),c(vars_to_pivot,raum_zeit_var))
-
-    x %>%
-      pivot_longer(cols = all_of(value_vars),names_to = "variable")
-  },error = function(cond){
-    NULL
-  })
-})
-
-
-names(themenatlas_data_long) <- ids
-names(all_data) <- ids
-# Bevölkerung und Soziales ------------------------------------------------
-
-print("## Bevölkerung und Soziales ---------------------------------------------------------")
-
-
-## Bevölkerungsstand -------------------------------------------------------------
-
-print("## Bevölkerungsstand ---------------------------------------------------------")
-
-# nested_list <- list(
-#   "Bevölkerung und Soziales" = list(
-#     "Bevölkerungsstand" = list(),
-#     "Bevölkerungsentwicklung" = list(),
-#     "Bevölkerungsbewegung" = list()
-#   )
-# )
-
-
-# Konfessionen
-
-
-
-bev_konf_id <- "sk-stat-62"
-
-
-
-bev_konf <- themenatlas_data_long[[bev_konf_id]] %>%
-  mutate(value = as.numeric(value)) %>%
-  group_by(bfs_nr_gemeinde,jahr) %>%
-  mutate(total = sum(value)) %>%
-  ungroup() %>%
-  mutate(share = value/total*100)
-
-
-
-
-
-bev_alter_id <-  catalog %>%
-  filter(metas.default.title=="Ständige Wohnbevölkerung Kanton Thurgau ab 2015 nach Gemeinden und Einzelaltersjahren") %>%
-  pull(dataset_id)
-
-
-### ZUSATZ: Bev nach Einzelaltersjahren -------------------------------------
-print("## ZUSATZ: Bev nach Einzelaltersjahren ---------------------------------------------------------")
-
-
-additional_data <-list(`Bevölkerung und Soziales`=list())
+### Zusatzdaten: Bevölkerung nach Altersklasse Geschlecht ---------------------
+print("### Zusatzdaten: Bevölkerung nach Altersklasse und Geschlecht -----------")
 
 gemeinde_summary <- get_data_from_ogd("sk-stat-58") %>%
-  select(bfs_nr_gemeinde,jahr,geschlecht_bezeichnung,alter5klassen_bezeichnung,anzahl_personen,alter5klassen_code) %>%
-  rename(ageclass = "alter5klassen_bezeichnung",
-         sex = "geschlecht_bezeichnung",
-         value ="anzahl_personen",
+  select(bfs_nr_gemeinde, jahr, geschlecht_bezeichnung,
+         alter5klassen_bezeichnung, anzahl_personen, alter5klassen_code) %>%
+  rename(ageclass      = "alter5klassen_bezeichnung",
+         sex           = "geschlecht_bezeichnung",
+         value         = "anzahl_personen",
          ageclass_code = "alter5klassen_code") %>%
   mutate(value = as.numeric(value))
 
-
-
-# Merge gemeinde data with bezirk data
-data_merged <- gemeinde_summary %>%
-  left_join(bezirk_data, by = "bfs_nr_gemeinde")
-
-# Aggregate to bezirk level
-bezirk_summary <- data_merged %>%
+bezirk_summary <- gemeinde_summary %>%
+  left_join(bezirk_data, by = "bfs_nr_gemeinde") %>%
   group_by(bfs_nr_bezirk, name_bezirk, jahr, sex, ageclass, ageclass_code) %>%
   summarise(value = sum(value, na.rm = TRUE), .groups = "drop") %>%
-  rename(bfs_nr_gemeinde="bfs_nr_bezirk") %>%
-  select(-name_bezirk )
+  rename(bfs_nr_gemeinde = "bfs_nr_bezirk") %>%
+  select(-name_bezirk)
 
-
-# Kanton
 kanton_summary <- bezirk_summary %>%
-  group_by(jahr,sex ,ageclass, ageclass_code) %>%
+  group_by(jahr, sex, ageclass, ageclass_code) %>%
   summarise(value = sum(value)) %>%
-  mutate(bfs_nr_gemeinde="20")
+  mutate(bfs_nr_gemeinde = "20")
 
+register_indicator(
+  gemeinde_summary %>%
+    bind_rows(bezirk_summary) %>%
+    bind_rows(kanton_summary),
+  "Bevölkerung und Soziales", "Bevölkerung nach Altersklasse Geschlecht",
+  geo_unit = "zusatzdaten", source_ids = "sk-stat-58"
+)
 
+## Bevölkerungsstand ----------------------------------------------------------
+print("## Bevölkerungsstand ----------------------------------------------------")
 
-additional_data$`Bevölkerung und Soziales`[["Bevölkerung nach Altersklasse Geschlecht"]] <- gemeinde_summary %>%
-  bind_rows(bezirk_summary) %>%
-  bind_rows(kanton_summary)
-
-
-data_source_list[["additional_data$`Bevölkerung und Soziales`$`Bevölkerung nach Altersklasse Geschlecht`"]] <- create_data_source_element("sk-stat-58")
-
-
-bev_alter <- themenatlas_data_long[[bev_alter_id]] %>%
+# Bevölkerung nach Einzelaltersjahren (Basis für Durchschnittsalter etc.)
+bev_alter <- themenatlas_long[[bev_alter_id]] %>%
   mutate(value = as.numeric(value),
          alter_code = as.numeric(alter_code)) %>%
   mutate(ageclass = case_when(
-    alter_code<20~ "unter 20 Jahre",
-    alter_code>=20 & alter_code<=64 ~ "20-64-Jährige",
-    alter_code>64 ~ "über 64 Jahre",
-    TRUE~NA_character_
+    alter_code < 20                    ~ "unter 20 Jahre",
+    alter_code >= 20 & alter_code <= 64 ~ "20-64-Jährige",
+    alter_code > 64                    ~ "über 64 Jahre",
+    TRUE ~ NA_character_
   )) %>%
-  group_by(bfs_nr_gemeinde,jahr) %>%
+  group_by(bfs_nr_gemeinde, jahr) %>%
   mutate(total = sum(value)) %>%
   ungroup() %>%
-  mutate(share = value/total)
-
+  mutate(share = value / total)
 
 bev_ageclass <- bev_alter %>%
-  group_by(bfs_nr_gemeinde,name_gemeinde ,jahr,ageclass) %>%
+  group_by(bfs_nr_gemeinde, name_gemeinde, jahr, ageclass) %>%
   summarise(value = sum(value)) %>%
-  group_by(bfs_nr_gemeinde,jahr) %>%
+  group_by(bfs_nr_gemeinde, jahr) %>%
   mutate(total = sum(value)) %>%
   ungroup() %>%
-  mutate(share = value/total*100)
+  mutate(share = value / total * 100)
 
+### Durchschnittsalter der Bevölkerung
+register_indicator(
+  bev_alter %>%
+    mutate(age_summe = value * alter_code) %>%
+    group_by(bfs_nr_gemeinde, name_gemeinde, jahr) %>%
+    summarise(value = sum(age_summe) / sum(value)) %>%
+    ungroup() %>%
+    select(-name_gemeinde),
+  "Bevölkerung und Soziales", "Bevölkerungsstand",
+  "Durchschnittsalter der Bevölkerung", source_ids = "sk-stat-57"
+)
 
+### Durchschnittsalter der Rentnerinnen und Rentner
+register_indicator(
+  bev_alter %>%
+    filter(alter_code >= 65) %>%
+    mutate(age_summe = value * alter_code) %>%
+    group_by(bfs_nr_gemeinde, name_gemeinde, jahr) %>%
+    summarise(value = sum(age_summe) / sum(value)) %>%
+    ungroup() %>%
+    select(-name_gemeinde),
+  "Bevölkerung und Soziales", "Bevölkerungsstand",
+  "Durchschnittsalter der Rentnerinnen und Rentner", source_ids = "sk-stat-57"
+)
 
+### Bevölkerungsverteilung nach Geschlecht
+register_indicator(
+  themenatlas_long[[bev_ausl_id]] %>%
+    group_by(bfs_nr_gemeinde, jahr, geschlecht_bezeichnung) %>%
+    summarise(value = sum(as.numeric(value))) %>%
+    ungroup() %>%
+    group_by(bfs_nr_gemeinde, jahr) %>%
+    mutate(share = value / sum(value) * 100) %>%
+    ungroup() %>%
+    rename(filter1 = "geschlecht_bezeichnung"),
+  "Bevölkerung und Soziales", "Bevölkerungsstand",
+  "Bevölkerungsverteilung nach Geschlecht", source_ids = "sk-stat-59"
+)
 
-bev_mean_alter <- bev_alter %>%
-  mutate(age_summe = value*alter_code) %>%
-  group_by(bfs_nr_gemeinde,name_gemeinde,jahr) %>%
-  summarise(value = sum(age_summe)/sum(value)) %>%
-  ungroup()
+### Bevölkerungsverteilung nach Altersklasse
+register_indicator(
+  bev_ageclass %>%
+    select(bfs_nr_gemeinde, jahr, ageclass, value, share) %>%
+    rename(filter1 = "ageclass") %>%
+    summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data),
+  "Bevölkerung und Soziales", "Bevölkerungsstand",
+  "Bevölkerungsverteilung nach Altersklasse", source_ids = "sk-stat-57"
+)
 
-
-### Durchschnittsalter  --------
-print("### Durchschnittsalter  ---------")
-
-
-
-nested_list$`Bevölkerung und Soziales`$Bevölkerungsstand$`Durchschnittsalter der Bevölkerung` <- bev_mean_alter %>%
-  select(-name_gemeinde)
-
-
-bev_mean_alter_rentner <- bev_alter %>%
-  filter(alter_code>=65) %>%
-  mutate(age_summe = value*alter_code) %>%
-  group_by(bfs_nr_gemeinde,name_gemeinde,jahr) %>%
-  summarise(value = sum(age_summe)/sum(value)) %>%
-  ungroup()
-
-
-
-nested_list$`Bevölkerung und Soziales`$Bevölkerungsstand$`Durchschnittsalter der Rentnerinnen und Rentner` <- bev_mean_alter_rentner %>%
-  select(-name_gemeinde)
-
-
-
-### Bevölkerungsverteilung nach Geschlecht ---------------------------------------
-print("### Bevölkerungsverteilung nach Geschlecht ---------------------------------------")
-
-
-bev_ausl_id <-  catalog %>%
-  filter(metas.default.title=="Ständige Wohnbevölkerung Kanton Thurgau ab 2015 nach Gemeinden, Geschlecht und Staatsangehörigkeit") %>%
-  pull(dataset_id)
-
-bev_ausl_full <- themenatlas_data_long[[bev_ausl_id]] %>%
+### Bevölkerungsverteilung nach Konfession
+bev_konf <- themenatlas_long[["sk-stat-62"]] %>%
   mutate(value = as.numeric(value)) %>%
-  group_by(bfs_nr_gemeinde,jahr) %>%
+  group_by(bfs_nr_gemeinde, jahr) %>%
   mutate(total = sum(value)) %>%
   ungroup() %>%
-  mutate(share_sex = value/total) %>%
-  group_by(bfs_nr_gemeinde,jahr,nationalitaet_bezeichnung) %>%
-  mutate(share = sum(value)/total*100,
+  mutate(share = value / total * 100)
+
+register_indicator(
+  bev_konf %>%
+    select(bfs_nr_gemeinde, jahr, konfession_bezeichnung, value, share) %>%
+    rename(filter1 = "konfession_bezeichnung") %>%
+    summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data),
+  "Bevölkerung und Soziales", "Bevölkerungsstand",
+  "Bevölkerungsverteilung nach Konfession", source_ids = "sk-stat-62"
+)
+
+### Bevölkerungsverteilung nach Nationalität
+bev_ausl <- themenatlas_long[[bev_ausl_id]] %>%
+  mutate(value = as.numeric(value)) %>%
+  group_by(bfs_nr_gemeinde, jahr) %>%
+  mutate(total = sum(value)) %>%
+  ungroup() %>%
+  mutate(share_sex = value / total) %>%
+  group_by(bfs_nr_gemeinde, jahr, nationalitaet_bezeichnung) %>%
+  mutate(share = sum(value) / total * 100,
          value = sum(value)) %>%
-  ungroup()
-
-
-bev_ausl <- bev_ausl_full %>%
-  distinct(bfs_nr_gemeinde,name_gemeinde,jahr,nationalitaet_bezeichnung,share,value)
-
-
-
-
-nested_list$`Bevölkerung und Soziales`$Bevölkerungsstand$`Bevölkerungsverteilung nach Geschlecht` <- themenatlas_data_long[[bev_ausl_id]] %>%
-  group_by(bfs_nr_gemeinde,jahr,geschlecht_bezeichnung) %>%
-  summarise(value = sum(as.numeric(value))) %>%
   ungroup() %>%
-  group_by(bfs_nr_gemeinde,jahr) %>%
-  mutate(share = value/sum(value)*100) %>%
-  ungroup() %>%
-  rename(filter1="geschlecht_bezeichnung")
+  distinct(bfs_nr_gemeinde, name_gemeinde, jahr,
+           nationalitaet_bezeichnung, share, value)
 
+register_indicator(
+  bev_ausl %>%
+    select(bfs_nr_gemeinde, jahr, nationalitaet_bezeichnung, value, share) %>%
+    rename(filter1 = "nationalitaet_bezeichnung") %>%
+    summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data),
+  "Bevölkerung und Soziales", "Bevölkerungsstand",
+  "Bevölkerungsverteilung nach Nationalität", source_ids = "sk-stat-59"
+)
 
-### Bevölkerungsverteilung nach Altersklasse ---------------------------------------
-print("### Bevölkerungsverteilung nach Altersklasse ---------------------------------------")
-
-
-nested_list$`Bevölkerung und Soziales`$Bevölkerungsstand$`Bevölkerungsverteilung nach Altersklasse` <- bev_ageclass %>%
-  select(bfs_nr_gemeinde,jahr,ageclass,value,share) %>%
-  rename(filter1="ageclass") %>%
-  summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
-
-
-
-### Bevölkerungsverteilung nach Konfession ---------------------------------------
-print("### Bevölkerungsverteilung nach Konfession ---------------------------------------")
-
-nested_list$`Bevölkerung und Soziales`$Bevölkerungsstand$`Bevölkerungsverteilung nach Konfession` <- bev_konf %>%
-  select(bfs_nr_gemeinde,jahr,konfession_bezeichnung,value,share) %>%
-  rename(filter1="konfession_bezeichnung") %>%
-  summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
-
-
-### Bevölkerungsverteilung nach Nationalität ---------------------------------------
-print("### Bevölkerungsverteilung nach Nationalität ---------------------------------------")
-
-nested_list$`Bevölkerung und Soziales`$Bevölkerungsstand$`Bevölkerungsverteilung nach Nationalität` <- bev_ausl %>%
-  select(bfs_nr_gemeinde,jahr,nationalitaet_bezeichnung,value,share) %>%
-  rename(filter1="nationalitaet_bezeichnung") %>%
-  summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
-
-### Gesamtbevölkerung ---------------------------------------
-print("### Gesamtbevölkerung ---------------------------------------")
-
-nested_list$`Bevölkerung und Soziales`$Bevölkerungsstand$Gesamtbevölkerung <- bev_ausl %>%
-  group_by(bfs_nr_gemeinde,jahr) %>%
+### Gesamtbevölkerung
+gesamtbevoelkerung <- bev_ausl %>%
+  group_by(bfs_nr_gemeinde, jahr) %>%
   summarise(value = sum(as.numeric(value))) %>%
   ungroup() %>%
   group_by(jahr) %>%
-  mutate(share = value/sum(value)*100) %>%
+  mutate(share = value / sum(value) * 100) %>%
   ungroup() %>%
-  summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
+  summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data)
 
+register_indicator(
+  gesamtbevoelkerung,
+  "Bevölkerung und Soziales", "Bevölkerungsstand",
+  "Gesamtbevölkerung", source_ids = "sk-stat-59"
+)
 
-# Bevölkerungsentwicklung -------------------------------------------------
-print("# Bevölkerungsentwicklung -------------------------------------------------")
+## Bevölkerungsentwicklung ----------------------------------------------------
+print("## Bevölkerungsentwicklung ----------------------------------------------")
 
-bevent_id <- catalog %>%
-  filter(metas.default.title=="Ständige Wohnbevölkerung der Thurgauer Gemeinden") %>%
-  pull(dataset_id)
+bevent_id <- lookup_dataset_id("Ständige Wohnbevölkerung der Thurgauer Gemeinden", catalog)
 
-bevent_join <- themenatlas_data_long[[bevent_id]] %>%
-  select(bfs_nr_gemeinde,jahr,value) %>%
-  mutate(jahr = as.numeric(jahr),
-         value = as.numeric(value))
+bevent_join <- themenatlas_long[[bevent_id]] %>%
+  select(bfs_nr_gemeinde, jahr, value) %>%
+  mutate(jahr = as.numeric(jahr), value = as.numeric(value))
 
-bevent <- themenatlas_data_long[[bevent_id]] %>%
-  mutate(jahr = as.numeric(jahr),
-         value = as.numeric(value)) %>%
-  mutate(fuenf_jahr = ifelse((jahr-5) >= min(jahr),jahr-5,NA),
-         ein_jahr = ifelse((jahr-1) >= min(jahr),jahr-1,NA)) %>%
-  left_join(bevent_join %>%
-              rename(value_fuenf = "value"),by = c("bfs_nr_gemeinde","fuenf_jahr"="jahr")) %>%
-  left_join(bevent_join %>%
-              rename(value_ein = "value"),by = c("bfs_nr_gemeinde","ein_jahr"="jahr")) %>%
-  mutate(change_fuenf = (value-value_fuenf)/value_fuenf*100,
-         change_ein = (value-value_ein)/value_ein*100) %>%
-  select(bfs_nr_gemeinde,name_gemeinde,jahr,change_fuenf,change_ein) %>%
-  pivot_longer(cols = c(change_fuenf,change_ein)) %>%
-  mutate(name = case_when(
-    name=="change_fuenf"~"im Vergleich zu vor 5 Jahren",
-    TRUE~"im Vorjahresvergleich"
-  )) %>%
-  rename(filter1 = "name")
+register_indicator(
+  themenatlas_long[[bevent_id]] %>%
+    mutate(jahr = as.numeric(jahr), value = as.numeric(value)) %>%
+    mutate(fuenf_jahr = ifelse((jahr - 5) >= min(jahr), jahr - 5, NA),
+           ein_jahr   = ifelse((jahr - 1) >= min(jahr), jahr - 1, NA)) %>%
+    left_join(bevent_join %>% rename(value_fuenf = "value"),
+              by = c("bfs_nr_gemeinde", "fuenf_jahr" = "jahr")) %>%
+    left_join(bevent_join %>% rename(value_ein = "value"),
+              by = c("bfs_nr_gemeinde", "ein_jahr" = "jahr")) %>%
+    mutate(change_fuenf = (value - value_fuenf) / value_fuenf * 100,
+           change_ein   = (value - value_ein) / value_ein * 100) %>%
+    select(bfs_nr_gemeinde, name_gemeinde, jahr, change_fuenf, change_ein) %>%
+    pivot_longer(cols = c(change_fuenf, change_ein)) %>%
+    mutate(name = case_when(
+      name == "change_fuenf" ~ "im Vergleich zu vor 5 Jahren",
+      TRUE                   ~ "im Vorjahresvergleich"
+    )) %>%
+    rename(filter1 = "name") %>%
+    select(-name_gemeinde),
+  "Bevölkerung und Soziales", "Bevölkerungsentwicklung",
+  "Bevölkerungsentwicklung (Vorjahr/5 Jahre)", source_ids = "sk-stat-56"
+)
 
-### Bevölkerungsentwicklung (Vorjahr/5 Jahre) ---------------------------------------
-print("### Bevölkerungsentwicklung (Vorjahr/5 Jahre) ---------------------------------------")
-
-nested_list$`Bevölkerung und Soziales`$Bevölkerungsentwicklung$`Bevölkerungsentwicklung (Vorjahr/5 Jahre)` <- bevent %>%
-  select(-name_gemeinde)
-
-## Bevölkerungsbewegung -------------------------------------------------
+## Bevölkerungsbewegung -------------------------------------------------------
 print("## Bevölkerungsbewegung -------------------------------------------------")
 
+### Lebendgeburten
+lebendgeburten <- bfs_get_data(number_bfs = "px-x-0102020204_102", language = "de",
+    query = list(`Kanton (-) / Bezirk (>>) / Gemeinde (......)` = bezirk_data$bfs_nr_gemeinde)) %>%
+  mutate(bfs_nr_gemeinde = str_extract(`Kanton (-) / Bezirk (>>) / Gemeinde (......)`, "\\d\\d\\d\\d")) %>%
+  select(bfs_nr_gemeinde, Jahr, Lebendgeburten) %>%
+  rename(value = "Lebendgeburten", jahr = "Jahr") %>%
+  filter(jahr >= 2009) %>%
+  summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data)
 
+register_indicator(lebendgeburten,
+  "Bevölkerung und Soziales", "Bevölkerungsbewegung", "Lebendgeburten",
+  source_ids = "px-x-0102020204_102")
 
+### Todesfälle
+todesfaelle <- bfs_get_data(number_bfs = "px-x-0102020206_102", language = "de",
+    query = list(`Kanton (-) / Bezirk (>>) / Gemeinde (......)` = bezirk_data$bfs_nr_gemeinde,
+                 `Staatsangehörigkeit (Kategorie)` = c("-99999"))) %>%
+  mutate(bfs_nr_gemeinde = str_extract(`Kanton (-) / Bezirk (>>) / Gemeinde (......)`, "\\d\\d\\d\\d")) %>%
+  select(bfs_nr_gemeinde, Jahr, Todesfälle) %>%
+  rename(value = "Todesfälle", jahr = "Jahr") %>%
+  filter(jahr >= 2009) %>%
+  summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data)
 
-### Geburten ----------------------------------------------------------------
-print("### Geburten ----------------------------------------------------------------")
+register_indicator(todesfaelle,
+  "Bevölkerung und Soziales", "Bevölkerungsbewegung", "Todesfälle",
+  source_ids = "px-x-0102020206_102")
 
+### Geburtensaldo
+register_indicator(
+  todesfaelle %>%
+    left_join(lebendgeburten, c("jahr", "bfs_nr_gemeinde")) %>%
+    mutate(value = value.y - value.x) %>%
+    select(bfs_nr_gemeinde, jahr, value),
+  "Bevölkerung und Soziales", "Bevölkerungsbewegung", "Geburtensaldo",
+  source_ids = c("px-x-0102020206_102", "px-x-0102020204_102"))
 
-bfs_get_data <- function(...){
-  Sys.sleep(5)
-  BFS::bfs_get_data(...)
-}
+### Heiraten
+register_indicator(
+  bfs_get_data(number_bfs = "px-x-0102020202_102", language = "de",
+      query = list(`Kanton (-) / Bezirk (>>) / Gemeinde (......)` = bezirk_data$bfs_nr_gemeinde)) %>%
+    mutate(bfs_nr_gemeinde = str_extract(`Kanton (-) / Bezirk (>>) / Gemeinde (......)`, "\\d\\d\\d\\d")) %>%
+    select(bfs_nr_gemeinde, Jahr, Heiraten) %>%
+    rename(value = "Heiraten", jahr = "Jahr") %>%
+    filter(jahr >= 2009) %>%
+    summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data),
+  "Bevölkerung und Soziales", "Bevölkerungsbewegung", "Heiraten",
+  source_ids = "px-x-0102020202_102")
 
-nested_list$`Bevölkerung und Soziales`$Bevölkerungsbewegung$Lebendgeburten <- bfs_get_data(number_bfs = "px-x-0102020204_102",language= "de",query= list(`Kanton (-) / Bezirk (>>) / Gemeinde (......)` = bezirk_data$bfs_nr_gemeinde)) %>%
-  mutate(bfs_nr_gemeinde = str_extract(`Kanton (-) / Bezirk (>>) / Gemeinde (......)`,"\\d\\d\\d\\d")) %>%
-  select(bfs_nr_gemeinde,Jahr,Lebendgeburten) %>%
-  rename(value = "Lebendgeburten",
-         jahr = "Jahr") %>%
-  filter(jahr>=2009) %>%
-  summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
+### Scheidungen
+register_indicator(
+  bfs_get_data(number_bfs = "px-x-0102020203_103", language = "de",
+      query = list(`Kanton (-) / Bezirk (>>) / Gemeinde (......)` = bezirk_data$bfs_nr_gemeinde)) %>%
+    mutate(bfs_nr_gemeinde = str_extract(`Kanton (-) / Bezirk (>>) / Gemeinde (......)`, "\\d\\d\\d\\d")) %>%
+    select(bfs_nr_gemeinde, Jahr, Scheidungen) %>%
+    rename(value = "Scheidungen", jahr = "Jahr") %>%
+    filter(jahr >= 2009) %>%
+    summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data),
+  "Bevölkerung und Soziales", "Bevölkerungsbewegung", "Scheidungen",
+  source_ids = "px-x-0102020203_103")
 
+### Wanderung (Saldo / Zuzüge / Wegzüge)
+wanderung_metadata  <- bfs_get_metadata("px-x-0103010200_121", language = "de")
+wanderungen_lookup  <- tibble(value = wanderung_metadata$values[[2]],
+                              text  = wanderung_metadata$valueTexts[[2]]) %>%
+  filter(str_extract(text, "\\d\\d\\d\\d") %in% bezirk_data$bfs_nr_gemeinde)
 
-
-nested_list$`Bevölkerung und Soziales`$Bevölkerungsbewegung$Todesfälle <-  bfs_get_data(number_bfs = "px-x-0102020206_102",language= "de",query= list(`Kanton (-) / Bezirk (>>) / Gemeinde (......)` = bezirk_data$bfs_nr_gemeinde,
-                                                                                        `Staatsangehörigkeit (Kategorie)`=c("-99999"))) %>%
-  mutate(bfs_nr_gemeinde = str_extract(`Kanton (-) / Bezirk (>>) / Gemeinde (......)`,"\\d\\d\\d\\d")) %>%
-  select(bfs_nr_gemeinde,Jahr,Todesfälle) %>%
-  rename(value = "Todesfälle",
-         jahr = "Jahr") %>%
-  filter(jahr>=2009) %>%
-  summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
-
-nested_list$`Bevölkerung und Soziales`$Bevölkerungsbewegung$Geburtensaldo <- nested_list$`Bevölkerung und Soziales`$Bevölkerungsbewegung$Todesfälle %>%
-  left_join(nested_list$`Bevölkerung und Soziales`$Bevölkerungsbewegung$Lebendgeburten,c("jahr","bfs_nr_gemeinde")) %>%
-  mutate(value = value.y-value.x) %>%
-  select(bfs_nr_gemeinde,jahr,value)
-
-
-nested_list$`Bevölkerung und Soziales`$Bevölkerungsbewegung$Heiraten <- bfs_get_data(number_bfs = "px-x-0102020202_102", language = "de",query= list(`Kanton (-) / Bezirk (>>) / Gemeinde (......)` = bezirk_data$bfs_nr_gemeinde)) %>%
-  mutate(bfs_nr_gemeinde = str_extract(`Kanton (-) / Bezirk (>>) / Gemeinde (......)`,"\\d\\d\\d\\d")) %>%
-  select(bfs_nr_gemeinde,Jahr,Heiraten)  %>%
-  rename(value = "Heiraten",
-         jahr = "Jahr") %>%
-  filter(jahr>=2009) %>%
-  summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
-
-
-
-nested_list$`Bevölkerung und Soziales`$Bevölkerungsbewegung$Scheidungen <- bfs_get_data(number_bfs = "px-x-0102020203_103", language = "de",query= list(`Kanton (-) / Bezirk (>>) / Gemeinde (......)` = bezirk_data$bfs_nr_gemeinde)) %>%
-  mutate(bfs_nr_gemeinde = str_extract(`Kanton (-) / Bezirk (>>) / Gemeinde (......)`,"\\d\\d\\d\\d")) %>%
-  select(bfs_nr_gemeinde,Jahr,Scheidungen) %>%
-  rename(value = "Scheidungen",
-         jahr = "Jahr") %>%
-  filter(jahr>=2009) %>%
-  summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
-
-
-
-### Wanderungssaldo ---------------------------------------
-print("### Wanderungssaldo ---------------------------------------")
-
-wanderung_metadata <- bfs_get_metadata("px-x-0103010200_121",language = "de")
-
-
-wanderungen_lookup <- tibble(value = wanderung_metadata$values[[2]],text = wanderung_metadata$valueTexts[[2]]) %>%
-  filter(str_extract(text,"\\d\\d\\d\\d") %in% bezirk_data$bfs_nr_gemeinde)
-
-
-wanderung_data_full <- bfs_get_data(number_bfs = "px-x-0103010200_121",language="de",query= list(`Kanton (-) / Bezirk (>>) / Gemeinde (......)` = wanderungen_lookup$value)) %>%
-  mutate(bfs_nr_gemeinde = str_extract(`Kanton (-) / Bezirk (>>) / Gemeinde (......)`,"\\d\\d\\d\\d")) %>%
+wanderung_data_full <- bfs_get_data(number_bfs = "px-x-0103010200_121", language = "de",
+    query = list(`Kanton (-) / Bezirk (>>) / Gemeinde (......)` = wanderungen_lookup$value)) %>%
+  mutate(bfs_nr_gemeinde = str_extract(`Kanton (-) / Bezirk (>>) / Gemeinde (......)`, "\\d\\d\\d\\d")) %>%
   mutate(mig_typ = case_when(
-    Migrationstyp %in% c("Einwanderung inkl. Änderung des Bevölkerungstyps","Interkantonaler Zuzug" ,"Intrakantonaler Zuzug")~"Zuzug",
-    TRUE~"Wegzug"
+    Migrationstyp %in% c("Einwanderung inkl. Änderung des Bevölkerungstyps",
+                         "Interkantonaler Zuzug", "Intrakantonaler Zuzug") ~ "Zuzug",
+    TRUE ~ "Wegzug"
   )) %>%
   rename(value = "Wanderung der ständigen Wohnbevölkerung") %>%
   mutate(type = case_when(
-    str_detect(Migrationstyp,"Interkantonal")~"mit anderen Kantonen",
-    str_detect(Migrationstyp,"Intrakantonal")~"mit anderen Gemeinden",
-    Migrationstyp %in% c("Einwanderung inkl. Änderung des Bevölkerungstyps","Auswanderung")~"mit dem Ausland"
+    str_detect(Migrationstyp, "Interkantonal") ~ "mit anderen Kantonen",
+    str_detect(Migrationstyp, "Intrakantonal") ~ "mit anderen Gemeinden",
+    Migrationstyp %in% c("Einwanderung inkl. Änderung des Bevölkerungstyps",
+                         "Auswanderung") ~ "mit dem Ausland"
   ))
 
-wanderung_data_zu_weg <- wanderung_data_full %>%
-  group_by(Jahr,bfs_nr_gemeinde,mig_typ) %>%
-  summarise(value = sum(value)) %>%
-  ungroup()
-
 zuzug_data <- wanderung_data_full %>%
-  filter(mig_typ=="Zuzug") %>%
-  group_by(Jahr,bfs_nr_gemeinde,type) %>%
+  filter(mig_typ == "Zuzug") %>%
+  group_by(Jahr, bfs_nr_gemeinde, type) %>%
   summarise(zuzuege = sum(value)) %>%
   ungroup()
 
 wegzug_data <- wanderung_data_full %>%
-  filter(mig_typ=="Wegzug") %>%
-  group_by(Jahr,bfs_nr_gemeinde,type) %>%
+  filter(mig_typ == "Wegzug") %>%
+  group_by(Jahr, bfs_nr_gemeinde, type) %>%
   summarise(wegzuege = sum(value)) %>%
   ungroup()
 
 wanderungssaldo_data <- zuzug_data %>%
-  left_join(wegzug_data,c("Jahr","bfs_nr_gemeinde","type")) %>%
-  mutate(saldo = zuzuege-wegzuege)
+  left_join(wegzug_data, c("Jahr", "bfs_nr_gemeinde", "type")) %>%
+  mutate(saldo = zuzuege - wegzuege)
 
-nested_list$`Bevölkerung und Soziales`$Bevölkerungsbewegung$Wanderungssaldo <- wanderungssaldo_data %>%
-  rename(value = "saldo",
-         filter1 = "type",
-         jahr = "Jahr") %>%
-  select(bfs_nr_gemeinde,jahr,filter1,value) %>%
-  summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
+register_indicator(
+  wanderungssaldo_data %>%
+    rename(value = "saldo", filter1 = "type", jahr = "Jahr") %>%
+    select(bfs_nr_gemeinde, jahr, filter1, value) %>%
+    summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data),
+  "Bevölkerung und Soziales", "Bevölkerungsbewegung", "Wanderungssaldo",
+  source_ids = "px-x-0103010200_121")
 
-### Zuzüge ---------------------------------------
-print("### Zuzüge ---------------------------------------")
+register_indicator(
+  wanderungssaldo_data %>%
+    rename(value = "zuzuege", filter1 = "type", jahr = "Jahr") %>%
+    mutate(filter1 = str_replace(filter1, "mit ", "aus ")) %>%
+    select(bfs_nr_gemeinde, jahr, filter1, value) %>%
+    summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data),
+  "Bevölkerung und Soziales", "Bevölkerungsbewegung", "Zuzüge",
+  source_ids = "px-x-0103010200_121")
 
+register_indicator(
+  wanderungssaldo_data %>%
+    rename(value = "wegzuege", filter1 = "type", jahr = "Jahr") %>%
+    mutate(filter1 = case_when(
+      filter1 == "mit anderen Gemeinden" ~ "in andere Gemeinden",
+      filter1 == "mit anderen Kantonen"  ~ "in andere Kantone",
+      filter1 == "mit dem Ausland"       ~ "ins Ausland"
+    )) %>%
+    select(bfs_nr_gemeinde, jahr, filter1, value) %>%
+    summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data),
+  "Bevölkerung und Soziales", "Bevölkerungsbewegung", "Wegzüge",
+  source_ids = "px-x-0103010200_121")
 
-nested_list$`Bevölkerung und Soziales`$Bevölkerungsbewegung$Zuzüge <- wanderungssaldo_data %>%
-  rename(value = "zuzuege",
-         filter1 = "type",
-         jahr = "Jahr") %>%
-  mutate(filter1 = str_replace(filter1,"mit ","aus ")) %>%
-  select(bfs_nr_gemeinde,jahr,filter1,value) %>%
-  summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
+## Haushalte ------------------------------------------------------------------
+print("## Haushalte ------------------------------------------------------------")
 
-### Wegzüge ---------------------------------------
-print("### Wegzüge ---------------------------------------")
+hh_metadata <- BFS::bfs_get_sse_metadata("DF_STATPOP_PHH") %>%
+  select(code, value, valueText)
 
-nested_list$`Bevölkerung und Soziales`$Bevölkerungsbewegung$Wegzüge <- wanderungssaldo_data %>%
-  rename(value = "wegzuege",
-         filter1 = "type",
-         jahr = "Jahr") %>%
-  mutate(filter1 =case_when(
-    filter1 == "mit anderen Gemeinden"~"in andere Gemeinden",
-    filter1 == "mit anderen Kantonen"~"in andere Kantone",
-    filter1 == "mit dem Ausland"~"ins Ausland"
-  )) %>%
-  select(bfs_nr_gemeinde,jahr,filter1,value) %>%
-  summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
+hh_geo <- hh_metadata %>% filter(code == "GEO_UNIT") %>%
+  select(-code) %>% rename(bfs_nr_gemeinde = "value")
+hh_size <- hh_metadata %>% filter(code == "HH_SIZE") %>%
+  select(-code) %>% rename(filter1 = "value")
 
-## Haushalte ---------------------------------------------------------------
-print("## Haushalte ---------------------------------------------------------------")
-
-
-
-metadata <- BFS::bfs_get_sse_metadata("DF_STATPOP_PHH")
-
-metadata_red <- metadata |>
-  select(code,value,valueText)
-
-metadata_red_geo <- metadata_red |>
-  filter(code == "GEO_UNIT") |>
-  select(-code) |>
-  rename(bfs_nr_gemeinde ="value")
-
-
-metadata_red_hh <- metadata_red |>
-  filter(code == "HH_SIZE") |>
-  select(-code) |>
-  rename(filter1 ="value")
-
-hh_data <- BFS::bfs_get_sse_data("DF_STATPOP_PHH",language = "de",query = list(GEO_UNIT =bezirk_data$bfs_nr_gemeinde,
-                                                                    HH_SIZE=c("1", "2", "3", "4", "5", "60")))
-
-hh_data_mod <- hh_data |>
-  left_join(metadata_red_geo,by = c("GEO_UNIT"="valueText")) |>
-  left_join(metadata_red_hh,by = c("HH_SIZE"="valueText"))
-
-
-
-haushalte <- hh_data_mod %>%
-  group_by(TIME_PERIOD ,bfs_nr_gemeinde) %>%
-  mutate(share = value /sum(value )*100) %>%
+haushalte <- BFS::bfs_get_sse_data("DF_STATPOP_PHH", language = "de",
+    query = list(GEO_UNIT = bezirk_data$bfs_nr_gemeinde,
+                 HH_SIZE  = c("1", "2", "3", "4", "5", "60"))) %>%
+  left_join(hh_geo,  by = c("GEO_UNIT" = "valueText")) %>%
+  left_join(hh_size, by = c("HH_SIZE"  = "valueText")) %>%
+  group_by(TIME_PERIOD, bfs_nr_gemeinde) %>%
+  mutate(share = value / sum(value) * 100) %>%
   ungroup() %>%
   rename(jahr = "TIME_PERIOD") %>%
-  # rename(filter1="Haushaltsgrösse") |>
-  select(jahr,bfs_nr_gemeinde,filter1,value,share)
-
-
-### Haushalte nach Haushaltsgrösse ---------------------------------------
-print("### Haushalte nach Haushaltsgrösse ---------------------------------------")
-
-
-nested_list$`Bevölkerung und Soziales`$Haushalte[["Haushalte nach Haushaltsgrösse"]] <- haushalte %>%
-  summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
-
-### Haushalte insgsesamt ---------------------------------------
-print("### Haushalte insgsesamt ---------------------------------------")
-
-
-
-nested_list$`Bevölkerung und Soziales`$Haushalte[["Haushalte insgesamt"]] <- haushalte %>%
-  group_by(jahr,bfs_nr_gemeinde) %>%
-  summarise(value = sum(value)) %>%
-  ungroup() %>%
-  summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
-
-
-## Sozialhife --------------------------------------------------------------
-print("## Sozialhife ---------------------------------------------------------------")
-
-
-### Brutto ausgaben ---------------------------------------------------------
-print("### Brutto ausgaben ---------------------------------------------------------")
-
-
-soz_brutto <- themenatlas_data_long[["sk-stat-54"]]
-
-
-nested_list$`Bevölkerung und Soziales`$Sozialhilfe[["Brutto Sozialhilfeausgaben je Einwohner"]] <- soz_brutto %>%
-  filter(variable == "brutto_sozialhilfe_je_einwohner") %>%
-  select(bfs_nr_gemeinde,jahr,value) %>%
-  mutate(value = as.numeric(value))
-
-nested_list$`Bevölkerung und Soziales`$Sozialhilfe[["Brutto Sozialhilfeausgaben total"]] <- soz_brutto %>%
-  filter(variable == "ausgaben_brutto") %>%
-  select(bfs_nr_gemeinde,jahr,value) %>%
-  mutate(value = as.numeric(value)) %>%
-  summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
-
-### Netto Ausgaben ----------------------------------------------------------
-print("### Netto Ausgaben ----------------------------------------------------------")
-
-
-soz_netto <- themenatlas_data_long[["sk-stat-55"]]
-
-
-
-nested_list$`Bevölkerung und Soziales`$Sozialhilfe[["Netto Sozialhilfeausgaben je Einwohner"]] <- soz_netto %>%
-  filter(variable == "netto_sozialhilfe_je_einwohner") %>%
-  select(bfs_nr_gemeinde,jahr,value) %>%
-  mutate(value = as.numeric(value))
-
-nested_list$`Bevölkerung und Soziales`$Sozialhilfe[["Netto Sozialhilfeausgaben total"]] <- soz_netto %>%
-  filter(variable == "ausgaben_netto") %>%
-  select(bfs_nr_gemeinde,jahr,value) %>%
-  mutate(value = as.numeric(value)) %>%
-  summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
-
-### Sozialhilfequote --------------------------------------------------------
-
-
-
-soz_quote <- themenatlas_data_long[["sk-stat-80"]]
-
-
-nested_list$`Bevölkerung und Soziales`$Sozialhilfe[["Sozialhilfequote"]] <- soz_quote %>%
-  select(bfs_nr_gemeinde,jahr,value) %>%
-  mutate(value = as.numeric(value))
-
-
-# Wirtschaft und Arbeit ---------------------------------------------------
-print("# Wirtschaft und Arbeit ---------------------------------------------------")
-
-
-
-## Beschäftigte ------------------------------------------------------------
-print("## Beschäftigte ------------------------------------------------------------")
-
-besch_id <- catalog %>%
-  filter(metas.default.title=="Beschäftigte nach Sektoren und Politischen Gemeinden Kanton Thurgau") %>%
-  pull(dataset_id)
-
-
-besch <- themenatlas_data_long[[besch_id]] %>%
-  mutate(value = as.numeric(value)) %>%
-  group_by(bfs_nr_gemeinde,jahr) %>%
-  mutate(total = sum(value)) %>%
-  ungroup() %>%
-  mutate(share = value/total*100) %>%
-  filter(jahr>=2011)
-
-besch_total <- besch %>%
-  group_by(bfs_nr_gemeinde,name_gemeinde,jahr) %>%
-  summarise(total = sum(value)) %>%
-  ungroup()
-
-besch_join <- themenatlas_data_long[[besch_id]] %>%
-  mutate(jahr = as.numeric(jahr),
-         value = as.numeric(value)) %>%
-  group_by(bfs_nr_gemeinde,jahr) %>%
-  mutate(total = sum(value)) %>%
-  ungroup() %>%
-  mutate(value_tot = value,
-         value = value/total*100) %>%
-  filter(jahr>=2011) %>%
-  select(bfs_nr_gemeinde,jahr,sektor,value,value_tot)
-
-besch_ent <- besch %>%
-  mutate(jahr = as.numeric(jahr),
-         value = as.numeric(value)) %>%
-  mutate(fuenf_jahr = ifelse((jahr-5) >= min(jahr),jahr-5,NA),
-         ein_jahr = ifelse((jahr-1) >= min(jahr),jahr-1,NA)) %>%
-  left_join(besch_join %>%
-              rename(value_fuenf = "value",
-                     value_tot_fuenf = "value_tot"),by = c("bfs_nr_gemeinde","fuenf_jahr"="jahr","sektor")) %>%
-  left_join(besch_join %>%
-              rename(value_ein = "value",
-                     value_tot_ein = "value_tot"),by = c("bfs_nr_gemeinde","ein_jahr"="jahr","sektor")) %>%
-  mutate(change_fuenf = (share-value_fuenf),
-         change_ein = (share-value_ein),
-         change_tot_fuenf = value-value_tot_fuenf,
-         change_tot_ein = value-value_tot_ein)
-
-# Im Datensatz sk-stat-98 gibt es seltsame Werte die gelöscht werden müssen
-# Sehr kleine Werte werden ausgewiesen bspw. für Rickenbach
-
-
-### Veränderung Beschäftigte total gegenüber vor 5 Jahren --------------------------------------------------------
-print("### Veränderung Beschäftigte total gegenüber vor 5 Jahren --------------------------------------------------------")
-
-
-
-nested_list$`Wirtschaft und Arbeit`$Beschäftigte[["Veränderung Beschäftigte total gegenüber vor 5 Jahren"]] <- besch_ent %>%
-  select(bfs_nr_gemeinde:change_fuenf) %>%
-  group_by(bfs_nr_gemeinde,jahr) %>%
-  summarise_at(vars(value,value_tot_fuenf),sum,na.rm = T) %>%
-  ungroup() %>%
-  filter(jahr>=2016) %>%
-  mutate(share = (value-value_tot_fuenf)/value_tot_fuenf*100) %>%
-  mutate(value = value-value_tot_fuenf ) %>%
-  select(jahr,bfs_nr_gemeinde,value,share)
-
-### Vorjahresveränderung Beschäftigte total --------------------------------------------------------
-print("### Vorjahresveränderung Beschäftigte total --------------------------------------------------------")
-
-
-nested_list$`Wirtschaft und Arbeit`$Beschäftigte[["Vorjahresveränderung Beschäftigte total"]] <- besch_ent %>%
-  select(bfs_nr_gemeinde:change_fuenf) %>%
-  group_by(bfs_nr_gemeinde,jahr) %>%
-  summarise_at(vars(value,value_tot_ein),sum,na.rm = T) %>%
-  ungroup() %>%
-  filter(jahr>=2016) %>%
-  mutate(share = (value-value_tot_ein)/value_tot_ein*100) %>%
-  mutate(value = value-value_tot_ein ) %>%
-  select(jahr,bfs_nr_gemeinde,value,share)
-
-
-
-### Veränderung Beschäftigte nach Sektor gegenüber vor 5 Jahren (in % Punkten) --------------------------------------------------------
-print("### Veränderung Beschäftigte nach Sektor gegenüber vor 5 Jahren (in % Punkten) --------------------------------------------------------")
-
-nested_list$`Wirtschaft und Arbeit`$Beschäftigte[["Veränderung Beschäftigte nach Sektor gegenüber vor 5 Jahren (in % Punkten)"]] <- besch_ent %>%
-  select(jahr,sektor,bfs_nr_gemeinde,change_fuenf) %>%
-  rename(filter1 = "sektor",
-         value = "change_fuenf")
-
-
-### Vorjahresveränderung Beschäftigte nach Sektor (in %) --------------------------------------------------------
-print("### Vorjahresveränderung Beschäftigte nach Sektor (in %) --------------------------------------------------------")
-
-
-nested_list$`Wirtschaft und Arbeit`$Beschäftigte[["Vorjahresveränderung Beschäftigte nach Sektor (in %)"]] <- besch_ent %>%
-  mutate(share = (value-value_tot_ein)/value_tot_ein*100,
-         value = value -value_tot_ein) %>%
-  select(jahr,sektor,bfs_nr_gemeinde,value,share) %>%
-  rename(filter1 = "sektor")
-
-
-### Beschäftigte total --------------------------------------------------------
-print("### Beschäftigte total --------------------------------------------------------")
-
-nested_list$`Wirtschaft und Arbeit`$Beschäftigte[["Beschäftigte total"]] <- besch_ent %>%
-  group_by(bfs_nr_gemeinde,jahr) %>%
-  summarise_at(vars(value),sum,na.rm = T) %>%
-  ungroup() %>%
-  summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
-
-### Beschäftigte nach Sektor --------------------------------------------------------
-print("### Beschäftigte nach Sektor --------------------------------------------------------")
-
-
-nested_list$`Wirtschaft und Arbeit`$Beschäftigte[["Beschäftigte nach Sektor"]] <- besch_ent %>%
-  select(jahr,sektor,bfs_nr_gemeinde,value,share) %>%
-  rename(filter1 = "sektor")%>%
-  summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
-
-# Warum einmal Veränderung in % Punkte (5 Jahre) und einmal in % (ein Jahr)????
-
-## Arbeitsstätten ----------------------------------------------------------
-print("## Arbeitsstätten ----------------------------------------------------------")
-
-arbst_it <-catalog %>%
-  filter(metas.default.title=="Arbeitsstätten nach Sektoren und Politischen Gemeinden Kanton Thurgau") %>%
-  pull(dataset_id)
-
-
-arbst <- themenatlas_data_long[[arbst_it]] %>%
-  mutate(value = as.numeric(value)) %>%
-  group_by(bfs_nr_gemeinde,jahr) %>%
-  mutate(total = sum(value)) %>%
-  ungroup() %>%
-  mutate(share = value/total*100) %>%
-  filter(jahr>=2011)
-
-
-arbst_total <- arbst %>%
-  group_by(bfs_nr_gemeinde,name_gemeinde,jahr) %>%
-  summarise(total = sum(value)) %>%
-  ungroup()
-
-arbst_join <- themenatlas_data_long[[arbst_it]] %>%
-  mutate(jahr = as.numeric(jahr),
-         value = as.numeric(value)) %>%
-  group_by(bfs_nr_gemeinde,jahr) %>%
-  mutate(total = sum(value)) %>%
-  ungroup() %>%
-  mutate(value_tot = value,
-         value = value/total*100) %>%
-  filter(jahr>=2011) %>%
-  select(bfs_nr_gemeinde,jahr,sektor,value,value_tot)
-
-arbst_ent <- arbst %>%
-  mutate(jahr = as.numeric(jahr),
-         value = as.numeric(value)) %>%
-  mutate(fuenf_jahr = ifelse((jahr-5) >= min(jahr),jahr-5,NA),
-         ein_jahr = ifelse((jahr-1) >= min(jahr),jahr-1,NA)) %>%
-  left_join(arbst_join %>%
-              rename(value_fuenf = "value",
-                     value_tot_fuenf = "value_tot"),by = c("bfs_nr_gemeinde","fuenf_jahr"="jahr","sektor")) %>%
-  left_join(arbst_join %>%
-              rename(value_ein = "value",
-                     value_tot_ein = "value_tot"),by = c("bfs_nr_gemeinde","ein_jahr"="jahr","sektor")) %>%
-  mutate(change_fuenf = (share-value_fuenf),
-         change_ein = (share-value_ein),
-         change_tot_fuenf = value-value_tot_fuenf,
-         change_tot_ein = value-value_tot_ein)
-
-
-### Veränderung Arbeitsstätten total gegenüber vor 5 Jahren --------------------------------------------------------
-print("### Veränderung Arbeitsstätten total gegenüber vor 5 Jahren --------------------------------------------------------")
-
-
-nested_list$`Wirtschaft und Arbeit`$Arbeitsstätten[["Veränderung Arbeitsstätten total gegenüber vor 5 Jahren"]] <- arbst_ent %>%
-  select(bfs_nr_gemeinde:change_fuenf) %>%
-  group_by(bfs_nr_gemeinde,jahr) %>%
-  summarise_at(vars(value,value_tot_fuenf),sum,na.rm = T) %>%
-  ungroup() %>%
-  filter(jahr>=2016) %>%
-  mutate(share = (value-value_tot_fuenf)/value_tot_fuenf*100) %>%
-  mutate(value = value-value_tot_fuenf ) %>%
-  select(jahr,bfs_nr_gemeinde,value,share)
-
-
-### Vorjahresveränderung Arbeitsstätten total --------------------------------------------------------
-print("### Vorjahresveränderung Arbeitsstätten total --------------------------------------------------------")
-
-
-nested_list$`Wirtschaft und Arbeit`$Arbeitsstätten[["Vorjahresveränderung Arbeitsstätten total"]] <- arbst_ent %>%
-  select(bfs_nr_gemeinde:change_fuenf) %>%
-  group_by(bfs_nr_gemeinde,jahr) %>%
-  summarise_at(vars(value,value_tot_ein),sum,na.rm = T) %>%
-  ungroup() %>%
-  filter(jahr>=2016) %>%
-  mutate(share = (value-value_tot_ein)/value_tot_ein*100) %>%
-  mutate(value = value-value_tot_ein ) %>%
-  select(jahr,bfs_nr_gemeinde,value,share)
-
-
-### Veränderung Arbeitsstätten nach Sektor gegenüber vor 5 Jahren (in % Punkten) --------------------------------------------------------
-print("### Veränderung Arbeitsstätten nach Sektor gegenüber vor 5 Jahren (in % Punkten) --------------------------------------------------------")
-
-
-nested_list$`Wirtschaft und Arbeit`$Arbeitsstätten[["Veränderung Arbeitsstätten nach Sektor gegenüber vor 5 Jahren (in % Punkten)"]] <- arbst_ent %>%
-  select(jahr,sektor,bfs_nr_gemeinde,change_fuenf) %>%
-  rename(filter1 = "sektor",
-         value = "change_fuenf")
-
-
-### Vorjahresveränderung Arbeitsstätten nach Sektor (in %) --------------------------------------------------------
-print("### Vorjahresveränderung Arbeitsstätten nach Sektor (in %) --------------------------------------------------------")
-
-
-nested_list$`Wirtschaft und Arbeit`$Arbeitsstätten[["Vorjahresveränderung Arbeitsstätten nach Sektor (in %)"]] <- arbst_ent %>%
-  mutate(share = (value-value_tot_ein)/value_tot_ein*100,
-         value = value -value_tot_ein) %>%
-  select(jahr,sektor,bfs_nr_gemeinde,value,share) %>%
-  rename(filter1 = "sektor")
-
-
-### Arbeitsstätten total --------------------------------------------------------
-print("### Arbeitsstätten --------------------------------------------------------")
-
-
-nested_list$`Wirtschaft und Arbeit`$Arbeitsstätten[["Arbeitsstätten total"]] <- arbst_ent %>%
-  group_by(bfs_nr_gemeinde,jahr) %>%
-  summarise_at(vars(value),sum,na.rm = T) %>%
-  ungroup() %>%
-  summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
-
-
-### Arbeitsstätten nach Sektor --------------------------------------------------------
-print("### Arbeitsstätten Sektor--------------------------------------------------------")
-
-
-nested_list$`Wirtschaft und Arbeit`$Arbeitsstätten[["Arbeitsstätten nach Sektor"]] <- arbst_ent %>%
-  select(jahr,sektor,bfs_nr_gemeinde,value,share) %>%
-  rename(filter1 = "sektor") %>%
-  summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
-
-
-# Warum manchmal Prozentpunkte und manchmal prizentuale Veränderung????
-
-
-
-## Grenzgänger -------------------------------------------------------------
-
-print("### Grenzgänger--------------------------------------------------------")
-
-
-grenzgaenger_metadata <- bfs_get_sse_metadata("DF_GGS_2")
-
-grenzgaenger_metadata_red <- grenzgaenger_metadata |>
-  select(code,value,valueText)
-
-grenzgaenger_metadata_red_geo <- grenzgaenger_metadata_red |>
-  filter(code == "GDE_WORK") |>
-  select(-code) |>
-  rename(bfs_nr_gemeinde ="value")
-
-grenzgaenger_data <- bfs_get_sse_data(number_bfs = "DF_GGS_2",language = "de",query = list(GDE_WORK =bezirk_data$bfs_nr_gemeinde,
-                                                                                           SEX      =c("_T")),variable_value_type = "code") |>
-  mutate(jahr = str_extract(TIME_PERIOD ,"^\\d\\d\\d\\d")) |>
-  filter(str_detect(TIME_PERIOD,"Q4")) %>%
-  select(jahr,bfs_nr_gemeinde=GDE_WORK,value) %>%
-  mutate(value = round(value,0),
-         jahr = as.numeric(jahr))
-
-
-
-
-
-nested_list$`Wirtschaft und Arbeit`[["Grenzgänger/innen"]][["Grenzgänger/innen total"]] <- grenzgaenger_data %>%
-  summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
-
-
-nested_list$`Wirtschaft und Arbeit`[["Grenzgänger/innen"]][["Anteil Grenzgänger/innen am Total der Beschäftigten"]] <- grenzgaenger_data %>%
-  left_join(nested_list$`Wirtschaft und Arbeit`$Beschäftigte$`Beschäftigte total` %>% rename(total = "value"),by = c("bfs_nr_gemeinde","jahr")) %>%
-  filter(!is.na(total)) %>%
-  mutate(value = value/total*100) %>%
-  select(jahr,bfs_nr_gemeinde,value)
-
-
-
-
-## Arbeitslosigkeit --------------------------------------------------------
-print("### Arbeitslosigkeit--------------------------------------------------------")
-
-# Warum nirgends veröffentlicht ausser als Internettabelle?
-
-
-## Neu gegründete Unternehmen ----------------------------------------------
-
-print("### Neu gegründete Unternehmen--------------------------------------------------------")
-
-
-unternehmen_metadata <- bfs_get_metadata( "px-x-0602030000_205",language="de")
-
-
-unternehmen_lookup <- tibble(value = unternehmen_metadata$values[[2]],text = unternehmen_metadata$valueTexts[[2]]) %>%
-  filter(str_extract(text,"\\d\\d\\d\\d") %in% bezirk_data$bfs_nr_gemeinde)
-
-unternehmen_data <- bfs_get_data("px-x-0602030000_205","de",query=list(Gemeinde = bezirk_data$bfs_nr_gemeinde,Beobachtungseinheit=c("1","2"),
-                                                                       Wirtschaftssektor = c("2","3"))) %>%
-  mutate(bfs_nr_gemeinde = str_extract(Gemeinde,"\\d\\d\\d\\d")) %>%
-  group_by(Jahr,bfs_nr_gemeinde,Beobachtungseinheit) %>%
-  summarise(value =sum(`Gründungen, Schliessungen und Bestand aktiver Unternehmen nach Gemeinde und Wirtschaftssektor`,na.rm = T)) %>%
-  ungroup()
-
-
-
-max_jahr_unternehmen <- max(as.numeric(unternehmen_data$Jahr))
-unternehmen_5_jahre <- max_jahr_unternehmen-4
-
-
-# Test
-unternehmen_neu_test <- unternehmen_data %>%
-  filter(Beobachtungseinheit =="Unternehmensneugründungen") %>%
-  filter(Jahr == max_jahr_unternehmen)
-
-unternehmen_neu <- unternehmen_data %>%
-  filter(Beobachtungseinheit =="Unternehmensneugründungen") %>%
-  filter(Jahr>=unternehmen_5_jahre) %>%
-  group_by(bfs_nr_gemeinde) %>%
-  summarise(value = sum(value))
-
-unternehmen_bestand <- unternehmen_data %>%
-  filter(Jahr == max_jahr_unternehmen) %>%
-  filter(Beobachtungseinheit=="Bestand aktiver Unternehmen") %>%
-  select(bfs_nr_gemeinde,value) %>%
-  rename(bestand = value) %>%
-  left_join(unternehmen_neu,"bfs_nr_gemeinde") %>%
-  mutate(value_avg = value/5) %>%
-  mutate(rate_kum = value_avg/bestand)
-
-
-# Zahlen stimmen nicht mit den Werten im Themenatlas überein -> BFS Cube scheint unvollständig
-
-
-# Bauen und Wohnen --------------------------------------------------------
-print("### Bauen und Wohnen--------------------------------------------------------")
-
-
-
-## Leerstand Wohnungen -----------------------------------------------------
-print("### Leerstand Wohnungen--------------------------------------------------------")
-
-
-
-
-leerstand_id <-catalog %>%
-  filter(metas.default.title=="Leerstehende Wohnungen nach Politischer Gemeinde") %>%
-  pull(dataset_id)
-
-
-leerstand <- themenatlas_data_long[[leerstand_id]]
-
-### Leer stehende Wohnungen total --------------------------------------------------------
-print("### Leer stehende Wohnungen total--------------------------------------------------------")
-
-
-nested_list$`Bauen und Wohnen`$`Leer stehende Wohnungen`[["Leer stehende Wohnungen total"]] <- leerstand %>%
-  filter(variable=="leerwhg_anzahl") %>%
-  select(bfs_nr_gemeinde,jahr,value) %>%
-  summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
-
-
-### Leerwohnungsziffer --------------------------------------------------------
-print("### Leerwohnungsziffer--------------------------------------------------------")
-
-
-nested_list$`Bauen und Wohnen`$`Leer stehende Wohnungen`[["Leerwohnungsziffer"]] <- leerstand %>%
-  filter(variable=="leerwhg_ziffer") %>%
-  select(bfs_nr_gemeinde,jahr,value)
-
-
-## Bauinvestitionen --------------------------------------------------------
-print("### Bauinvestitionen--------------------------------------------------------")
-
-bau1_meta <- bfs_get_metadata("px-x-0904010000_203",language = "de")
-
-
-
-
-reshape_metadata  <- function(metadata){
-  names(metadata$values) <- metadata$code
-  names(metadata$valueTexts) <- metadata$code
-
-  df1 <- purrr::map2_df(names(metadata$values), metadata$values, ~ tibble(code = .x, value = .y))
-  df2 <- purrr::map2_df(names(metadata$valueTexts), metadata$valueTexts, ~ tibble( text = .y))
-
-  bind_cols(df1,df2)
-
-
-}
-
-
-bau_meta <- reshape_metadata(bau1_meta)
-
-bau_max_jahr = bau1_meta$valueTexts[[5]] %>% as.numeric() %>% max()
-
-bau_data_full <- bfs_get_data(number_bfs = "px-x-0904010000_203",language = "de",query = list(`Grossregion (<<) / Kanton (-) / Gemeinde (......)`=bezirk_data$bfs_nr_gemeinde,
-                                                                                              Jahr = as.character(2013:bau_max_jahr),
-                                                                                              `Kategorie der Bauwerke` = c("100","200","300","400","500","600" ,"700","800","900","1000","1100"),
-                                                                                              `Art der Auftraggeber`=c("1","2"),
-                                                                                              Beobachtungseinheit = c("kost_j")))
-
-
-bau_data <- bau_data_full %>%
-  mutate(bfs_nr_gemeinde = str_extract(`Grossregion (<<) / Kanton (-) / Gemeinde (......)`,"\\d\\d\\d\\d")) %>%
+  select(jahr, bfs_nr_gemeinde, filter1, value, share)
+
+register_indicator(
+  haushalte %>% summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data),
+  "Bevölkerung und Soziales", "Haushalte", "Haushalte nach Haushaltsgrösse",
+  source_ids = "px-x-0102020000_402")
+
+register_indicator(
+  haushalte %>%
+    group_by(jahr, bfs_nr_gemeinde) %>%
+    summarise(value = sum(value)) %>%
+    ungroup() %>%
+    summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data),
+  "Bevölkerung und Soziales", "Haushalte", "Haushalte insgesamt",
+  source_ids = "px-x-0102020000_402")
+
+## Sozialhilfe ----------------------------------------------------------------
+print("## Sozialhilfe ----------------------------------------------------------")
+
+soz_brutto <- themenatlas_long[["sk-stat-54"]]
+soz_netto  <- themenatlas_long[["sk-stat-55"]]
+
+register_indicator(
+  soz_brutto %>%
+    filter(variable == "brutto_sozialhilfe_je_einwohner") %>%
+    select(bfs_nr_gemeinde, jahr, value) %>%
+    mutate(value = as.numeric(value)),
+  "Bevölkerung und Soziales", "Sozialhilfe",
+  "Brutto Sozialhilfeausgaben je Einwohner", source_ids = "sk-stat-54")
+
+register_indicator(
+  soz_brutto %>%
+    filter(variable == "ausgaben_brutto") %>%
+    select(bfs_nr_gemeinde, jahr, value) %>%
+    mutate(value = as.numeric(value)) %>%
+    summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data),
+  "Bevölkerung und Soziales", "Sozialhilfe",
+  "Brutto Sozialhilfeausgaben total", source_ids = "sk-stat-54")
+
+register_indicator(
+  soz_netto %>%
+    filter(variable == "netto_sozialhilfe_je_einwohner") %>%
+    select(bfs_nr_gemeinde, jahr, value) %>%
+    mutate(value = as.numeric(value)),
+  "Bevölkerung und Soziales", "Sozialhilfe",
+  "Netto Sozialhilfeausgaben je Einwohner", source_ids = "sk-stat-55")
+
+register_indicator(
+  soz_netto %>%
+    filter(variable == "ausgaben_netto") %>%
+    select(bfs_nr_gemeinde, jahr, value) %>%
+    mutate(value = as.numeric(value)) %>%
+    summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data),
+  "Bevölkerung und Soziales", "Sozialhilfe",
+  "Netto Sozialhilfeausgaben total", source_ids = "sk-stat-55")
+
+register_indicator(
+  themenatlas_long[["sk-stat-80"]] %>%
+    select(bfs_nr_gemeinde, jahr, value) %>%
+    mutate(value = as.numeric(value)),
+  "Bevölkerung und Soziales", "Sozialhilfe", "Sozialhilfequote",
+  source_ids = "sk-stat-80")
+
+# -----------------------------------------------------------------------------
+# Wirtschaft und Arbeit
+# -----------------------------------------------------------------------------
+print("## Wirtschaft und Arbeit ------------------------------------------------")
+
+besch_id <- lookup_dataset_id(
+  "Beschäftigte nach Sektoren und Politischen Gemeinden Kanton Thurgau", catalog)
+arbst_id <- lookup_dataset_id(
+  "Arbeitsstätten nach Sektoren und Politischen Gemeinden Kanton Thurgau", catalog)
+
+## Beschäftigte (liefert "Beschäftigte total" für die Grenzgänger-Quote zurück)
+beschaeftigte_total <- register_sektor_indicators(
+  prepare_sektor_entwicklung(themenatlas_long[[besch_id]]),
+  label = "Beschäftigte", source_id = "sk-stat-98", bezirk_data = bezirk_data)
+
+## Arbeitsstätten
+register_sektor_indicators(
+  prepare_sektor_entwicklung(themenatlas_long[[arbst_id]]),
+  label = "Arbeitsstätten", source_id = "sk-stat-97", bezirk_data = bezirk_data)
+
+## Grenzgänger/innen ----------------------------------------------------------
+print("## Grenzgänger/innen ----------------------------------------------------")
+
+grenzgaenger_geo <- bfs_get_sse_metadata("DF_GGS_2") %>%
+  select(code, value, valueText) %>%
+  filter(code == "GDE_WORK") %>%
+  select(-code) %>%
+  rename(bfs_nr_gemeinde = "value")
+
+grenzgaenger_data <- bfs_get_sse_data(number_bfs = "DF_GGS_2", language = "de",
+    query = list(GDE_WORK = bezirk_data$bfs_nr_gemeinde, SEX = c("_T")),
+    variable_value_type = "code") %>%
+  mutate(jahr = str_extract(TIME_PERIOD, "^\\d\\d\\d\\d")) %>%
+  filter(str_detect(TIME_PERIOD, "Q4")) %>%
+  select(jahr, bfs_nr_gemeinde = GDE_WORK, value) %>%
+  mutate(value = round(value, 0), jahr = as.numeric(jahr))
+
+register_indicator(
+  grenzgaenger_data %>%
+    summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data),
+  "Wirtschaft und Arbeit", "Grenzgänger/innen", "Grenzgänger/innen total",
+  source_ids = "px-x-0302010000_101")
+
+register_indicator(
+  grenzgaenger_data %>%
+    left_join(beschaeftigte_total %>% rename(total = "value"),
+              by = c("bfs_nr_gemeinde", "jahr")) %>%
+    filter(!is.na(total)) %>%
+    mutate(value = value / total * 100) %>%
+    select(jahr, bfs_nr_gemeinde, value),
+  "Wirtschaft und Arbeit", "Grenzgänger/innen",
+  "Anteil Grenzgänger/innen am Total der Beschäftigten",
+  source_ids = c("sk-stat-98", "px-x-0302010000_101"))
+
+# -----------------------------------------------------------------------------
+# Bauen und Wohnen
+# -----------------------------------------------------------------------------
+print("## Bauen und Wohnen -----------------------------------------------------")
+
+## Leer stehende Wohnungen ----------------------------------------------------
+leerstand_id <- lookup_dataset_id("Leerstehende Wohnungen nach Politischer Gemeinde", catalog)
+leerstand    <- themenatlas_long[[leerstand_id]]
+
+register_indicator(
+  leerstand %>%
+    filter(variable == "leerwhg_anzahl") %>%
+    select(bfs_nr_gemeinde, jahr, value) %>%
+    summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data),
+  "Bauen und Wohnen", "Leer stehende Wohnungen", "Leer stehende Wohnungen total",
+  source_ids = "sk-stat-93")
+
+register_indicator(
+  leerstand %>%
+    filter(variable == "leerwhg_ziffer") %>%
+    select(bfs_nr_gemeinde, jahr, value),
+  "Bauen und Wohnen", "Leer stehende Wohnungen", "Leerwohnungsziffer",
+  source_ids = "sk-stat-93")
+
+## Bauinvestitionen -----------------------------------------------------------
+print("## Bauinvestitionen -----------------------------------------------------")
+
+bau_meta     <- bfs_get_metadata("px-x-0904010000_203", language = "de")
+bau_max_jahr <- bau_meta$valueTexts[[5]] %>% as.numeric() %>% max()
+
+bau_data <- bfs_get_data(number_bfs = "px-x-0904010000_203", language = "de",
+    query = list(`Grossregion (<<) / Kanton (-) / Gemeinde (......)` = bezirk_data$bfs_nr_gemeinde,
+                 Jahr = as.character(2013:bau_max_jahr),
+                 `Kategorie der Bauwerke` = c("100", "200", "300", "400", "500",
+                                              "600", "700", "800", "900", "1000", "1100"),
+                 `Art der Auftraggeber` = c("1", "2"),
+                 Beobachtungseinheit = c("kost_j"))) %>%
+  mutate(bfs_nr_gemeinde = str_extract(`Grossregion (<<) / Kanton (-) / Gemeinde (......)`, "\\d\\d\\d\\d")) %>%
   rename(auftraggeber = "Art der Auftraggeber",
-         kategorie = "Kategorie der Bauwerke",
-         value = "Bauinvestitionen und Arbeitsvorrat",
-         jahr = "Jahr") %>%
-  select(jahr,bfs_nr_gemeinde,auftraggeber,kategorie,value)
+         kategorie    = "Kategorie der Bauwerke",
+         value        = "Bauinvestitionen und Arbeitsvorrat",
+         jahr         = "Jahr") %>%
+  select(jahr, bfs_nr_gemeinde, auftraggeber, kategorie, value)
 
+register_indicator(
+  bau_data %>%
+    group_by(bfs_nr_gemeinde, jahr, kategorie) %>%
+    summarise(value = sum(value)) %>%
+    ungroup() %>%
+    rename(filter1 = "kategorie") %>%
+    group_by(bfs_nr_gemeinde, jahr) %>%
+    mutate(share = value / sum(value) * 100) %>%
+    ungroup() %>%
+    summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data),
+  "Bauen und Wohnen", "Bauinvestitionen", "Bauinvestitionen nach Kategorie",
+  source_ids = "px-x-0904010000_203")
 
-### Bauinvestitionen nach Kategorie --------------------------------------------------------
-print("### Bauinvestitionen nach Kategorie--------------------------------------------------------")
+register_indicator(
+  bau_data %>%
+    group_by(bfs_nr_gemeinde, jahr, auftraggeber) %>%
+    summarise(value = sum(value)) %>%
+    ungroup() %>%
+    rename(filter1 = "auftraggeber") %>%
+    group_by(bfs_nr_gemeinde, jahr) %>%
+    mutate(share = value / sum(value) * 100) %>%
+    ungroup() %>%
+    summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data),
+  "Bauen und Wohnen", "Bauinvestitionen", "Bauinvestitionen nach Art der Auftraggeber",
+  source_ids = "px-x-0904010000_203")
 
-
-nested_list$`Bauen und Wohnen`$Bauinvestitionen[["Bauinvestitionen nach Kategorie"]] <- bau_data %>%
-  group_by(bfs_nr_gemeinde,jahr,kategorie) %>%
-  summarise(value = sum(value)) %>%
-  ungroup() %>%
-  rename(filter1="kategorie") %>%
-  group_by(bfs_nr_gemeinde,jahr) %>%
-  mutate(share =value/ sum(value)*100) %>%
-  ungroup() %>%
-  summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
-
-
-### Bauinvestitionen nach Art der Auftraggeber --------------------------------------------------------
-print("### Bauinvestitionen nach Art der Auftraggeber--------------------------------------------------------")
-
-
-nested_list$`Bauen und Wohnen`$Bauinvestitionen[["Bauinvestitionen nach Art der Auftraggeber"]] <- bau_data %>%
-  group_by(bfs_nr_gemeinde,jahr,auftraggeber) %>%
-  summarise(value = sum(value)) %>%
-  ungroup() %>%
-  rename(filter1="auftraggeber") %>%
-  group_by(bfs_nr_gemeinde,jahr) %>%
-  mutate(share =value/ sum(value)*100) %>%
-  ungroup() %>%
-  summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
-
-
-### Bauinvestitionen total --------------------------------------------------------
-print("### Bauinvestitionen total--------------------------------------------------------")
-
-
-nested_list$`Bauen und Wohnen`$Bauinvestitionen[["Bauinvestitionen total"]] <- bau_data %>%
-  group_by(bfs_nr_gemeinde,jahr) %>%
-  summarise(value = sum(value))
-
+register_indicator(
+  bau_data %>%
+    group_by(bfs_nr_gemeinde, jahr) %>%
+    summarise(value = sum(value)),
+  "Bauen und Wohnen", "Bauinvestitionen", "Bauinvestitionen total",
+  source_ids = "px-x-0904010000_203")
 
 bau_join <- bau_data %>%
-  group_by(bfs_nr_gemeinde,jahr) %>%
+  group_by(bfs_nr_gemeinde, jahr) %>%
   summarise(value = sum(value)) %>%
   ungroup() %>%
-  mutate(jahr = as.numeric(jahr),
-         value = as.numeric(value)) %>%
-  summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
+  mutate(jahr = as.numeric(jahr), value = as.numeric(value)) %>%
+  summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data)
 
+register_indicator(
+  bau_data %>%
+    group_by(bfs_nr_gemeinde, jahr) %>%
+    summarise(value = sum(value)) %>%
+    ungroup() %>%
+    mutate(jahr = as.numeric(jahr), value = as.numeric(value)) %>%
+    mutate(ein_jahr = ifelse((jahr - 1) >= min(jahr), jahr - 1, NA)) %>%
+    left_join(bau_join %>% rename(value_ein = "value"),
+              by = c("bfs_nr_gemeinde", "ein_jahr" = "jahr")) %>%
+    filter(!is.na(ein_jahr)) %>%
+    mutate(share = (value - value_ein) / value_ein * 100,
+           value = value - value_ein) %>%
+    select(jahr, bfs_nr_gemeinde, value, share),
+  "Bauen und Wohnen", "Bauinvestitionen", "Bauinvestitionen im Vorjahresvergleich",
+  source_ids = "px-x-0904010000_203")
 
-### Bauinvestitionen im Vorjahresvergleich --------------------------------------------------------
-print("### Bauinvestitionen Vorjahresvergleich--------------------------------------------------------")
+## Gebäude und Wohnungen ------------------------------------------------------
+print("## Gebäude und Wohnungen ------------------------------------------------")
 
+geb_meta_red <- bfs_get_sse_metadata("DF_GWS_REG1", language = "de") %>%
+  filter(code == "GEMEINDENAME") %>%
+  select(GEMEINDENAME = valueText, bfs_nr_gemeinde = value)
 
-nested_list$`Bauen und Wohnen`$Bauinvestitionen[["Bauinvestitionen im Vorjahresvergleich"]] <- bau_data %>%
-  group_by(bfs_nr_gemeinde,jahr) %>%
-  summarise(value = sum(value)) %>%
-  ungroup() %>%
-  mutate(jahr = as.numeric(jahr),
-         value = as.numeric(value)) %>%
-  mutate(ein_jahr = ifelse((jahr-1) >= min(jahr),jahr-1,NA)) %>%
-  left_join(bau_join %>%
-              rename(value_ein = "value"),by = c("bfs_nr_gemeinde","ein_jahr"="jahr")) %>%
-  filter(!is.na(ein_jahr)) %>%
-  mutate(share = (value-value_ein)/value_ein*100,
-         value = value-value_ein) %>%
-  select(jahr,bfs_nr_gemeinde,value,share)
+geb_data <- bfs_get_sse_data(number_bfs = "DF_GWS_REG1", language = "de",
+    query = list(GEMEINDENAME = bezirk_data$bfs_nr_gemeinde)) %>%
+  filter(GBAUPS != "Total") %>%
+  filter(GKATS != "Total") %>%
+  left_join(geb_meta_red, "GEMEINDENAME") %>%
+  select(jahr = TIME_PERIOD, bfs_nr_gemeinde, kategorie = GKATS,
+         periode = GBAUPS, value)
 
+register_indicator(
+  geb_data %>%
+    group_by(jahr, bfs_nr_gemeinde) %>%
+    summarise(value = sum(value)) %>%
+    ungroup() %>%
+    summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data),
+  "Bauen und Wohnen", "Gebäude und Wohnungen", "Wohngebäude total",
+  source_ids = "px-x-0902010000_103")
 
-## Gebäude und Wohnungen ---------------------------------------------------
-print("### Gebäude und Wohnungenh--------------------------------------------------------")
+register_indicator(
+  geb_data %>%
+    group_by(jahr, bfs_nr_gemeinde, periode) %>%
+    summarise(value = sum(value)) %>%
+    ungroup() %>%
+    rename(filter1 = "periode") %>%
+    group_by(jahr, bfs_nr_gemeinde) %>%
+    mutate(share = value / sum(value) * 100) %>%
+    ungroup() %>%
+    summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data),
+  "Bauen und Wohnen", "Gebäude und Wohnungen", "Wohngebäude nach Bauperiode",
+  source_ids = "px-x-0902010000_103")
 
-geb_meta <- bfs_get_sse_metadata("DF_GWS_REG1",language = "de")
+register_indicator(
+  geb_data %>%
+    group_by(jahr, bfs_nr_gemeinde, kategorie) %>%
+    summarise(value = sum(value)) %>%
+    ungroup() %>%
+    rename(filter1 = "kategorie") %>%
+    group_by(jahr, bfs_nr_gemeinde) %>%
+    mutate(share = value / sum(value) * 100) %>%
+    ungroup() %>%
+    summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data),
+  "Bauen und Wohnen", "Gebäude und Wohnungen", "Wohngebäude nach Kategorie des Gebäudes",
+  source_ids = "px-x-0902010000_103")
 
-geb_meta_red <- geb_meta |>
-  filter(code =="GEMEINDENAME") |>
-  select(GEMEINDENAME=valueText,bfs_nr_gemeinde=value)
+### Neu erstellte Wohngebäude
+neu_gebaeude_meta <- bfs_get_metadata("px-x-0904030000_106", "de")
 
+register_indicator(
+  bfs_get_data(number_bfs = "px-x-0904030000_106", language = "de",
+      query = list(`Grossregion (<<) / Kanton (-) / Gemeinde (......)` = bezirk_data$bfs_nr_gemeinde,
+                   `Gebäudetyp` = neu_gebaeude_meta$values[which(neu_gebaeude_meta$code == "Gebäudetyp")][[1]])) %>%
+    mutate(bfs_nr_gemeinde = str_extract(`Grossregion (<<) / Kanton (-) / Gemeinde (......)`, "\\d\\d\\d\\d")) %>%
+    select(-`Grossregion (<<) / Kanton (-) / Gemeinde (......)`) %>%
+    rename(value = "Neu erstellte Gebäude mit Wohnungen", typ = "Gebäudetyp", jahr = "Jahr") %>%
+    filter(str_detect(typ, "Total")) %>%
+    select(-typ) %>%
+    summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data),
+  "Bauen und Wohnen", "Gebäude und Wohnungen", "Neu erstellte Wohngebäude",
+  source_ids = "px-x-0904030000_106")
 
+### Wohnungen nach Zimmerzahl / total
+wohnungen_zimmer <- prepare_zimmerwohnungen(all_data[["sk-stat-90"]], bezirk_data)
 
+register_indicator(wohnungen_zimmer,
+  "Bauen und Wohnen", "Gebäude und Wohnungen", "Wohnungen nach Zimmerzahl",
+  source_ids = "sk-stat-90")
 
-geb_data_full <- bfs_get_sse_data(number_bfs = "DF_GWS_REG1",language = "de",query = list(GEMEINDENAME=bezirk_data$bfs_nr_gemeinde))
-
-
-geb_data <- geb_data_full %>%
-  filter(GBAUPS != "Total") |>
-  filter(GKATS != "Total") |>
-  left_join(geb_meta_red,"GEMEINDENAME") |>
-  select(jahr = TIME_PERIOD,bfs_nr_gemeinde,kategorie=GKATS,periode = GBAUPS,value)
-
-
-
-### Wohngebäude total --------------------------------------------------------
-print("### Wohngebäude total--------------------------------------------------------")
-
-
-
-nested_list$`Bauen und Wohnen`$`Gebäude und Wohnungen`[["Wohngebäude total"]] <- geb_data %>%
-  group_by(jahr,bfs_nr_gemeinde) %>%
-  summarise(value = sum(value)) %>%
-  ungroup() %>%
-  summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
-
-### Wohngebäude nach Bauperiode --------------------------------------------------------
-print("### Wohngebäude nach Bauperiode--------------------------------------------------------")
-
-
-nested_list$`Bauen und Wohnen`$`Gebäude und Wohnungen`[["Wohngebäude nach Bauperiode"]] <- geb_data %>%
-  group_by(jahr,bfs_nr_gemeinde,periode) %>%
-  summarise(value = sum(value)) %>%
-  ungroup() %>%
-  rename(filter1 = "periode") %>%
-  group_by(jahr,bfs_nr_gemeinde) %>%
-  mutate(share = value/sum(value)*100) %>%
-  ungroup() %>%
-  summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
-
-### Wohngebäude nach Kategorie des Gebäudes --------------------------------------------------------
-print("###  Wohngebäude nach Kategorie des Gebäudes--------------------------------------------------------")
-
-
-nested_list$`Bauen und Wohnen`$`Gebäude und Wohnungen`[["Wohngebäude nach Kategorie des Gebäudes"]] <- geb_data %>%
-  group_by(jahr,bfs_nr_gemeinde,kategorie) %>%
-  summarise(value = sum(value)) %>%
-  ungroup() %>%
-  rename(filter1 = "kategorie") %>%
-  group_by(jahr,bfs_nr_gemeinde) %>%
-  mutate(share = value/sum(value)*100) %>%
-  ungroup() %>%
-  summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
-
-
-### Neu erstellte Wohngebäude --------------------------------------------------------
-print("###  Neu erstellte Wohngebäude--------------------------------------------------------")
-
-neu_wohnung_id <-catalog %>%
-  filter(metas.default.title=="Neu erstellte Wohnungen nach Anzahl Zimmer nach Politischer Gemeinde") %>%
-  pull(dataset_id)
-
-neu_gebäude_meta <- bfs_get_metadata("px-x-0904030000_106","de")
-
-neu_gebäude_data <- bfs_get_data(number_bfs = "px-x-0904030000_106",language = "de",query = list(`Grossregion (<<) / Kanton (-) / Gemeinde (......)`= bezirk_data$bfs_nr_gemeinde,
-                                                                                                 `Gebäudetyp`=neu_gebäude_meta$values[which(neu_gebäude_meta$code=="Gebäudetyp")][[1]])) %>%
-  mutate(bfs_nr_gemeinde = str_extract(`Grossregion (<<) / Kanton (-) / Gemeinde (......)`,"\\d\\d\\d\\d")) %>%
-  select(-`Grossregion (<<) / Kanton (-) / Gemeinde (......)`) %>%
-  rename(value = "Neu erstellte Gebäude mit Wohnungen",
-         typ= "Gebäudetyp",
-         jahr = "Jahr")
-
-nested_list$`Bauen und Wohnen`$`Gebäude und Wohnungen`[["Neu erstellte Wohngebäude"]] <- neu_gebäude_data %>%
-  filter(str_detect(typ,"Total")) %>%
-  select(-typ) %>%
-  summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
-
-### Wohnungen nach Zimmerzahl --------------------------------------------------------
-print("###  Wohnungen nach Zimmerzahl--------------------------------------------------------")
-
-
-nested_list$`Bauen und Wohnen`$`Gebäude und Wohnungen`[["Wohnungen nach Zimmerzahl"]] <- all_data[["sk-stat-90"]] %>%
-  select(bfs_nr_gemeinde,jahr,`1_zimmerwohnung` :last_col()) %>%
-  pivot_longer(cols = `1_zimmerwohnung` :last_col()) %>%
-  mutate(filter1 = case_when(
-    name %in% c("1_zimmerwohnung","2_zimmerwohnung")~"1-2-Zimmerwohnungen",
-    name %in% c("3_zimmerwohnung","4_zimmerwohnung")~"3-4-Zimmerwohnungen",
-    name %in% c("5_zimmerwohnung")~"5-Zimmerwohnungen",
-    name %in% c("6plus_zimmerwohnung")~"Wohnungen mit 6 und mehr Zimmern",
-    TRUE~NA_character_
-  )) %>%
-  group_by(bfs_nr_gemeinde,jahr,filter1) %>%
-  summarise(value = sum(as.numeric(value))) %>%
-  ungroup() %>%
-  summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
-
-### Wohnungen total --------------------------------------------------------
-print("###  Wohnungen total--------------------------------------------------------")
-
-
-nested_list$`Bauen und Wohnen`$`Gebäude und Wohnungen`[["Wohnungen total"]] <- nested_list$`Bauen und Wohnen`$`Gebäude und Wohnungen`[["Wohnungen nach Zimmerzahl"]] %>%
-  group_by(bfs_nr_gemeinde,jahr) %>%
+wohnungen_total <- wohnungen_zimmer %>%
+  group_by(bfs_nr_gemeinde, jahr) %>%
   summarise(value = sum(value)) %>%
   ungroup()
 
-nested_list$`Bauen und Wohnen`$`Gebäude und Wohnungen`[["Neu erstellte Wohnungen nach Zimmerzahl"]] <- all_data[["sk-stat-92"]] %>%
-  select(bfs_nr_gemeinde,jahr,`1_zimmerwohnung` :last_col()) %>%
-  pivot_longer(cols = `1_zimmerwohnung` :last_col()) %>%
-  mutate(filter1 = case_when(
-    name %in% c("1_zimmerwohnung","2_zimmerwohnung")~"1-2-Zimmerwohnungen",
-    name %in% c("3_zimmerwohnung","4_zimmerwohnung")~"3-4-Zimmerwohnungen",
-    name %in% c("5_zimmerwohnung")~"5-Zimmerwohnungen",
-    name %in% c("6plus_zimmerwohnung")~"Wohnungen mit 6 und mehr Zimmern",
-    TRUE~NA_character_
-  )) %>%
-  group_by(bfs_nr_gemeinde,jahr,filter1) %>%
-  summarise(value = sum(as.numeric(value))) %>%
-  ungroup() %>%
-  summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
+register_indicator(wohnungen_total,
+  "Bauen und Wohnen", "Gebäude und Wohnungen", "Wohnungen total",
+  source_ids = "sk-stat-90")
 
-### Neu erstellte Wohnungen total --------------------------------------------------------
-print("###  Neu erstellte Wohnungen total--------------------------------------------------------")
+### Neu erstellte Wohnungen nach Zimmerzahl / total
+neu_wohnungen_zimmer <- prepare_zimmerwohnungen(all_data[["sk-stat-92"]], bezirk_data)
 
+register_indicator(neu_wohnungen_zimmer,
+  "Bauen und Wohnen", "Gebäude und Wohnungen", "Neu erstellte Wohnungen nach Zimmerzahl",
+  source_ids = "sk-stat-92")
 
-nested_list$`Bauen und Wohnen`$`Gebäude und Wohnungen`[["Neu erstellte Wohnungen total"]] <- nested_list$`Bauen und Wohnen`$`Gebäude und Wohnungen`[["Neu erstellte Wohnungen nach Zimmerzahl"]] %>%
-  group_by(bfs_nr_gemeinde,jahr) %>%
+neu_wohnungen_total <- neu_wohnungen_zimmer %>%
+  group_by(bfs_nr_gemeinde, jahr) %>%
   summarise(value = sum(value)) %>%
   ungroup() %>%
-  summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
+  summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data)
 
+register_indicator(neu_wohnungen_total,
+  "Bauen und Wohnen", "Gebäude und Wohnungen", "Neu erstellte Wohnungen total",
+  source_ids = "sk-stat-92")
 
-### Anteil neu erstellter Wohnungen am Wohnungsbestand des Vorjahres --------------------------------------------------------
-print("### Anteil neu erstellter Wohnungen am Wohnungsbestand des Vorjahres--------------------------------")
+### Anteil neu erstellter Wohnungen am Wohnungsbestand des Vorjahres
+register_indicator(
+  neu_wohnungen_total %>%
+    mutate(ein_jahr = as.numeric(jahr) - 1) %>%
+    left_join(wohnungen_total %>%
+                mutate(jahr = as.numeric(jahr)) %>%
+                rename(bestand = "value"),
+              by = c("ein_jahr" = "jahr", "bfs_nr_gemeinde")) %>%
+    mutate(share = value / bestand * 100) %>%
+    select(bfs_nr_gemeinde, jahr, share) %>%
+    rename(value = "share"),
+  "Bauen und Wohnen", "Gebäude und Wohnungen",
+  "Anteil neu erstellter Wohnungen am Wohnungsbestand des Vorjahres",
+  source_ids = c("sk-stat-92", "sk-stat-90"))
 
+### Wohngebäude nach Energiequelle der Heizung
+energie_geb_meta_red <- bfs_get_sse_metadata("DF_GWS_REG3", "de") %>%
+  filter(code == "GEMEINDENAME") %>%
+  select(GEMEINDENAME = valueText, bfs_nr_gemeinde = value)
 
-nested_list$`Bauen und Wohnen`$`Gebäude und Wohnungen`[["Anteil neu erstellter Wohnungen am Wohnungsbestand des Vorjahres"]] <- nested_list$`Bauen und Wohnen`$`Gebäude und Wohnungen`[["Neu erstellte Wohnungen total"]] %>%
-  mutate(ein_jahr = as.numeric(jahr)-1) %>%
-  left_join(nested_list$`Bauen und Wohnen`$`Gebäude und Wohnungen`[["Wohnungen total"]] %>%
-              mutate(jahr = as.numeric(jahr)) %>%
-              rename(bestand = "value"),by = c("ein_jahr"="jahr","bfs_nr_gemeinde")) %>%
-  mutate(share = value/bestand*100) %>%
-  select(bfs_nr_gemeinde,jahr,share) %>%
-  rename(value = "share")
+register_indicator(
+  bfs_get_sse_data(number = "DF_GWS_REG3", language = "de",
+      query = list(GEMEINDENAME = bezirk_data$bfs_nr_gemeinde)) %>%
+    filter(GBAUPS == "Total" & GKATS == "Total") %>%
+    left_join(energie_geb_meta_red, "GEMEINDENAME") %>%
+    rename(jahr = "TIME_PERIOD", filter1 = "GWAERZH") %>%
+    group_by(bfs_nr_gemeinde, jahr) %>%
+    mutate(share = value / sum(value) * 100) %>%
+    ungroup() %>%
+    select(bfs_nr_gemeinde, jahr, filter1, value, share) %>%
+    summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data),
+  "Bauen und Wohnen", "Gebäude und Wohnungen", "Wohngebäude nach Energiequelle der Heizung",
+  source_ids = "px-x-0902010000_104")
 
-energie_geb_meta <- bfs_get_sse_metadata("DF_GWS_REG3","de")
+# -----------------------------------------------------------------------------
+# Raum und Umwelt
+# -----------------------------------------------------------------------------
+print("## Raum und Umwelt ------------------------------------------------------")
 
-energie_geb_meta_red <-energie_geb_meta |>
-  filter(code=="GEMEINDENAME") |>
-  select(GEMEINDENAME=valueText,bfs_nr_gemeinde=value)
-energie_geb_data <- bfs_get_sse_data(number = "DF_GWS_REG3", language = "de",
-                                 query = list(GEMEINDENAME =bezirk_data$bfs_nr_gemeinde))
+flaeche_meta     <- bfs_get_sse_metadata("DF_AREA_NOAS", language = "de")
+flaeche_meta_red <- flaeche_meta %>%
+  filter(code == "REGION") %>%
+  select(REGION = valueText, bfs_nr_gemeinde = value)
 
+# Periodencodes auf ein repräsentatives Jahr abbilden
+recode_flaeche_jahr <- function(df) {
+  df %>%
+    mutate(jahr = case_when(
+      PERIOD == "1979-1985" ~ "1984",
+      PERIOD == "1992-1997" ~ "1996",
+      PERIOD == "2013-2018" ~ "2017",
+      PERIOD == "2004-2009" ~ "2008",
+      PERIOD == "2020-2025" ~ "2024",
+      TRUE ~ PERIOD
+    ))
+}
 
+flaeche_data <- bfs_get_sse_data(number_bfs = "DF_AREA_NOAS", language = "de",
+    query = list(REGION = bezirk_data$bfs_nr_gemeinde, NOAS = as.character(1:4))) %>%
+  left_join(flaeche_meta_red, "REGION") %>%
+  recode_flaeche_jahr() %>%
+  select(bfs_nr_gemeinde, jahr, filter1 = NOAS, value)
 
-
-
-
-### Wohngebäude nach Energiequelle der Heizung --------------------------------------------------------
-print("### Wohngebäude nach Energiequelle der Heizung ----------------")
-
-nested_list$`Bauen und Wohnen`$`Gebäude und Wohnungen`[["Wohngebäude nach Energiequelle der Heizung"]] <- energie_geb_data %>%
-  filter(GBAUPS=="Total" & GKATS=="Total") |>
-  left_join(energie_geb_meta_red,"GEMEINDENAME") |>
-  rename(jahr = "TIME_PERIOD",
-         filter1 = "GWAERZH") %>%
-  group_by(bfs_nr_gemeinde,jahr) %>%
-  mutate(share = value/sum(value)*100) %>%
-  ungroup() %>%
-  select(bfs_nr_gemeinde,jahr,filter1,value,share) %>%
-  summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
-
-
-# Raum und Umwelt ---------------------------------------------------------
-print("### Raum und Umwelt -----------------------")
-
-
-## Flächennutzung ---------------------------------------------------------
-
-print("### Flächennutzung-----------------------")
-
-flaeche_meta <- bfs_get_sse_metadata("DF_AREA_NOAS",language = "de")
-
-
-flaeche_lookup <- tibble(text =flaeche_meta$valueTexts[2][[1]],value = flaeche_meta$values[2][[1]]) %>%
-  filter(text %in% c("-a Siedlungsflächen","-b Landwirtschaftsflächen","-c Bestockte Flächen","-d Unproduktive Flächen"))
-
-
-flaeche_meta_red <- flaeche_meta |>
-  filter(code=="REGION") |>
-  select(REGION=valueText,bfs_nr_gemeinde=value)
-
-flaeche_data_raw <- bfs_get_sse_data(number_bfs = "DF_AREA_NOAS",language = "de",query = list(REGION=bezirk_data$bfs_nr_gemeinde,NOAS=as.character(1:4))) |>
-  left_join(flaeche_meta_red,"REGION")
-
-see_flaeche_mod <- bfs_get_sse_data(number_bfs = "DF_AREA_NOAS",language = "de",query = list(REGION=bezirk_data$bfs_nr_gemeinde,NOAS=c("413","414"))) |>
-  left_join(flaeche_meta_red,"REGION")
-
-flaeche_data <-flaeche_data_raw |>
-  mutate(jahr = case_when(
-    PERIOD     == "1979-1985"~"1984",
-    PERIOD     == "1992-1997"~"1996",
-    PERIOD     == "2013-2018"~"2017",
-    PERIOD     == "2004-2009"~"2008",
-    PERIOD     == "2020-2025"~"2024",
-    TRUE~PERIOD
-  )) |>
-  select(bfs_nr_gemeinde,jahr,filter1=NOAS,value)
-
-see_flaeche <- see_flaeche_mod |>
-  mutate(jahr = case_when(
-    PERIOD     == "1979-1985"~"1984",
-    PERIOD     == "1992-1997"~"1996",
-    PERIOD     == "2013-2018"~"2017",
-    PERIOD     == "2004-2009"~"2008",
-    PERIOD     == "2020-2025"~"2024",
-    TRUE~PERIOD
-  )) |>
-  select(bfs_nr_gemeinde,jahr,filter1=NOAS,value) |>
-  group_by(bfs_nr_gemeinde,jahr) |>
-  summarise(see=sum(value)) |>
+see_flaeche <- bfs_get_sse_data(number_bfs = "DF_AREA_NOAS", language = "de",
+    query = list(REGION = bezirk_data$bfs_nr_gemeinde, NOAS = c("413", "414"))) %>%
+  left_join(flaeche_meta_red, "REGION") %>%
+  recode_flaeche_jahr() %>%
+  select(bfs_nr_gemeinde, jahr, filter1 = NOAS, value) %>%
+  group_by(bfs_nr_gemeinde, jahr) %>%
+  summarise(see = sum(value)) %>%
   ungroup()
-
 
 landflaeche <- flaeche_data %>%
-  group_by(bfs_nr_gemeinde,jahr) %>%
-  summarise(value = sum(value)) |>
-  ungroup() |>
-  left_join(see_flaeche,by = c("jahr","bfs_nr_gemeinde")) %>%
-  mutate(see = replace_na(see,0)) %>%
-  mutate(value = value -see) %>%
+  group_by(bfs_nr_gemeinde, jahr) %>%
+  summarise(value = sum(value)) %>%
+  ungroup() %>%
+  left_join(see_flaeche, by = c("jahr", "bfs_nr_gemeinde")) %>%
+  mutate(see = replace_na(see, 0)) %>%
+  mutate(value = value - see) %>%
   select(-see)
 
+register_indicator(
+  flaeche_data %>%
+    group_by(bfs_nr_gemeinde, jahr) %>%
+    mutate(share = value / sum(value) * 100) %>%
+    ungroup() %>%
+    summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data),
+  "Raum und Umwelt", "Flächennutzung", "Fläche nach Flächenart",
+  source_ids = "px-x-0202020000_102")
 
+register_indicator(
+  flaeche_data %>%
+    group_by(bfs_nr_gemeinde, jahr) %>%
+    summarise(value = sum(value)) %>%
+    summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data),
+  "Raum und Umwelt", "Flächennutzung", "Fläche total",
+  source_ids = "px-x-0202020000_102")
 
+register_indicator(
+  landflaeche %>%
+    summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data),
+  "Raum und Umwelt", "Flächennutzung", "Landfläche",
+  source_ids = "px-x-0202020000_102")
 
+register_indicator(
+  gesamtbevoelkerung %>%
+    mutate(match_year = case_when(
+      jahr %in% c(2017, 2016, 2015, 2014, 2013, 2012) ~ "2008",
+      jahr >= 2018 ~ "2017",
+      TRUE ~ "2017"
+    )) %>%
+    left_join(landflaeche %>% rename(flaeche = "value"),
+              by = c("match_year" = "jahr", "bfs_nr_gemeinde")) %>%
+    mutate(value = value / flaeche) %>%
+    select(-c(share, match_year, flaeche)),
+  "Raum und Umwelt", "Flächennutzung", "Bevölkerungsdichte",
+  source_ids = c("px-x-0202020000_102", "sk-stat-59"))
 
-### Fläche nach Flächenart --------------------------------------------------------
-print("### Fläche nach Flächenart -------------------------")
+# -----------------------------------------------------------------------------
+# Staat und Politik
+# -----------------------------------------------------------------------------
+print("## Staat und Politik ----------------------------------------------------")
 
+## Grossratswahlen ------------------------------------------------------------
+parstrk     <- all_data[["sk-stat-9"]]
+start_index <- which(names(parstrk) == "jahr")
 
-nested_list$`Raum und Umwelt`$Flächennutzung[["Fläche nach Flächenart"]] <- flaeche_data %>%
-  group_by(bfs_nr_gemeinde,jahr) %>%
-  mutate(share = value/sum(value)*100) %>%
-  ungroup() %>%
-  summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
-
-### Fläche total --------------------------------------------------------
-print("### Fläche total -------------------------")
-
-
-nested_list$`Raum und Umwelt`$Flächennutzung[["Fläche total"]] <- flaeche_data %>%
-  group_by(bfs_nr_gemeinde,jahr) %>%
-  summarise(value = sum(value)) %>%
-  summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
-
-### Landfläche --------------------------------------------------------
-print("### Landfläche -----------------------")
-
-
-nested_list$`Raum und Umwelt`$Flächennutzung[["Landfläche"]] <- landflaeche %>%
-  summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
-
-### Bevölkerungsdichte --------------------------------------------------------
-print("### Bevölkerungsdichte -----------------")
-
-
-nested_list$`Raum und Umwelt`$Flächennutzung[["Bevölkerungsdichte"]] <- nested_list$`Bevölkerung und Soziales`$Bevölkerungsstand$Gesamtbevölkerung %>%
-  mutate(match_year = case_when(
-    jahr %in% c(2017, 2016, 2015, 2014, 2013, 2012)~"2008",
-    jahr >=2018 ~"2017",
-    TRUE~"2017"
-  )) %>%
-  left_join(landflaeche %>% rename(flaeche = "value"),by = c("match_year"="jahr","bfs_nr_gemeinde")) %>%
-  mutate(value= value/flaeche) %>%
-  select(-c(share,match_year,flaeche))
-
-
-# Staat und Politik -------------------------------------------------------
-print("# Staat und Politik -----------------")
-
-
-## Grossratswahlen ---------------------------------------------------------
-print("## Grossratswahlen --------------")
-
-
-
-### Parteistärken -----------------------------------------------------------
-print("### Parteistärken ---------------")
-
-parstrk <- all_data[["sk-stat-9"]]
-
-start_index <- which(names(parstrk)=="jahr")
-
-parteien <- readRDS("data/parteien.rds")
-
-
-nested_list$`Staat und Politik`$Grossratswahlen[["Parteistärken nach Partei"]]  <- parstrk %>%
-  pivot_longer(cols= all_of((start_index+1):last_col())) %>%
-  left_join(parteien,by = c("name"="abk")) %>%
+gr_parteistaerke <- parstrk %>%
+  pivot_longer(cols = all_of((start_index + 1):last_col())) %>%
+  left_join(parteien, by = c("name" = "abk")) %>%
   mutate(partei_code = case_when(
-    name=="uebrige"~"Übrige",
-    name=="bdp"~"BDP",
-    TRUE~partei_code)) %>%
+    name == "uebrige" ~ "Übrige",
+    name == "bdp"     ~ "BDP",
+    TRUE              ~ partei_code)) %>%
   mutate(value = as.numeric(value)) %>%
-  rename(filter1="partei_code") %>%
-  select(bfs_nr_gemeinde,jahr,filter1,value)
+  rename(filter1 = "partei_code") %>%
+  select(bfs_nr_gemeinde, jahr, filter1, value)
 
+register_indicator(gr_parteistaerke,
+  "Staat und Politik", "Grossratswahlen", "Parteistärken nach Partei",
+  source_ids = "sk-stat-9")
 
-### Veränderung Parteistärken im Vorjahresvergleich (%-Punkte) -----------------------------------------------------------
-print("### Veränderung Parteistärken im Vorjahresvergleich (%-Punkte)")
+register_indicator(
+  gr_parteistaerke %>%
+    mutate(jahr = as.numeric(jahr)) %>%
+    group_by(bfs_nr_gemeinde, filter1) %>%
+    arrange(desc(jahr), .by_group = TRUE) %>%
+    mutate(lead_value = lead(value)) %>%
+    ungroup() %>%
+    mutate(lead_value = case_when(
+      is.na(lead_value) & !is.na(value) ~ 0,
+      TRUE ~ lead_value)) %>%
+    mutate(change = value - lead_value) %>%
+    select(bfs_nr_gemeinde, jahr, filter1, change) %>%
+    rename(value = "change"),
+  "Staat und Politik", "Grossratswahlen",
+  "Veränderung Parteistärken im Vorjahresvergleich (%-Punkte)",
+  source_ids = "sk-stat-9")
 
-nested_list$`Staat und Politik`$Grossratswahlen[["Veränderung Parteistärken im Vorjahresvergleich (%-Punkte)"]] <- nested_list$`Staat und Politik`$Grossratswahlen[["Parteistärken nach Partei"]] %>%
-  mutate(jahr = as.numeric(jahr)) %>%   # Ensure 'jahr' is numeric
-  group_by(bfs_nr_gemeinde, filter1) %>%  # Group by 'bfs_nr_gemeinde' and 'filter1'
-  arrange(desc(jahr), .by_group = TRUE) %>%  # Arrange by 'jahr' within each group
-  mutate(lead_value = lead(value)) %>%  # Calculate lagged 'value'
-  ungroup() %>%
-  mutate(lead_value = case_when(
-    is.na(lead_value) & !is.na(value)~0,
-    TRUE~lead_value
-  )) %>%
-  mutate(change = value-lead_value) %>%
-  select(bfs_nr_gemeinde,jahr,filter1,change) %>%
-  rename(value = "change")
+register_indicator(
+  all_data[["sk-stat-11"]] %>%
+    mutate(value = as.numeric(wahlbeteiligung_in_prozent)) %>%
+    select(bfs_nr_gemeinde, jahr, value) %>%
+    tibble(),
+  "Staat und Politik", "Grossratswahlen", "Wahlbeteiligung",
+  source_ids = "sk-stat-11")
 
-
-
-### Wahlbeteiligung -----------------------------------------------------------
-print("### Wahlbeteiligung --------")
-
-
-nested_list$`Staat und Politik`$Grossratswahlen[["Wahlbeteiligung"]] <- all_data[["sk-stat-11"]] %>%
-  mutate(value = as.numeric(wahlbeteiligung_in_prozent)) %>%
-  select(bfs_nr_gemeinde,jahr,value) %>%
-  tibble()
-
-
-
-
-## Nationalratswahlen -----------------------------------------------------
-print("### Nationalratswahlen --------")
-
-### Parteistärken -----------------------------------------------------------
-print("### Parteistärken --------")
-
-nested_list$`Staat und Politik`$Nationalratswahlen[["Parteistärken nach Partei"]] <- all_data[["sk-stat-123"]] %>%
+## Nationalratswahlen ---------------------------------------------------------
+nr_parteistaerke <- all_data[["sk-stat-123"]] %>%
   mutate(value = as.numeric(parteistaerke_percent)) %>%
   rename(filter1 = "partei") %>%
-  select(bfs_nr_gemeinde,jahr,filter1,value)
+  select(bfs_nr_gemeinde, jahr, filter1, value)
 
+register_indicator(nr_parteistaerke,
+  "Staat und Politik", "Nationalratswahlen", "Parteistärken nach Partei",
+  source_ids = "sk-stat-123")
 
-### Veränderung Parteistärken im Vorjahresvergleich (%-Punkte) -----------------------------------------------------------
-print("### Veränderung Parteistärken im Vorjahresvergleich (%-Punkte) --------")
+register_indicator(
+  nr_parteistaerke %>%
+    mutate(jahr = as.numeric(jahr)) %>%
+    group_by(bfs_nr_gemeinde, filter1) %>%
+    arrange(desc(jahr), .by_group = TRUE) %>%
+    mutate(lead_value = lead(value)) %>%
+    ungroup() %>%
+    mutate(lead_value = case_when(
+      is.na(lead_value) & !is.na(value) ~ 0,
+      TRUE ~ lead_value)) %>%
+    mutate(change = value - lead_value) %>%
+    select(bfs_nr_gemeinde, jahr, filter1, change) %>%
+    rename(value = "change"),
+  "Staat und Politik", "Nationalratswahlen",
+  "Veränderung Parteistärken im Vorjahresvergleich (%-Punkte)",
+  source_ids = "sk-stat-123")
 
-nested_list$`Staat und Politik`$Nationalratswahlen[["Veränderung Parteistärken im Vorjahresvergleich (%-Punkte)"]] <- nested_list$`Staat und Politik`$Nationalratswahlen[["Parteistärken nach Partei"]] %>%
-  mutate(jahr = as.numeric(jahr)) %>%   # Ensure 'jahr' is numeric
-  group_by(bfs_nr_gemeinde, filter1) %>%  # Group by 'bfs_nr_gemeinde' and 'filter1'
-  arrange(desc(jahr), .by_group = TRUE) %>%  # Arrange by 'jahr' within each group
-  mutate(lead_value = lead(value)) %>%  # Calculate lagged 'value'
-  ungroup() %>%
-  mutate(lead_value = case_when(
-    is.na(lead_value) & !is.na(value)~0,
-    TRUE~lead_value
-  )) %>%
-  mutate(change = value-lead_value) %>%
-  select(bfs_nr_gemeinde,jahr,filter1,change) %>%
-  rename(value = "change")
+register_indicator(
+  all_data[["sk-stat-120"]] %>%
+    mutate(value = as.numeric(wahlbeteiligung_percent)) %>%
+    select(bfs_nr_gemeinde, jahr, value) %>%
+    tibble(),
+  "Staat und Politik", "Nationalratswahlen", "Wahlbeteiligung",
+  source_ids = "sk-stat-120")
 
+## Abstimmungen ---------------------------------------------------------------
+register_abstimmungen(prepare_abstimmungen(all_data[["sk-stat-50"]]),
+                      label = "Eidg. Abstimmungen", source_id = "sk-stat-50")
+register_abstimmungen(prepare_abstimmungen(all_data[["sk-stat-52"]]),
+                      label = "Kantonale Abstimmungen", source_id = "sk-stat-52")
 
-### Wahlbeteiligung -----------------------------------------------------------
-print("### Wahlbeteiligung --------")
+## Steuerkraft und Steuerfüsse ------------------------------------------------
+register_indicator(
+  all_data[["sk-stat-70"]] %>%
+    pivot_longer(cols = c(gesamtsteuerfuss_evang, gesamtsteuerfuss_kath,
+                          gesamtsteuerfuss_konfessionslos, gesamtsteuerfuss_jp)) %>%
+    mutate(filter1 = case_when(
+      name == "gesamtsteuerfuss_evang"          ~ "natürliche Personen evangelisch",
+      name == "gesamtsteuerfuss_kath"           ~ "natürliche Personen katholisch",
+      name == "gesamtsteuerfuss_konfessionslos" ~ "natürliche Personen konfessionslos",
+      name == "gesamtsteuerfuss_jp"             ~ "juristische Personen")) %>%
+    mutate(value = as.numeric(value)) %>%
+    select(bfs_nr_gemeinde, jahr, filter1, value) %>%
+    summarise_bezirk_kanton(type = "mean", bezirk_data = bezirk_data),
+  "Staat und Politik", "Steuerkraft und Steuerfüsse", "Gesamtsteuerfuss",
+  source_ids = "sk-stat-70")
 
-nested_list$`Staat und Politik`$Nationalratswahlen[["Wahlbeteiligung"]] <- all_data[["sk-stat-120"]] %>%
-  mutate(value = as.numeric(wahlbeteiligung_percent)) %>%
-  select(bfs_nr_gemeinde,jahr,value) %>%
-  tibble()
-
-
-
-## Eidg. Abstimmungen ------------------------------------------------------
-print("### Eidg. Abstimmunge --------")
-
-eidg_abst <- all_data[["sk-stat-50"]] %>%
-  mutate(tag = as.Date(tag)) %>%
-  filter(tag >="2009-01-01") %>%
-  mutate(jahr = year(tag)) %>%
-  select(bfs_nr_gemeinde,jahr,tag,vorlage_bezeichnung,ja_stimmen,stimmbeteiligung,gueltige_stimmen) %>%
-  mutate_at(vars(ja_stimmen,gueltige_stimmen,stimmbeteiligung),as.numeric) %>%
-  mutate(anteil_ja_stimmen = ja_stimmen/gueltige_stimmen*100) %>%
-  select(-c(gueltige_stimmen,ja_stimmen)) %>%
-  pivot_longer(cols = c(anteil_ja_stimmen,stimmbeteiligung)) %>%
-  mutate(filter1 = case_when(
-    name=="stimmbeteiligung"~"Stimmbeteiligung",
-    name=="anteil_ja_stimmen"~"Ja-Stimmenanteil",
-  )) %>%
-  select(-name)
-
-year_vec <- min(eidg_abst$jahr):max(eidg_abst$jahr)
-
-for (year in year_vec){
-
-
-  list_name <- paste0(year,": Eidg. Abstimmungen")
-
-  eidg_abst_jahr <- eidg_abst %>%
-    filter(jahr == year)
-
-  dist_vorlage <- eidg_abst_jahr %>% distinct(vorlage_bezeichnung,tag)
-
-  for (i in seq_along(dist_vorlage$vorlage_bezeichnung)){
-    vorlage_name <- paste0(format(dist_vorlage$tag[i],"%d.%m.%Y"),": ",dist_vorlage$vorlage_bezeichnung[i])
-    nested_list$`Staat und Politik`[[list_name]][[vorlage_name]] <- eidg_abst_jahr %>%
-      filter(vorlage_bezeichnung==dist_vorlage$vorlage_bezeichnung[i] & tag == dist_vorlage$tag[i]) %>%
-      select(bfs_nr_gemeinde,jahr,filter1,value)
-  }
-}
-
-nested_list$`Staat und Politik`$`2024: Eidgenössische Abstimmungen` <- NULL
-
-nested_list$`Staat und Politik`$`2022: Eidgenössische Abstimmungen` <- NULL
-nested_list$`Staat und Politik`$`2021: Eidgenössische Abstimmungen` <- NULL
-nested_list$`Staat und Politik`$`2020: Eidgenössische Abstimmungen` <- NULL
-nested_list$`Staat und Politik`$`2019: Eidgenössische Abstimmungen` <- NULL
-nested_list$`Staat und Politik`$`2019 bis 2022: Kantonale Abstimmungen` <- NULL
-
-
-## Kantonale Abstimmungen ------------------------------------------------------
-print("### Kantonale Abstimmunge --------")
-
-kant_abst <- all_data[["sk-stat-52"]] %>%
-  mutate(tag = as.Date(tag)) %>%
-  filter(tag >="2009-01-01") %>%
-  mutate(jahr = year(tag)) %>%
-  select(bfs_nr_gemeinde,jahr,tag,vorlage_bezeichnung,ja_stimmen,stimmbeteiligung,gueltige_stimmen) %>%
-  mutate_at(vars(ja_stimmen,gueltige_stimmen,stimmbeteiligung),as.numeric) %>%
-  mutate(anteil_ja_stimmen = ja_stimmen/gueltige_stimmen*100) %>%
-  select(-c(gueltige_stimmen,ja_stimmen)) %>%
-  pivot_longer(cols = c(anteil_ja_stimmen,stimmbeteiligung)) %>%
-  mutate(filter1 = case_when(
-    name=="stimmbeteiligung"~"Stimmbeteiligung",
-    name=="anteil_ja_stimmen"~"Ja-Stimmenanteil",
-  )) %>%
-  select(-name)
-
-
-
-year_vec_kt <- min(kant_abst$jahr):max(kant_abst$jahr)
-
-for (year in year_vec_kt){
-
-
-  list_name <- paste0(year,": Kantonale Abstimmungen")
-
-  kant_abst_jahr <- kant_abst %>%
-    filter(jahr == year)
-
-  dist_vorlage <- kant_abst_jahr %>% distinct(vorlage_bezeichnung,tag)
-
-  for (i in seq_along(dist_vorlage$vorlage_bezeichnung)){
-    vorlage_name <- paste0(format(dist_vorlage$tag[i],"%d.%m.%Y"),": ",dist_vorlage$vorlage_bezeichnung[i])
-    nested_list$`Staat und Politik`[[list_name]][[vorlage_name]] <- kant_abst_jahr %>%
-      filter(vorlage_bezeichnung==dist_vorlage$vorlage_bezeichnung[i] & tag == dist_vorlage$tag[i]) %>%
-      select(bfs_nr_gemeinde,jahr,filter1,value)
-  }
-}
-
-
-## Steuerkraft und Steuerfüsse ------------------------------------------------------
-print("### Steuerkraft und Steuerfüsse --------")
-
-
-
-
-
-### Gesamtsteuerfuss --------------------------------------------------------
-print("### Gesamtsteuerfuss --------")
-
-nested_list$`Staat und Politik`$`Steuerkraft und Steuerfüsse`[["Gesamtsteuerfuss"]] <- all_data[["sk-stat-70"]] %>%
-  pivot_longer(cols = c(gesamtsteuerfuss_evang,gesamtsteuerfuss_kath,gesamtsteuerfuss_konfessionslos, gesamtsteuerfuss_jp)) %>%
-  mutate(filter1 = case_when(
-    name=="gesamtsteuerfuss_evang"~"natürliche Personen evangelisch",
-    name=="gesamtsteuerfuss_kath"~"natürliche Personen katholisch",
-    name=="gesamtsteuerfuss_konfessionslos"~"natürliche Personen konfessionslos",
-    name=="gesamtsteuerfuss_jp"~"juristische Personen",
-  )) %>%
-  mutate(value = as.numeric(value)) %>%
-  select(bfs_nr_gemeinde,jahr,filter1,value) %>%
-  summarise_bezirk_kanton(type = "mean",bezirk_data = bezirk_data)
-
-
-### Gemeindesteuerfuss --------------------------------------------------------
-print("### Gemeindesteuerfuss --------")
-
-nested_list$`Staat und Politik`$`Steuerkraft und Steuerfüsse`[["Gemeindesteuerfuss"]] <- all_data[["sk-stat-69"]] %>%
+gemeindesteuerfuss <- all_data[["sk-stat-69"]] %>%
   mutate(value = as.numeric(gemeindesteuerfuss)) %>%
   mutate(jahr = as.numeric(jahr)) %>%
-  select(bfs_nr_gemeinde,jahr,value) %>%
-  summarise_bezirk_kanton(type = "mean",bezirk_data = bezirk_data)
-
-
-### Veränderung Gemeindesteuerfuss --------------------------------------------------------
-print("### Veränderung Gemeindesteuerfuss --------")
-
-nested_list$`Staat und Politik`$`Steuerkraft und Steuerfüsse`[["Veränderung der Gemeindesteuerfüsse im Vergleich zu vor 10 Jahren (%-Punkte)"]] <- nested_list$`Staat und Politik`$`Steuerkraft und Steuerfüsse`[["Gemeindesteuerfuss"]] %>%
-  mutate(zehn_jahre = jahr-10) %>%
-  left_join(nested_list$`Staat und Politik`$`Steuerkraft und Steuerfüsse`[["Gemeindesteuerfuss"]] %>%
-              rename(value_zehn = "value"), by = c("zehn_jahre"="jahr","bfs_nr_gemeinde")) %>%
-  filter(!is.na(value_zehn)) %>%
-  mutate(change = value-value_zehn) %>%
-  select(bfs_nr_gemeinde,jahr,change) %>%
-  rename(value = "change")
-
-
-
-### Steuerkraft --------------------------------------------------------
-print("### Steuerkraft --------")
-
-
-# Wie berechnen?
-
-
-
-## Finanzausgleich ---------------------------------------------------------
-print("### Finanzausgleich --------")
-
-nested_list$`Staat und Politik`$Finanzausgleich[["Gesamtauswirkung Finanzausgleich (positive Werte: Abschöpfung, negative Werte: Auszahlung) (CHF)"]] <- all_data[["sk-stat-1"]] %>%
-  mutate(value = as.numeric(auszahlung_abschoepfung_in_chf)) %>%
-  select(bfs_nr_gemeinde,jahr,value) %>%
-  summarise_bezirk_kanton(type = "sum",bezirk_data = bezirk_data)
-
-nested_list$`Staat und Politik`$Finanzausgleich[["Gesamtauswirkung Finanzausgleich pro Einwohner (positive Werte: Abschöpfung, negative Werte: Auszahlung) (CHF)"]] <- all_data[["sk-stat-1"]] %>%
-  mutate(value = as.numeric(auszahlung_abschoepfung_in_chf_pro_einwohner)) %>%
-  select(bfs_nr_gemeinde,jahr,value) %>%
-  summarise_bezirk_kanton(type = "mean",bezirk_data = bezirk_data)
-
-
-# Gemeindefinanzkennzahlen ------------------------------------------------
-print("### Gemeindefinanzkennzahlen --------")
-
-nested_list$`Staat und Politik`$Gemeindefinanzkennzahlen[["Gemeindefinanzkennzahlen"]] <- themenatlas_data_long[["sk-stat-4"]] %>%
-  mutate(filter1 = case_when(
-    variable=="selbstfinanzierungsgrad_in"~"Selbstfinanzierungsgrad in %",
-    variable=="selbstfinanzierungsanteil_in"~"Selbstfinanzierungsanteil in %",
-    variable=="zinsbelastungsanteil_in"~"Zinsbelastungsanteil in %",
-    variable=="kapitaldienstanteil_in"~"Kapitaldienstanteil in %",
-    variable=="investitionsanteil_in"~"Investitionsanteil in %",
-    variable=="bruttoverschuldungsanteil_in"~"Bruttoverschuldungsanteil in %",
-    variable=="nettoschuld_nettovermogen_pro_einwohner_in_chf"~"Nettoschuld (-) / Nettovermögen (+) pro Einwohner in Schweizer Franken",
-    variable=="nettoverschuldungsquotient_in"~"Nettoverschuldungsquotient in %",
-    variable=="bilanzuberschussquotient_in"~"Bilanzüberschussquotient in %"
-  )) %>%
-  select(jahr,bfs_nr_gemeinde,filter1,value) %>%
-  mutate(jahr = as.numeric(jahr)) %>%
-  summarise_bezirk_kanton(type = "mean",bezirk_data = bezirk_data)
-
-saveRDS(nested_list,"data/nested_list.rds")
-saveRDS(additional_data,"data/additional_data.rds")
-
-# Schulgemeinden ----------------------------------------------------------
-
-
-
-# Beispieldaten für Schulgemeinden
-finanzlage_sg <-get_data_from_ogd("dek-av-30")
-
-
-sg_data_source <- create_data_source_element("dek-av-30")
-
-sg_list <- list(list(),list(),list())
-names(sg_list) <- c("PSG","SSG","VSG")
-
-
-create_indicator_sg <- function(sg,variable,data,sg_list,topic,subtopic,indicator){
-
-  temp <- data %>%
-    filter(sgtyp2==sg) %>%
-    select(all_of(c("sg_id","jahr",variable))) %>%
-    setNames(c("bfs_nr_gemeinde","jahr","value"))
-
-  if (sum(is.na(temp$value))!=nrow(temp)){
-    sg_list[[topic]][[subtopic]][[indicator]] <- temp
-  }
-
-
-  return(sg_list)
-
-
-
-}
-
-
-get_list_paths <- function(lst, parent_path = "nested_list") {
-  paths <- c()
-
-  for (name in names(lst)) {
-    current_path <- ifelse(grepl(" ", name),
-                           paste0(parent_path, "$`", name, "`"),
-                           paste0(parent_path, "$", name))
-
-    if (is.data.frame(lst[[name]])) {
-      # Stop recursion and store path
-      paths <- c(paths, current_path)
-    } else if (is.list(lst[[name]])) {
-      # Recur if it's a list
-      paths <- c(paths, get_list_paths(lst[[name]], current_path))
-    }
-  }
-
-  return(paths)
-}
-
-
-for (i in seq_along(sg_list)){
-
-  sg_name <- names(sg_list)[i]
-
-  if (sg_name=="PSG"){
-    list_name <- "psg_list"
-  }
-  if (sg_name=="SSG"){
-    list_name <- "psg_list"
-  }
-  if (sg_name=="VSG"){
-    list_name <- "psg_list"
-  }
-
-
-
-  sg_list[[i]] <- create_indicator_sg(sg_name,"einwohner",finanzlage_sg,sg_list = sg_list[[i]],topic = "Bevölkerung und Soziales",subtopic = "Bevölkerungsstand",indicator = "Gesamtbevölkerung")
-
-  sg_list[[i]] <- create_indicator_sg(sg_name,"schueler",finanzlage_sg,sg_list = sg_list[[i]],topic = "Bevölkerung und Soziales",subtopic = "Bildung",indicator = "Anzahl Schülerinnen und Schüler im Durchschnitt der beiden Stichtage 15.2. und 15.9.")
-
-
-  sg_list[[i]] <- create_indicator_sg(sg_name,"schuelerproew",finanzlage_sg,sg_list = sg_list[[i]],topic = "Bevölkerung und Soziales",subtopic = "Bildung",indicator = "Anteil Schüler an der Anzahl Einwohner")
-
-
-  sg_list[[i]] <- create_indicator_sg(sg_name,"steuerkraft",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Steuerkraft und Steuerfüsse",indicator = "Steuerkraft 100%")
-
-  sg_list[[i]] <- create_indicator_sg(sg_name,"steuerkraftproew",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Steuerkraft und Steuerfüsse",indicator = "Steuerkraft pro Einwohner")
-
-  sg_list[[i]] <- create_indicator_sg(sg_name,"steuerfuss",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Steuerkraft und Steuerfüsse",indicator = "Steuerfuss in %")
-
-  sg_list[[i]] <- create_indicator_sg(sg_name,"steuerfuss_total",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Steuerkraft und Steuerfüsse",indicator = "Gesamtsteuerfuss Schule  in %")
-
-  sg_list[[i]] <- create_indicator_sg(sg_name,"gemeindesteuer",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Steuerkraft und Steuerfüsse",indicator = "Gemeindesteuerfuss in %")
-
-  sg_list[[i]] <- create_indicator_sg(sg_name,"schulsteuerfussinklgemeindesteuer",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Steuerkraft und Steuerfüsse",indicator = "Schulsteuerfuss inkl. Gemeindesteuer in %")
-
-  sg_list[[i]] <- create_indicator_sg(sg_name,"beitraege_basisjahr",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Beitragsleistungen",indicator = "Beitragsleistungen gemäss Basisjahr der Berechnungsparameter in CHF")
-
-  sg_list[[i]] <- create_indicator_sg(sg_name,"beitraege_basisjahr_steuerkraft",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Beitragsleistungen",indicator = "Beitragsleistungen gemäss Basisjahr der Berechnungsparameter im Verhältnis zur Steuerkraft 100%")
-
-
-  sg_list[[i]] <- create_indicator_sg(sg_name,"beitraege_rrb742",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Beitragsleistungen",indicator = "Beitragsleistungen periodisch abgegrenzt in CHF")
-
-  sg_list[[i]] <- create_indicator_sg(sg_name,"beitraege_rrb742_steuerkraft",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Beitragsleistungen",indicator = "Beitragsleistungen periodisch abgegrenzt im Verhältnis zur Steuerkraft 100%")
-
-  sg_list[[i]] <- create_indicator_sg(sg_name,"mittelfluss",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Beitragsleistungen",indicator = "Beitragsleistungen im Mittelflussjahr gerechnet")
-
-  sg_list[[i]] <- create_indicator_sg(sg_name,"nettoinvestitionen",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Nettoinvestitionen für das Verwaltungsvermögen im Rechnungsjahr")
-
-  sg_list[[i]] <- create_indicator_sg(sg_name,"nettoschuld",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Nettoschuld (-) / Nettovermögen (+) per 31.12. in CHF")
-
-  sg_list[[i]] <- create_indicator_sg(sg_name,"fiskalertrag",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Fiskalertrag in CHF")
-
-  sg_list[[i]] <- create_indicator_sg(sg_name,"nettoverschuldungsquotient",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Nettoverschuldungsquotient im Rechnungsjahr")
-
-  sg_list[[i]] <- create_indicator_sg(sg_name,"zinsbelastung",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Zinsbelastung im Rechnungsjahr in CHF")
-
-  sg_list[[i]] <- create_indicator_sg(sg_name,"laufender_ertrag",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Laufender Ertrag im Rechnungsjahr in CHF")
-
-  sg_list[[i]] <- create_indicator_sg(sg_name,"zinsbelastungsanteil",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Zinsbelastungsanteil im Rechnungsjahr")
-
-  sg_list[[i]] <- create_indicator_sg(sg_name,"verzinsliches_fremdkapital",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Bilanz",indicator = "Bilanzkontogruppen 201 und 206 per 31.12. in CHF")
-
-  sg_list[[i]] <- create_indicator_sg(sg_name,"zinsbelastungsrisiko",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Zinsbelastungsrisiko")
-
-
-  sg_list[[i]] <- create_indicator_sg(sg_name,"zinsrisiko",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Hypothetischer Prozentsatz für Zinsbelastungsrisiko")
-
-  sg_list[[i]] <- create_indicator_sg(sg_name,"gewinnverwendung",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Verbuchte Gewinnverwendung im Rechnungsjahr")
-
-  sg_list[[i]] <- create_indicator_sg(sg_name,"gewinnverwendung_erneuerungsfonds",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Verbuchte Einlagen in den Erneuerungsfonds Baufolgekosten")
-
-
-  sg_list[[i]] <- create_indicator_sg(sg_name,"aufwanddeckung",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Aufwanddeckung")
-
-  sg_list[[i]] <- create_indicator_sg(sg_name,"eigenkapital",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Bilanz",indicator = "Eigenkapital Bilanzkontogruppe 29 per 31.12.")
-
-  sg_list[[i]] <- create_indicator_sg(sg_name,"laufender_aufwand",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Laufender Aufwand im Rechnungsjahr")
-
-
-  sg_list[[i]] <- create_indicator_sg(sg_name,"bilanzsituation",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Eigenkapital im Verhältnis zur Steuerkraft 100% per 31.12.")
-
-  sg_list[[i]] <- create_indicator_sg(sg_name,"eigenkapitaldeckungsgrad",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Eigenkapitaldeckungsgrad")
-
-  sg_list[[i]] <- create_indicator_sg(sg_name,"erfolgvorgewinnverwendung",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Erfolgvorgewinnverwendung")
-
-  sg_list[[i]] <- create_indicator_sg(sg_name,"erfolg",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Erfolg im Rechnungsjahr in CHF")
-
-  sg_list[[i]] <- create_indicator_sg(sg_name,"bilanzueberschuss",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Bilanzüberschuss Kontogruppe 299")
-
-  sg_list[[i]] <- create_indicator_sg(sg_name,"vv",finanzlage_sg,sg_list = sg_list[[i]],topic = "Staat und Politik",subtopic = "Finanzkennzahlen",indicator = "Verwaltungsvermögen per 31.12.")
-
-
-  for (elem in get_list_paths(sg_list[[i]],list_name)){
-    data_source_list[[elem]] <- sg_data_source
+  select(bfs_nr_gemeinde, jahr, value) %>%
+  summarise_bezirk_kanton(type = "mean", bezirk_data = bezirk_data)
+
+register_indicator(gemeindesteuerfuss,
+  "Staat und Politik", "Steuerkraft und Steuerfüsse", "Gemeindesteuerfuss",
+  source_ids = "sk-stat-69")
+
+register_indicator(
+  gemeindesteuerfuss %>%
+    mutate(zehn_jahre = jahr - 10) %>%
+    left_join(gemeindesteuerfuss %>% rename(value_zehn = "value"),
+              by = c("zehn_jahre" = "jahr", "bfs_nr_gemeinde")) %>%
+    filter(!is.na(value_zehn)) %>%
+    mutate(change = value - value_zehn) %>%
+    select(bfs_nr_gemeinde, jahr, change) %>%
+    rename(value = "change"),
+  "Staat und Politik", "Steuerkraft und Steuerfüsse",
+  "Veränderung der Gemeindesteuerfüsse im Vergleich zu vor 10 Jahren (%-Punkte)",
+  source_ids = "sk-stat-69")
+
+## Finanzausgleich ------------------------------------------------------------
+register_indicator(
+  all_data[["sk-stat-1"]] %>%
+    mutate(value = as.numeric(auszahlung_abschoepfung_in_chf)) %>%
+    select(bfs_nr_gemeinde, jahr, value) %>%
+    summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data),
+  "Staat und Politik", "Finanzausgleich",
+  "Gesamtauswirkung Finanzausgleich (positive Werte: Abschöpfung, negative Werte: Auszahlung) (CHF)",
+  source_ids = "sk-stat-1")
+
+register_indicator(
+  all_data[["sk-stat-1"]] %>%
+    mutate(value = as.numeric(auszahlung_abschoepfung_in_chf_pro_einwohner)) %>%
+    select(bfs_nr_gemeinde, jahr, value) %>%
+    summarise_bezirk_kanton(type = "mean", bezirk_data = bezirk_data),
+  "Staat und Politik", "Finanzausgleich",
+  "Gesamtauswirkung Finanzausgleich pro Einwohner (positive Werte: Abschöpfung, negative Werte: Auszahlung) (CHF)",
+  source_ids = "sk-stat-1")
+
+## Gemeindefinanzkennzahlen ---------------------------------------------------
+register_indicator(
+  themenatlas_long[["sk-stat-4"]] %>%
+    mutate(filter1 = case_when(
+      variable == "selbstfinanzierungsgrad_in"   ~ "Selbstfinanzierungsgrad in %",
+      variable == "selbstfinanzierungsanteil_in" ~ "Selbstfinanzierungsanteil in %",
+      variable == "zinsbelastungsanteil_in"      ~ "Zinsbelastungsanteil in %",
+      variable == "kapitaldienstanteil_in"       ~ "Kapitaldienstanteil in %",
+      variable == "investitionsanteil_in"        ~ "Investitionsanteil in %",
+      variable == "bruttoverschuldungsanteil_in" ~ "Bruttoverschuldungsanteil in %",
+      variable == "nettoschuld_nettovermogen_pro_einwohner_in_chf" ~
+        "Nettoschuld (-) / Nettovermögen (+) pro Einwohner in Schweizer Franken",
+      variable == "nettoverschuldungsquotient_in" ~ "Nettoverschuldungsquotient in %",
+      variable == "bilanzuberschussquotient_in"   ~ "Bilanzüberschussquotient in %"
+    )) %>%
+    select(jahr, bfs_nr_gemeinde, filter1, value) %>%
+    mutate(jahr = as.numeric(jahr)) %>%
+    summarise_bezirk_kanton(type = "mean", bezirk_data = bezirk_data),
+  "Staat und Politik", "Gemeindefinanzkennzahlen", "Gemeindefinanzkennzahlen",
+  source_ids = "sk-stat-4")
+
+# -----------------------------------------------------------------------------
+# Schulgemeinden (Primar-, Sekundar-, Volksschulgemeinden)
+# -----------------------------------------------------------------------------
+print("## Schulgemeinden -------------------------------------------------------")
+
+finanzlage_sg <- get_data_from_ogd("dek-av-30")
+
+sg_geo_units <- c(PSG = "primarschulgemeinde",
+                  SSG = "sekundarschulgemeinde",
+                  VSG = "volksschulgemeinde")
+
+# Definition der Schulgemeinde-Indikatoren: Spalte -> Hierarchie
+sg_indicator_defs <- list(
+  list("einwohner", "Bevölkerung und Soziales", "Bevölkerungsstand", "Gesamtbevölkerung"),
+  list("schueler", "Bevölkerung und Soziales", "Bildung", "Anzahl Schülerinnen und Schüler im Durchschnitt der beiden Stichtage 15.2. und 15.9."),
+  list("schuelerproew", "Bevölkerung und Soziales", "Bildung", "Anteil Schüler an der Anzahl Einwohner"),
+  list("steuerkraft", "Staat und Politik", "Steuerkraft und Steuerfüsse", "Steuerkraft 100%"),
+  list("steuerkraftproew", "Staat und Politik", "Steuerkraft und Steuerfüsse", "Steuerkraft pro Einwohner"),
+  list("steuerfuss", "Staat und Politik", "Steuerkraft und Steuerfüsse", "Steuerfuss in %"),
+  list("steuerfuss_total", "Staat und Politik", "Steuerkraft und Steuerfüsse", "Gesamtsteuerfuss Schule  in %"),
+  list("gemeindesteuer", "Staat und Politik", "Steuerkraft und Steuerfüsse", "Gemeindesteuerfuss in %"),
+  list("schulsteuerfussinklgemeindesteuer", "Staat und Politik", "Steuerkraft und Steuerfüsse", "Schulsteuerfuss inkl. Gemeindesteuer in %"),
+  list("beitraege_basisjahr", "Staat und Politik", "Beitragsleistungen", "Beitragsleistungen gemäss Basisjahr der Berechnungsparameter in CHF"),
+  list("beitraege_basisjahr_steuerkraft", "Staat und Politik", "Beitragsleistungen", "Beitragsleistungen gemäss Basisjahr der Berechnungsparameter im Verhältnis zur Steuerkraft 100%"),
+  list("beitraege_rrb742", "Staat und Politik", "Beitragsleistungen", "Beitragsleistungen periodisch abgegrenzt in CHF"),
+  list("beitraege_rrb742_steuerkraft", "Staat und Politik", "Beitragsleistungen", "Beitragsleistungen periodisch abgegrenzt im Verhältnis zur Steuerkraft 100%"),
+  list("mittelfluss", "Staat und Politik", "Beitragsleistungen", "Beitragsleistungen im Mittelflussjahr gerechnet"),
+  list("nettoinvestitionen", "Staat und Politik", "Finanzkennzahlen", "Nettoinvestitionen für das Verwaltungsvermögen im Rechnungsjahr"),
+  list("nettoschuld", "Staat und Politik", "Finanzkennzahlen", "Nettoschuld (-) / Nettovermögen (+) per 31.12. in CHF"),
+  list("fiskalertrag", "Staat und Politik", "Finanzkennzahlen", "Fiskalertrag in CHF"),
+  list("nettoverschuldungsquotient", "Staat und Politik", "Finanzkennzahlen", "Nettoverschuldungsquotient im Rechnungsjahr"),
+  list("zinsbelastung", "Staat und Politik", "Finanzkennzahlen", "Zinsbelastung im Rechnungsjahr in CHF"),
+  list("laufender_ertrag", "Staat und Politik", "Finanzkennzahlen", "Laufender Ertrag im Rechnungsjahr in CHF"),
+  list("zinsbelastungsanteil", "Staat und Politik", "Finanzkennzahlen", "Zinsbelastungsanteil im Rechnungsjahr"),
+  list("verzinsliches_fremdkapital", "Staat und Politik", "Bilanz", "Bilanzkontogruppen 201 und 206 per 31.12. in CHF"),
+  list("zinsbelastungsrisiko", "Staat und Politik", "Finanzkennzahlen", "Zinsbelastungsrisiko"),
+  list("zinsrisiko", "Staat und Politik", "Finanzkennzahlen", "Hypothetischer Prozentsatz für Zinsbelastungsrisiko"),
+  list("gewinnverwendung", "Staat und Politik", "Finanzkennzahlen", "Verbuchte Gewinnverwendung im Rechnungsjahr"),
+  list("gewinnverwendung_erneuerungsfonds", "Staat und Politik", "Finanzkennzahlen", "Verbuchte Einlagen in den Erneuerungsfonds Baufolgekosten"),
+  list("aufwanddeckung", "Staat und Politik", "Finanzkennzahlen", "Aufwanddeckung"),
+  list("eigenkapital", "Staat und Politik", "Bilanz", "Eigenkapital Bilanzkontogruppe 29 per 31.12."),
+  list("laufender_aufwand", "Staat und Politik", "Finanzkennzahlen", "Laufender Aufwand im Rechnungsjahr"),
+  list("bilanzsituation", "Staat und Politik", "Finanzkennzahlen", "Eigenkapital im Verhältnis zur Steuerkraft 100% per 31.12."),
+  list("eigenkapitaldeckungsgrad", "Staat und Politik", "Finanzkennzahlen", "Eigenkapitaldeckungsgrad"),
+  list("erfolgvorgewinnverwendung", "Staat und Politik", "Finanzkennzahlen", "Erfolgvorgewinnverwendung"),
+  list("erfolg", "Staat und Politik", "Finanzkennzahlen", "Erfolg im Rechnungsjahr in CHF"),
+  list("bilanzueberschuss", "Staat und Politik", "Finanzkennzahlen", "Bilanzüberschuss Kontogruppe 299"),
+  list("vv", "Staat und Politik", "Finanzkennzahlen", "Verwaltungsvermögen per 31.12.")
+)
+
+for (sg_type in names(sg_geo_units)) {
+  geo_unit <- sg_geo_units[[sg_type]]
+  for (def in sg_indicator_defs) {
+    register_sg_indicator(sg_type, geo_unit, def[[1]], finanzlage_sg,
+                          def[[2]], def[[3]], def[[4]])
   }
 }
 
+# =============================================================================
+# 4. Speichern: flache Datensätze + Mapping + README
+# =============================================================================
+print("## Speichern ------------------------------------------------------------")
+
+save_indicators(base_dir = "nested_data", catalog = catalog)
+write_readme(catalog = catalog, path = "README.md")
 
 
-saveRDS(sg_list[[1]],"data/psg_list.rds")
-saveRDS(sg_list[[2]],"data/ssg_list.rds")
-saveRDS(sg_list[[3]],"data/vsg_list.rds")
-
-
-full_data <- list(psg_list=sg_list[[1]],
-                  ssg_list=sg_list[[2]],
-                  vsg_list=sg_list[[3]],
-                  nested_list=nested_list,
-                  additional_data=additional_data)
-
-saveRDS(full_data,"data/full_data.rds")
-
-saveRDS(data_source_list,"data/data_source_list.rds")
-
-
-
-md_list <- sapply(seq_along(data_source_list),function(i){
-  name <- names(data_source_list)[i] %>%
-    str_remove("^[^$]*\\$") %>%
-    # str_remove("additional_data\\$") %>%
-    str_remove_all("`") %>%
-    str_split("\\$") %>%
-    unlist()
-
-  if (length(name)==3){
-    topic <- name[1]
-    subtopic <- name[2]
-    indicator <- name[3]
-
-
-  }
-
-  if (length(name)==2){
-    topic <- name[1]
-    subtopic <- ""
-    indicator <- name[2]
-
-
-  }
-
-
-
-
-  temp <- data_source_list[[i]]
-
-
-  if (!is.null(temp$id)){
-    temp_df <- data.frame(id = temp$id,
-                          url = temp$url) %>%
-      mutate(string = paste0("[",id,"]","(",url,")")) %>%
-      pull(string)
-  } else {
-    temp_df <- ""
-  }
-
-
-
-  #
-
-  paste0(topic,"|",subtopic,"|",indicator,"|",paste0(temp_df,collapse = ", "))
-})
-
-
-save_nested_list <- function(nested_list, base_dir) {
-  mapping <- list()
-  counter <- 0L
-
-  walk_list <- function(lst, name_path) {
-    for (nm in names(lst)) {
-      item      <- lst[[nm]]
-      cur_names <- c(name_path, nm)
-
-      if (is.data.frame(item)) {
-        counter   <<- counter + 1L
-        id        <- sprintf("ds_%04d", counter)
-        save_path <- file.path(base_dir, paste0(id, ".rds"))
-
-        saveRDS(item, file = save_path)
-
-        mapping[[length(mapping) + 1]] <<- cur_names
-
-      } else if (is.list(item)) {
-        walk_list(item, cur_names)
-      }
-    }
-  }
-
-  dir.create(base_dir, recursive = TRUE, showWarnings = FALSE)
-  walk_list(nested_list, character(0))
-
-  # Build mapping with one column per level, NA-padded
-  max_depth <- max(lengths(mapping))
-
-  mapping_tbl <- purrr::map(mapping, function(x) {
-    length(x) <- max_depth
-    x
-  }) |>
-    do.call(rbind, args = _) |>
-    as.data.frame() |>
-    setNames(paste0("level_", seq_len(max_depth))) |>
-    tibble::as_tibble() |>
-    dplyr::mutate(id = sprintf("ds_%04d", dplyr::row_number()), .before = 1)
-
-  saveRDS(mapping_tbl, file = file.path(base_dir, "mapping.rds"))
-  readr::write_csv(mapping_tbl, file = file.path(base_dir, "mapping.csv"))
-
-  invisible(mapping_tbl)
-}
-
-
-# Usage
-dir.create("../prepare_indikatoren/nested_data")
-# save_nested_list(nested_list, base_dir = "../prepare_indikatoren/nested_data")
-mapping <- save_nested_list(nested_list, base_dir = "../prepare_indikatoren/nested_data")
-
-
-full_content <- paste0(md_list,collapse = "\n")
-
-
-full_table_md <- paste0("| Hauptkategorie | Unterkategorie | Indikator | Datensatz ID |\n",
-                        "|---------------|---------------|-----------|----------------|\n",
-                        full_content)
-
-
-writeLines(full_table_md, "README.md")
-
-
-# Probleme/Offene Fragen --------------------------------------------------
-
-# Probleme
-# Durchshcnittliche Haushaltsgrösse geht nicht
-# Arbeitslosigkeit: WO sind Daten?
-# Pendler: Wo sidn Daten? -> Aus Excel von statistik.tg.ch
-# Grenzgänger: Wo sind Daten/ Wie berechnet man diese? -> von BFS
-# Arbeitsstätten/Beschäftigte: Warum manchmal % und manchmal %Punkte?
-# Neu gegründete Unternehmen: Zahlen stimmen nicht mit den Werten im Themenatlas überein -> BFS Cube scheint unvollständig
-# Leer stehende Wohnungen nach Angebot: Daten nicht ohne weiteres auffindbar -> Aus Excel von statistik.tg.ch
-# Neu erstellte Wohngebäude: Daten für 2022 unvollständig (zu wenig )
-# Neu erstellte Wohnungen: 2020 und 2021 sind Duplikate -> Mail an Manuel gesendet
-# Drei-Jahres-Veränderung des Bestands an Gebäuden mit Wohnnutzung (%)2023 für Arbon liegt bei 92% -> die Jahre davor bei 1.4% bzw 0.4%
-# Fläche:  wie bekommt man Bodensee weg; Unterschiede in Siedlungsfläche (z.B. Arbon)
-# Steuerkraft: Wie wird diese berechnet? -> asu statisttil.tg.ch
-
-
-
+# Probleme/Offene Fragen ------------------------------------------------------
+#
+# - Durchschnittliche Haushaltsgrösse: aktuell nicht umgesetzt
+# - Arbeitslosigkeit: Datenquelle unklar
+# - Pendler: Daten aus Excel von statistik.tg.ch
+# - Grenzgänger: Berechnung/Quelle BFS
+# - Arbeitsstätten/Beschäftigte: teils %, teils %-Punkte
+# - Neu gegründete Unternehmen: BFS-Cube unvollständig (vs. Themenatlas)
+# - Leer stehende Wohnungen nach Angebot: nur via Excel von statistik.tg.ch
+# - Neu erstellte Wohngebäude: Daten 2022 unvollständig
+# - Neu erstellte Wohnungen: 2020/2021 teils Duplikate
+# - Fläche: Bodensee-Anteil, Unterschiede in Siedlungsfläche
+# - Steuerkraft: Berechnung via statistik.tg.ch
