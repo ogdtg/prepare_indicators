@@ -135,6 +135,8 @@ summarise_kanton <- function(data,type="sum"){
 }
 
 
+
+
 summarise_bezirk_kanton <- function(data,type="sum",bezirk_data){
   data_bez <- summarise_bezirk(data,type,bezirk_data)
   data_kt <- summarise_kanton(data,type)
@@ -215,6 +217,73 @@ zeit <- readRDS("data/zeit_df.rds") %>%
 catalog <- get_ogd_catalog()
 
 bezirk_data <- readRDS("data/bezirk_data.rds")
+
+
+
+get_pendler_data <- function(raw_url = "https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master") {
+
+  raw <- readr::read_csv(raw_url, show_col_types = FALSE)
+  tg_gemeinden <- bezirk_data$bfs_nr_gemeinde
+
+  zupendler <- raw |>
+    dplyr::filter(
+      PERSPECTIVE == "W",
+      GEO_CANT_WORK == 20,
+      GEO_COMM_WORK %in% tg_gemeinden,
+      GEO_COMM_RESID != GEO_COMM_WORK
+    ) |>
+    dplyr::group_by(bfs_nr_gemeinde = GEO_COMM_WORK, jahr = REF_YEAR) |>
+    dplyr::summarise(value = sum(VALUE, na.rm = TRUE), .groups = "drop")
+
+  wegpendler <- raw |>
+    dplyr::filter(
+      PERSPECTIVE == "R",
+      GEO_CANT_RESID == 20,
+      GEO_COMM_RESID %in% tg_gemeinden,
+      GEO_COMM_RESID != GEO_COMM_WORK
+    ) |>
+    dplyr::group_by(bfs_nr_gemeinde = GEO_COMM_RESID, jahr = REF_YEAR) |>
+    dplyr::summarise(value = sum(VALUE, na.rm = TRUE), .groups = "drop")
+
+  binnenpendler <- raw |>
+    dplyr::filter(
+      PERSPECTIVE == "R",
+      GEO_CANT_RESID == 20,
+      GEO_COMM_RESID %in% tg_gemeinden,
+      GEO_COMM_RESID == GEO_COMM_WORK
+    ) |>
+    dplyr::group_by(bfs_nr_gemeinde = GEO_COMM_RESID, jahr = REF_YEAR) |>
+    dplyr::summarise(value = sum(VALUE, na.rm = TRUE), .groups = "drop")
+
+  pendlersaldo <- zupendler |>
+    dplyr::rename(zu = value) |>
+    dplyr::left_join(wegpendler  |> dplyr::rename(weg    = value), by = c("jahr", "bfs_nr_gemeinde")) |>
+    dplyr::left_join(binnenpendler |> dplyr::rename(binnen = value), by = c("jahr", "bfs_nr_gemeinde")) |>
+    dplyr::mutate(
+      pendlersaldo       = zu - weg,
+      pendlersaldo_quote = pendlersaldo / (binnen + weg) * 100,
+      wegpendler_quote   = weg          / (binnen + weg) * 100,
+      zupendler_quote    = zu           / (binnen + zu)  * 100
+    )
+
+  list(
+    anzahl_zupendler    = zupendler |> dplyr::arrange(bfs_nr_gemeinde, jahr),
+    anzahl_wegpendler   = wegpendler |> dplyr::arrange(bfs_nr_gemeinde, jahr),
+    zupendlerquote      = pendlersaldo |> dplyr::select(bfs_nr_gemeinde, jahr, value = zupendler_quote),
+    wegpendlerquote     = pendlersaldo |> dplyr::select(bfs_nr_gemeinde, jahr, value = wegpendler_quote),
+    pendlersaldoquote   = pendlersaldo |> dplyr::select(bfs_nr_gemeinde, jahr, value = pendlersaldo_quote)
+  )
+}
+
+# Verwendung
+pendler <- get_pendler_data()
+
+# Zugriff auf einzelne Datensätze
+pendler$anzahl_zupendler
+pendler$anzahl_wegpendler
+pendler$zupendlerquote
+pendler$wegpendlerquote
+pendler$pendlersaldoquote
 
 
 ## Bezug und teilweise Pivotierung -----------------------------------------
@@ -376,9 +445,92 @@ bev_mean_alter <- bev_alter %>%
   ungroup()
 
 
+
+
+
+### Pendler -----------------------------------------------------------------
+
+
+
+
+get_pendler_data <- function(raw_url = "https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master",
+                             bezirk_data_path = "../themenatlasdb/data/bezirk_data.rds") {
+
+  raw <- readr::read_csv(raw_url, show_col_types = FALSE)
+  bezirk_data <- readRDS(bezirk_data_path)
+  tg_gemeinden <- bezirk_data$bfs_nr_gemeinde
+
+  zupendler <- raw |>
+    dplyr::filter(
+      PERSPECTIVE == "W",
+      GEO_CANT_WORK == 20,
+      GEO_COMM_WORK %in% tg_gemeinden,
+      GEO_COMM_RESID != GEO_COMM_WORK
+    ) |>
+    dplyr::group_by(bfs_nr_gemeinde = GEO_COMM_WORK, jahr = REF_YEAR) |>
+    dplyr::summarise(value = sum(VALUE, na.rm = TRUE), .groups = "drop")
+
+  wegpendler <- raw |>
+    dplyr::filter(
+      PERSPECTIVE == "R",
+      GEO_CANT_RESID == 20,
+      GEO_COMM_RESID %in% tg_gemeinden,
+      GEO_COMM_RESID != GEO_COMM_WORK
+    ) |>
+    dplyr::group_by(bfs_nr_gemeinde = GEO_COMM_RESID, jahr = REF_YEAR) |>
+    dplyr::summarise(value = sum(VALUE, na.rm = TRUE), .groups = "drop")
+
+  binnenpendler <- raw |>
+    dplyr::filter(
+      PERSPECTIVE == "R",
+      GEO_CANT_RESID == 20,
+      GEO_COMM_RESID %in% tg_gemeinden,
+      GEO_COMM_RESID == GEO_COMM_WORK
+    ) |>
+    dplyr::group_by(bfs_nr_gemeinde = GEO_COMM_RESID, jahr = REF_YEAR) |>
+    dplyr::summarise(value = sum(VALUE, na.rm = TRUE), .groups = "drop")
+
+  pendlersaldo <- zupendler |>
+    dplyr::rename(zu = value) |>
+    dplyr::left_join(wegpendler  |> dplyr::rename(weg    = value), by = c("jahr", "bfs_nr_gemeinde")) |>
+    dplyr::left_join(binnenpendler |> dplyr::rename(binnen = value), by = c("jahr", "bfs_nr_gemeinde")) |>
+    dplyr::mutate(
+      pendlersaldo       = zu - weg,
+      pendlersaldo_quote = pendlersaldo / (binnen + weg) * 100,
+      wegpendler_quote   = weg          / (binnen + weg) * 100,
+      zupendler_quote    = zu           / (binnen + zu)  * 100
+    )
+
+  list(
+    anzahl_binnenpendler <- binnenpendler,
+    anzahl_zupendler    = zupendler |> dplyr::arrange(bfs_nr_gemeinde, jahr),
+    anzahl_wegpendler   = wegpendler |> dplyr::arrange(bfs_nr_gemeinde, jahr),
+    zupendlerquote      = pendlersaldo |> dplyr::select(bfs_nr_gemeinde, jahr, value = zupendler_quote),
+    wegpendlerquote     = pendlersaldo |> dplyr::select(bfs_nr_gemeinde, jahr, value = wegpendler_quote),
+    pendlersaldoquote   = pendlersaldo |> dplyr::select(bfs_nr_gemeinde, jahr, value = pendlersaldo_quote)
+  )
+}
+
+# Verwendung
+pendler <- get_pendler_data()
+
+
+nested_list$`Wirtschaft und Arbeit`$Pendler$`Anzahl Zupendler (ohne Ausland)` <- pendler$anzahl_zupendler
+nested_list$`Wirtschaft und Arbeit`$Pendler$`Anzahl Wegpendler (ohne Ausland)` <- pendler$anzahl_wegpendler
+nested_list$`Wirtschaft und Arbeit`$Pendler$`Anzahl Binnenpendler (ohne Ausland)` <- pendler$anzahl_binnenpendler
+nested_list$`Wirtschaft und Arbeit`$Pendler$`Zupendlerquote (ohne Ausland)` <- pendler$zupendlerquote
+nested_list$`Wirtschaft und Arbeit`$Pendler$`Wegpendlerquote (ohne Ausland)` <- pendler$wegpendlerquote
+nested_list$`Wirtschaft und Arbeit`$Pendler$`Pendlersaldoquote (ohne Ausland)` <- pendler$pendlersaldoquote
+
+# Zugriff auf einzelne Datensätze
+pendler$anzahl_zupendler
+pendler$anzahl_wegpendler
+pendler$zupendlerquote
+pendler$wegpendlerquote
+pendler$pendlersaldoquote
+
 ### Durchschnittsalter  --------
 print("### Durchschnittsalter  ---------")
-
 
 
 nested_list$`Bevölkerung und Soziales`$Bevölkerungsstand$`Durchschnittsalter der Bevölkerung` <- bev_mean_alter %>%

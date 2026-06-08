@@ -1,3 +1,29 @@
+inddb_map_register_once <- function() {
+  geo_dir <- app_sys("extdata/geo")
+
+  shiny::addResourcePath("inddb_geo", geo_dir)
+
+  shiny::tagList(
+    echarts4r::e_map_register_ui(
+      "inddb_gemeinde_tg",
+      file.path("inddb_geo", "gemeinde_tg.geojson")
+    ),
+    echarts4r::e_map_register_ui(
+      "inddb_primarschulgemeinde_tg",
+      file.path("inddb_geo", "primarschulgemeinde_tg.geojson")
+    ),
+    echarts4r::e_map_register_ui(
+      "inddb_sekundarschulgemeinde_tg",
+      file.path("inddb_geo", "sekundarschulgemeinde_tg.geojson")
+    ),
+    echarts4r::e_map_register_ui(
+      "inddb_volksschulgemeinde_tg",
+      file.path("inddb_geo", "volksschulgemeinde_tg.geojson")
+    )
+  ) |>
+    shiny::singleton()
+}
+
 #' Die Shiny-Applikation UI
 #'
 #' @param request Interner Shiny-Parameter
@@ -15,7 +41,7 @@ app_ui <- function(request) {
       ),
       add_external_resources(),
       tgdashboard::chart_title_inject_css(),
-      tgdashboard::echarts_map_register_once(),
+      inddb_map_register_once(),
 
       # ---------------------
       # Inhalt hier einfuegen
