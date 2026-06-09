@@ -553,6 +553,55 @@ register_indicator(
   "Anteil Grenzgänger/innen am Total der Beschäftigten",
   source_ids = c("sk-stat-98", "px-x-0302010000_101"))
 
+
+
+### Pendler -----------------------------------------------------------------
+print("## Pendler ----------------------------------------------------")
+
+# Verwendung
+pendler <- get_pendler_data()
+
+
+
+register_indicator(pendler$anzahl_binnenpendler,
+                   "Wirtschaft und Arbeit", "Pendler",
+                   "Anzahl Binnenpendler",
+                   source_ids = c("https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master"))
+
+
+register_indicator(pendler$anzahl_wegpendler,
+                   "Wirtschaft und Arbeit", "Pendler",
+                   "Anzahl Wegpendler",
+                   source_ids = c("https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master"))
+
+
+
+register_indicator(pendler$anzahl_zupendler,
+                   "Wirtschaft und Arbeit", "Pendler",
+                   "Anzahl Zupendler",
+                   source_ids = c("https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master"))
+
+
+
+register_indicator(pendler$zupendlerquote,
+                   "Wirtschaft und Arbeit", "Pendler",
+                   "Zupendlerquote",
+                   source_ids = c("https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master"))
+
+register_indicator(pendler$wegpendlerquote,
+                   "Wirtschaft und Arbeit", "Pendler",
+                   "Wegpendlerquote",
+                   source_ids = c("https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master"))
+
+
+register_indicator(pendler$pendlersaldoquote,
+                   "Wirtschaft und Arbeit", "Pendler",
+                   "Pendlersaldoquote",
+                   source_ids = c("https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master"))
+
+
+
+
 # -----------------------------------------------------------------------------
 # Bauen und Wohnen
 # -----------------------------------------------------------------------------
@@ -787,9 +836,9 @@ register_indicator(
   source_ids = "px-x-0902010000_104")
 
 # -----------------------------------------------------------------------------
-# Raum und Umwelt
+# Raum, Verkehr und Umwelt
 # -----------------------------------------------------------------------------
-print("## Raum und Umwelt ------------------------------------------------------")
+print("## Raum, Verkehr und Umwelt ------------------------------------------------------")
 
 flaeche_meta     <- bfs_get_sse_metadata("DF_AREA_NOAS", language = "de")
 flaeche_meta_red <- flaeche_meta %>%
@@ -839,7 +888,7 @@ register_indicator(
     mutate(share = value / sum(value) * 100) %>%
     ungroup() %>%
     summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data),
-  "Raum und Umwelt", "Flächennutzung", "Fläche nach Flächenart",
+  "Raum, Verkehr und Umwelt", "Flächennutzung", "Fläche nach Flächenart",
   source_ids = "px-x-0202020000_102")
 
 register_indicator(
@@ -847,13 +896,13 @@ register_indicator(
     group_by(bfs_nr_gemeinde, jahr) %>%
     summarise(value = sum(value)) %>%
     summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data),
-  "Raum und Umwelt", "Flächennutzung", "Fläche total",
+  "Raum, Verkehr und Umwelt", "Flächennutzung", "Fläche total",
   source_ids = "px-x-0202020000_102")
 
 register_indicator(
   landflaeche %>%
     summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data),
-  "Raum und Umwelt", "Flächennutzung", "Landfläche",
+  "Raum, Verkehr und Umwelt", "Flächennutzung", "Landfläche",
   source_ids = "px-x-0202020000_102")
 
 register_indicator(
@@ -867,9 +916,39 @@ register_indicator(
               by = c("match_year" = "jahr", "bfs_nr_gemeinde")) %>%
     mutate(value = value / flaeche) %>%
     select(-c(share, match_year, flaeche)),
-  "Raum und Umwelt", "Flächennutzung", "Bevölkerungsdichte",
+  "Raum, Verkehr und Umwelt", "Flächennutzung", "Bevölkerungsdichte",
   source_ids = c("px-x-0202020000_102", "sk-stat-59"))
 
+
+fahrzeugbestand <- get_data_from_ogd("djs-stv-14") |>
+  filter(fahrzeuggruppe=="Personenwagen") |>
+  group_by(bfs_nr_gemeinde,jahr) |>
+  summarise(value = sum(anzahl),.groups = "drop")
+
+
+
+bev_total_mod <- bev_konf |>
+  group_by(bfs_nr_gemeinde,jahr) |>
+  summarise(value = sum(value),.groups = "drop") #|>
+  # mutate(jahr = as.numeric(jahr)+1) |>
+  # mutate(jahr = as.character(jahr))
+
+
+motorisierungsgrad <- fahrzeugbestand |>
+  left_join(bev_total_mod,by = c("bfs_nr_gemeinde","jahr")) |>
+  mutate(value = value.x/value.y*100)
+
+
+
+register_indicator(
+  motorisierungsgrad,
+  "Raum, Verkehr und Umwelt", "Personenwagenbestand", "Motorisierungsgrad",
+  source_ids = c("djs-stv-14", "sk-stat-59"))
+
+register_indicator(
+  fahrzeugbestand,
+  "Raum, Verkehr und Umwelt", "Personenwagenbestand", "Personenwagenbestand",
+  source_ids = c("djs-stv-14"))
 # -----------------------------------------------------------------------------
 # Staat und Politik
 # -----------------------------------------------------------------------------
@@ -1103,6 +1182,8 @@ for (sg_type in names(sg_geo_units)) {
 print("## Speichern ------------------------------------------------------------")
 
 save_indicators(base_dir = "nested_data", catalog = catalog)
+save_indicators(base_dir = "../raw.db/inst/extdata/data/", catalog = catalog)
+
 write_readme(catalog = catalog, path = "README.md")
 
 

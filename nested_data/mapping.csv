@@ -1,356 +1,364 @@
-id,geo_unit,level_1,level_2,level_3
-ds_0001,primarschulgemeinde,Bevölkerung und Soziales,Bevölkerungsstand,Gesamtbevölkerung
-ds_0002,primarschulgemeinde,Bevölkerung und Soziales,Bildung,Anzahl Schülerinnen und Schüler im Durchschnitt der beiden Stichtage 15.2. und 15.9.
-ds_0003,primarschulgemeinde,Bevölkerung und Soziales,Bildung,Anteil Schüler an der Anzahl Einwohner
-ds_0004,primarschulgemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Steuerkraft 100%
-ds_0005,primarschulgemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Steuerkraft pro Einwohner
-ds_0006,primarschulgemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Steuerfuss in %
-ds_0007,primarschulgemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Gesamtsteuerfuss Schule  in %
-ds_0008,primarschulgemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Gemeindesteuerfuss in %
-ds_0009,primarschulgemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Schulsteuerfuss inkl. Gemeindesteuer in %
-ds_0010,primarschulgemeinde,Staat und Politik,Beitragsleistungen,Beitragsleistungen gemäss Basisjahr der Berechnungsparameter in CHF
-ds_0011,primarschulgemeinde,Staat und Politik,Beitragsleistungen,Beitragsleistungen gemäss Basisjahr der Berechnungsparameter im Verhältnis zur Steuerkraft 100%
-ds_0012,primarschulgemeinde,Staat und Politik,Beitragsleistungen,Beitragsleistungen periodisch abgegrenzt in CHF
-ds_0013,primarschulgemeinde,Staat und Politik,Beitragsleistungen,Beitragsleistungen periodisch abgegrenzt im Verhältnis zur Steuerkraft 100%
-ds_0014,primarschulgemeinde,Staat und Politik,Beitragsleistungen,Beitragsleistungen im Mittelflussjahr gerechnet
-ds_0015,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Nettoinvestitionen für das Verwaltungsvermögen im Rechnungsjahr
-ds_0016,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Nettoschuld (-) / Nettovermögen (+) per 31.12. in CHF
-ds_0017,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Fiskalertrag in CHF
-ds_0018,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Nettoverschuldungsquotient im Rechnungsjahr
-ds_0019,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Zinsbelastung im Rechnungsjahr in CHF
-ds_0020,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Laufender Ertrag im Rechnungsjahr in CHF
-ds_0021,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Zinsbelastungsanteil im Rechnungsjahr
-ds_0022,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Zinsbelastungsrisiko
-ds_0023,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Hypothetischer Prozentsatz für Zinsbelastungsrisiko
-ds_0024,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Verbuchte Gewinnverwendung im Rechnungsjahr
-ds_0025,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Verbuchte Einlagen in den Erneuerungsfonds Baufolgekosten
-ds_0026,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Aufwanddeckung
-ds_0027,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Laufender Aufwand im Rechnungsjahr
-ds_0028,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Eigenkapital im Verhältnis zur Steuerkraft 100% per 31.12.
-ds_0029,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Eigenkapitaldeckungsgrad
-ds_0030,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Erfolgvorgewinnverwendung
-ds_0031,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Erfolg im Rechnungsjahr in CHF
-ds_0032,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Bilanzüberschuss Kontogruppe 299
-ds_0033,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Verwaltungsvermögen per 31.12.
-ds_0034,primarschulgemeinde,Staat und Politik,Bilanz,Bilanzkontogruppen 201 und 206 per 31.12. in CHF
-ds_0035,primarschulgemeinde,Staat und Politik,Bilanz,Eigenkapital Bilanzkontogruppe 29 per 31.12.
-ds_0036,sekundarschulgemeinde,Bevölkerung und Soziales,Bevölkerungsstand,Gesamtbevölkerung
-ds_0037,sekundarschulgemeinde,Bevölkerung und Soziales,Bildung,Anzahl Schülerinnen und Schüler im Durchschnitt der beiden Stichtage 15.2. und 15.9.
-ds_0038,sekundarschulgemeinde,Bevölkerung und Soziales,Bildung,Anteil Schüler an der Anzahl Einwohner
-ds_0039,sekundarschulgemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Steuerkraft 100%
-ds_0040,sekundarschulgemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Steuerkraft pro Einwohner
-ds_0041,sekundarschulgemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Steuerfuss in %
-ds_0042,sekundarschulgemeinde,Staat und Politik,Beitragsleistungen,Beitragsleistungen gemäss Basisjahr der Berechnungsparameter in CHF
-ds_0043,sekundarschulgemeinde,Staat und Politik,Beitragsleistungen,Beitragsleistungen gemäss Basisjahr der Berechnungsparameter im Verhältnis zur Steuerkraft 100%
-ds_0044,sekundarschulgemeinde,Staat und Politik,Beitragsleistungen,Beitragsleistungen periodisch abgegrenzt in CHF
-ds_0045,sekundarschulgemeinde,Staat und Politik,Beitragsleistungen,Beitragsleistungen periodisch abgegrenzt im Verhältnis zur Steuerkraft 100%
-ds_0046,sekundarschulgemeinde,Staat und Politik,Beitragsleistungen,Beitragsleistungen im Mittelflussjahr gerechnet
-ds_0047,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Nettoinvestitionen für das Verwaltungsvermögen im Rechnungsjahr
-ds_0048,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Nettoschuld (-) / Nettovermögen (+) per 31.12. in CHF
-ds_0049,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Fiskalertrag in CHF
-ds_0050,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Nettoverschuldungsquotient im Rechnungsjahr
-ds_0051,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Zinsbelastung im Rechnungsjahr in CHF
-ds_0052,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Laufender Ertrag im Rechnungsjahr in CHF
-ds_0053,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Zinsbelastungsanteil im Rechnungsjahr
-ds_0054,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Zinsbelastungsrisiko
-ds_0055,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Hypothetischer Prozentsatz für Zinsbelastungsrisiko
-ds_0056,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Verbuchte Gewinnverwendung im Rechnungsjahr
-ds_0057,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Verbuchte Einlagen in den Erneuerungsfonds Baufolgekosten
-ds_0058,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Aufwanddeckung
-ds_0059,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Laufender Aufwand im Rechnungsjahr
-ds_0060,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Eigenkapital im Verhältnis zur Steuerkraft 100% per 31.12.
-ds_0061,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Eigenkapitaldeckungsgrad
-ds_0062,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Erfolgvorgewinnverwendung
-ds_0063,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Erfolg im Rechnungsjahr in CHF
-ds_0064,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Bilanzüberschuss Kontogruppe 299
-ds_0065,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Verwaltungsvermögen per 31.12.
-ds_0066,sekundarschulgemeinde,Staat und Politik,Bilanz,Bilanzkontogruppen 201 und 206 per 31.12. in CHF
-ds_0067,sekundarschulgemeinde,Staat und Politik,Bilanz,Eigenkapital Bilanzkontogruppe 29 per 31.12.
-ds_0068,volksschulgemeinde,Bevölkerung und Soziales,Bevölkerungsstand,Gesamtbevölkerung
-ds_0069,volksschulgemeinde,Bevölkerung und Soziales,Bildung,Anzahl Schülerinnen und Schüler im Durchschnitt der beiden Stichtage 15.2. und 15.9.
-ds_0070,volksschulgemeinde,Bevölkerung und Soziales,Bildung,Anteil Schüler an der Anzahl Einwohner
-ds_0071,volksschulgemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Steuerkraft 100%
-ds_0072,volksschulgemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Steuerkraft pro Einwohner
-ds_0073,volksschulgemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Steuerfuss in %
-ds_0074,volksschulgemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Gesamtsteuerfuss Schule  in %
-ds_0075,volksschulgemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Gemeindesteuerfuss in %
-ds_0076,volksschulgemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Schulsteuerfuss inkl. Gemeindesteuer in %
-ds_0077,volksschulgemeinde,Staat und Politik,Beitragsleistungen,Beitragsleistungen gemäss Basisjahr der Berechnungsparameter in CHF
-ds_0078,volksschulgemeinde,Staat und Politik,Beitragsleistungen,Beitragsleistungen gemäss Basisjahr der Berechnungsparameter im Verhältnis zur Steuerkraft 100%
-ds_0079,volksschulgemeinde,Staat und Politik,Beitragsleistungen,Beitragsleistungen periodisch abgegrenzt in CHF
-ds_0080,volksschulgemeinde,Staat und Politik,Beitragsleistungen,Beitragsleistungen periodisch abgegrenzt im Verhältnis zur Steuerkraft 100%
-ds_0081,volksschulgemeinde,Staat und Politik,Beitragsleistungen,Beitragsleistungen im Mittelflussjahr gerechnet
-ds_0082,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Nettoinvestitionen für das Verwaltungsvermögen im Rechnungsjahr
-ds_0083,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Nettoschuld (-) / Nettovermögen (+) per 31.12. in CHF
-ds_0084,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Fiskalertrag in CHF
-ds_0085,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Nettoverschuldungsquotient im Rechnungsjahr
-ds_0086,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Zinsbelastung im Rechnungsjahr in CHF
-ds_0087,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Laufender Ertrag im Rechnungsjahr in CHF
-ds_0088,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Zinsbelastungsanteil im Rechnungsjahr
-ds_0089,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Zinsbelastungsrisiko
-ds_0090,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Hypothetischer Prozentsatz für Zinsbelastungsrisiko
-ds_0091,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Verbuchte Gewinnverwendung im Rechnungsjahr
-ds_0092,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Verbuchte Einlagen in den Erneuerungsfonds Baufolgekosten
-ds_0093,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Aufwanddeckung
-ds_0094,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Laufender Aufwand im Rechnungsjahr
-ds_0095,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Eigenkapital im Verhältnis zur Steuerkraft 100% per 31.12.
-ds_0096,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Eigenkapitaldeckungsgrad
-ds_0097,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Erfolgvorgewinnverwendung
-ds_0098,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Erfolg im Rechnungsjahr in CHF
-ds_0099,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Bilanzüberschuss Kontogruppe 299
-ds_0100,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Verwaltungsvermögen per 31.12.
-ds_0101,volksschulgemeinde,Staat und Politik,Bilanz,Bilanzkontogruppen 201 und 206 per 31.12. in CHF
-ds_0102,volksschulgemeinde,Staat und Politik,Bilanz,Eigenkapital Bilanzkontogruppe 29 per 31.12.
-ds_0103,gemeinde,Bauen und Wohnen,Leer stehende Wohnungen,Leer stehende Wohnungen total
-ds_0104,gemeinde,Bauen und Wohnen,Leer stehende Wohnungen,Leerwohnungsziffer
-ds_0105,gemeinde,Bauen und Wohnen,Bauinvestitionen,Bauinvestitionen nach Kategorie
-ds_0106,gemeinde,Bauen und Wohnen,Bauinvestitionen,Bauinvestitionen nach Art der Auftraggeber
-ds_0107,gemeinde,Bauen und Wohnen,Bauinvestitionen,Bauinvestitionen total
-ds_0108,gemeinde,Bauen und Wohnen,Bauinvestitionen,Bauinvestitionen im Vorjahresvergleich
-ds_0109,gemeinde,Bauen und Wohnen,Gebäude und Wohnungen,Wohngebäude total
-ds_0110,gemeinde,Bauen und Wohnen,Gebäude und Wohnungen,Wohngebäude nach Bauperiode
-ds_0111,gemeinde,Bauen und Wohnen,Gebäude und Wohnungen,Wohngebäude nach Kategorie des Gebäudes
-ds_0112,gemeinde,Bauen und Wohnen,Gebäude und Wohnungen,Neu erstellte Wohngebäude
-ds_0113,gemeinde,Bauen und Wohnen,Gebäude und Wohnungen,Wohnungen nach Zimmerzahl
-ds_0114,gemeinde,Bauen und Wohnen,Gebäude und Wohnungen,Wohnungen total
-ds_0115,gemeinde,Bauen und Wohnen,Gebäude und Wohnungen,Neu erstellte Wohnungen nach Zimmerzahl
-ds_0116,gemeinde,Bauen und Wohnen,Gebäude und Wohnungen,Neu erstellte Wohnungen total
-ds_0117,gemeinde,Bauen und Wohnen,Gebäude und Wohnungen,Anteil neu erstellter Wohnungen am Wohnungsbestand des Vorjahres
-ds_0118,gemeinde,Bauen und Wohnen,Gebäude und Wohnungen,Wohngebäude nach Energiequelle der Heizung
-ds_0119,gemeinde,Bevölkerung und Soziales,Bevölkerungsstand,Durchschnittsalter der Bevölkerung
-ds_0120,gemeinde,Bevölkerung und Soziales,Bevölkerungsstand,Durchschnittsalter der Rentnerinnen und Rentner
-ds_0121,gemeinde,Bevölkerung und Soziales,Bevölkerungsstand,Bevölkerungsverteilung nach Geschlecht
-ds_0122,gemeinde,Bevölkerung und Soziales,Bevölkerungsstand,Bevölkerungsverteilung nach Altersklasse
-ds_0123,gemeinde,Bevölkerung und Soziales,Bevölkerungsstand,Bevölkerungsverteilung nach Konfession
-ds_0124,gemeinde,Bevölkerung und Soziales,Bevölkerungsstand,Bevölkerungsverteilung nach Nationalität
-ds_0125,gemeinde,Bevölkerung und Soziales,Bevölkerungsstand,Gesamtbevölkerung
-ds_0126,gemeinde,Bevölkerung und Soziales,Bevölkerungsentwicklung,Bevölkerungsentwicklung (Vorjahr/5 Jahre)
-ds_0127,gemeinde,Bevölkerung und Soziales,Bevölkerungsbewegung,Wanderungssaldo
-ds_0128,gemeinde,Bevölkerung und Soziales,Bevölkerungsbewegung,Zuzüge
-ds_0129,gemeinde,Bevölkerung und Soziales,Bevölkerungsbewegung,Wegzüge
-ds_0130,gemeinde,Bevölkerung und Soziales,Bevölkerungsbewegung,Lebendgeburten
-ds_0131,gemeinde,Bevölkerung und Soziales,Bevölkerungsbewegung,Todesfälle
-ds_0132,gemeinde,Bevölkerung und Soziales,Bevölkerungsbewegung,Geburtensaldo
-ds_0133,gemeinde,Bevölkerung und Soziales,Bevölkerungsbewegung,Heiraten
-ds_0134,gemeinde,Bevölkerung und Soziales,Bevölkerungsbewegung,Scheidungen
-ds_0135,gemeinde,Bevölkerung und Soziales,Haushalte,Haushalte nach Haushaltsgrösse
-ds_0136,gemeinde,Bevölkerung und Soziales,Haushalte,Haushalte insgesamt
-ds_0137,gemeinde,Bevölkerung und Soziales,Sozialhilfe,Brutto Sozialhilfeausgaben je Einwohner
-ds_0138,gemeinde,Bevölkerung und Soziales,Sozialhilfe,Brutto Sozialhilfeausgaben total
-ds_0139,gemeinde,Bevölkerung und Soziales,Sozialhilfe,Netto Sozialhilfeausgaben je Einwohner
-ds_0140,gemeinde,Bevölkerung und Soziales,Sozialhilfe,Netto Sozialhilfeausgaben total
-ds_0141,gemeinde,Bevölkerung und Soziales,Sozialhilfe,Sozialhilfequote
-ds_0142,gemeinde,Raum und Umwelt,Flächennutzung,Fläche nach Flächenart
-ds_0143,gemeinde,Raum und Umwelt,Flächennutzung,Fläche total
-ds_0144,gemeinde,Raum und Umwelt,Flächennutzung,Landfläche
-ds_0145,gemeinde,Raum und Umwelt,Flächennutzung,Bevölkerungsdichte
-ds_0146,gemeinde,Staat und Politik,Grossratswahlen,Parteistärken nach Partei
-ds_0147,gemeinde,Staat und Politik,Grossratswahlen,Veränderung Parteistärken im Vorjahresvergleich (%-Punkte)
-ds_0148,gemeinde,Staat und Politik,Grossratswahlen,Wahlbeteiligung
-ds_0149,gemeinde,Staat und Politik,Nationalratswahlen,Parteistärken nach Partei
-ds_0150,gemeinde,Staat und Politik,Nationalratswahlen,Veränderung Parteistärken im Vorjahresvergleich (%-Punkte)
-ds_0151,gemeinde,Staat und Politik,Nationalratswahlen,Wahlbeteiligung
-ds_0152,gemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Gesamtsteuerfuss
-ds_0153,gemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Gemeindesteuerfuss
-ds_0154,gemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Veränderung der Gemeindesteuerfüsse im Vergleich zu vor 10 Jahren (%-Punkte)
-ds_0155,gemeinde,Staat und Politik,Finanzausgleich,"Gesamtauswirkung Finanzausgleich (positive Werte: Abschöpfung, negative Werte: Auszahlung) (CHF)"
-ds_0156,gemeinde,Staat und Politik,Finanzausgleich,"Gesamtauswirkung Finanzausgleich pro Einwohner (positive Werte: Abschöpfung, negative Werte: Auszahlung) (CHF)"
-ds_0157,gemeinde,Staat und Politik,2009: Eidg. Abstimmungen,29.11.2009: Bundesbeschluss zur Schaffung einer Spezialfinanzierung für Aufgaben im Luftverkehr
-ds_0158,gemeinde,Staat und Politik,2009: Eidg. Abstimmungen,29.11.2009: Volksinitiative 'Für ein Verbot von Kriegsmaterial-Exporten'
-ds_0159,gemeinde,Staat und Politik,2009: Eidg. Abstimmungen,29.11.2009: Volksinitiative 'Gegen den Bau von Minaretten'
-ds_0160,gemeinde,Staat und Politik,2009: Eidg. Abstimmungen,27.09.2009: Bundesbeschluss über den Verzicht auf die Einführung der allgemeinen Volksinitiative
-ds_0161,gemeinde,Staat und Politik,2009: Eidg. Abstimmungen,"27.09.2009: Bundesbeschluss über eine befristete Zusatzfinanzierung der Invalidenversicherung durch Anhebung der Mehrwertsteuersätze, geändert durch den Bundesbeschluss vom 12.06.2009 über die Änderung dieses Beschlusses"
-ds_0162,gemeinde,Staat und Politik,2009: Eidg. Abstimmungen,17.05.2009: Bundesbeschluss über die Genehmigung und die Umsetzung des Notenaustauschs zwischen der Schweiz und der Europäischen Gemeinschaft betreffend die Übernahme der Verordnung (EG) Nr. 2252/2004 über biometrische Pässe und Reisedokumente (Weiterentwicklung des Schengen-Besitzstands)
-ds_0163,gemeinde,Staat und Politik,2009: Eidg. Abstimmungen,17.05.2009: Verfassungsartikel 'Zukunft mit Komplementärmedizin'
-ds_0164,gemeinde,Staat und Politik,2009: Eidg. Abstimmungen,08.02.2009: Bundesbeschluss über die Genehmigung der Weiterführung des Freizügigkeitsabkommens zwischen der Schweiz und der Europäischen Gemeinschaft und ihren Mitgliedstaaten sowie über die Genehmigung und die Umsetzung des Protokolls über die Ausdehnung des Freizügigkeitsabkommens auf Bulgarien und Rumänien
-ds_0165,gemeinde,Staat und Politik,2010: Eidg. Abstimmungen,28.11.2010: Bundesbeschluss über die Aus- und Wegweisung krimineller Ausländerinnen und Ausländer im Rahmen der Bundesverfassung (Gegenentwurf zur Volksinitiative 'für die Ausschaffung krimineller Ausländer (Ausschaffungsinitiative))
-ds_0166,gemeinde,Staat und Politik,2010: Eidg. Abstimmungen,28.11.2010: Volksabstimmung 'Für die Ausschaffung krimineller Ausländer (Ausschaffungsinitiative)'
-ds_0167,gemeinde,Staat und Politik,2010: Eidg. Abstimmungen,28.11.2010: Volksinitiative 'Für die Ausschaffung von kriminellen Ausländern': Stichfrage
-ds_0168,gemeinde,Staat und Politik,2010: Eidg. Abstimmungen,28.11.2010: Volksinitiative 'Für faire Steuern. Stopp dem Missbrauch beim Steuerwettbewerb (Steuergerechtigskeits-Initiative)'
-ds_0169,gemeinde,Staat und Politik,2010: Eidg. Abstimmungen,"26.09.2010: Änderung des Bundesgesetzes über die obligatorische Arbeitslosenversicherung und die Insolvenzentschädigung (Arbeitslosenversicherungsgesetz, AVIG)"
-ds_0170,gemeinde,Staat und Politik,2010: Eidg. Abstimmungen,"07.03.2010: Änderung des Bundesgesetzes über die berufliche Alters-, Hinterlassenen- und Invalidenvorsorge (BVG) (Mindestumwandlungssatz)"
-ds_0171,gemeinde,Staat und Politik,2010: Eidg. Abstimmungen,07.03.2010: Bundesbeschluss zu einem Verfassungsartikel über die Forschung am Menschen
-ds_0172,gemeinde,Staat und Politik,2010: Eidg. Abstimmungen,07.03.2010: Volksinitiative 'Gegen Tierquälerei und für einen besseren Rechtsschutz für Tiere (Tierschutzanwalt-Initiative)'
-ds_0173,gemeinde,Staat und Politik,2011: Eidg. Abstimmungen,13.02.2011: Volksinitiative 'Für den Schutz vor Waffengewalt'
-ds_0174,gemeinde,Staat und Politik,2012: Eidg. Abstimmungen,25.11.2012: Änderung des Tierseuchengesetzes
-ds_0175,gemeinde,Staat und Politik,2012: Eidg. Abstimmungen,23.09.2012: Bundesbeschluss über die Jugendmusikförderung (Gegenentwurf zur Volksinitiative 'jugend + musik')
-ds_0176,gemeinde,Staat und Politik,2012: Eidg. Abstimmungen,23.09.2012: Volksinitiative 'Schutz vor Passivrauchen'
-ds_0177,gemeinde,Staat und Politik,2012: Eidg. Abstimmungen,23.09.2012: Volksinitiative 'Sicheres Wohnen im Alter'
-ds_0178,gemeinde,Staat und Politik,2012: Eidg. Abstimmungen,17.06.2012: Änderung des Bundesgesetzes über die Krankenversicherung (KVG) (Managed Care)
-ds_0179,gemeinde,Staat und Politik,2012: Eidg. Abstimmungen,17.06.2012: Volksinitiative 'Eigene vier Wände dank Bausparen'
-ds_0180,gemeinde,Staat und Politik,2012: Eidg. Abstimmungen,17.06.2012: Volksinitiative 'Für die Stärkung der Volksrechte in der Aussenpolitik (Staatsverträge vors Volk!)'
-ds_0181,gemeinde,Staat und Politik,2012: Eidg. Abstimmungen,11.03.2012: Bundesbeschluss über die Regelung der Geldspiele zugunsten gemeinnütziger Zwecke (Gegenentwurf zur Volksinitiative 'Für Geldspiele im Dienste des Gemeinwohls')
-ds_0182,gemeinde,Staat und Politik,2012: Eidg. Abstimmungen,11.03.2012: Bundesgesetz über die Buchpreisbindung (BuPG)
-ds_0183,gemeinde,Staat und Politik,2012: Eidg. Abstimmungen,11.03.2012: Volksinitiative '6 Wochen Ferien für alle'
-ds_0184,gemeinde,Staat und Politik,2012: Eidg. Abstimmungen,11.03.2012: Volksinitiative 'Für ein steuerlich begünstigtes Bausparen zum Erwerb von selbst genutztem Wohneigentum und zur Finanzierung von baulichen Energiespar- und Umweltschutzmassnahmen (Bau-Sparinitiative)'
-ds_0185,gemeinde,Staat und Politik,2012: Eidg. Abstimmungen,11.03.2012: Volksinitiative 'Schluss mit uferlosem Bau von Zweitwohnungen'
-ds_0186,gemeinde,Staat und Politik,2013: Eidg. Abstimmungen,"24.11.2013: Änderung des Bundesgesetzes über die Abgabe für die Benützung von Nationalstrassen (Nationalstrassengesetz, NSAG)"
-ds_0187,gemeinde,Staat und Politik,2013: Eidg. Abstimmungen,24.11.2013: Volksinitiative '1:12 - für gerechte Löhne'
-ds_0188,gemeinde,Staat und Politik,2013: Eidg. Abstimmungen,"24.11.2013: Volksinitiative 'Familieninitiative: Steuerabzüge auch für Eltern, die ihre Kinder selber betreuen'"
-ds_0189,gemeinde,Staat und Politik,2013: Eidg. Abstimmungen,"22.09.2013: Änderung des Bundesgesetzes über die Arbeit, Industrie, Gewerbe und Handel (Arbeitsgesetz, ArG)"
-ds_0190,gemeinde,Staat und Politik,2013: Eidg. Abstimmungen,"22.09.2013: Bundesgesetz über die Bekämpfung übertragbarer Krankheiten des Menschen (Epidemiengesetz, EpG)"
-ds_0191,gemeinde,Staat und Politik,2013: Eidg. Abstimmungen,22.09.2013: Volksinitiative 'Ja zur Aufhebung der Wehrpflicht'
-ds_0192,gemeinde,Staat und Politik,2013: Eidg. Abstimmungen,09.06.2013: Änderung des Asylgesetzes (AsylG) (Dringliche Änderung des Asylgesetzes)
-ds_0193,gemeinde,Staat und Politik,2013: Eidg. Abstimmungen,09.06.2013: Volksinitiative 'Volkswahl des Bundesrates'
-ds_0194,gemeinde,Staat und Politik,2013: Eidg. Abstimmungen,"03.03.2013: Änderung des Bundesgesetzes über die Raumplanung (Raumplanungsgesetz, RPG)"
-ds_0195,gemeinde,Staat und Politik,2013: Eidg. Abstimmungen,03.03.2013: Bundesbeschluss über die Familienpolitik
-ds_0196,gemeinde,Staat und Politik,2013: Eidg. Abstimmungen,03.03.2013: Volksinitiative 'Gegen die Abzockerei'
-ds_0197,gemeinde,Staat und Politik,2014: Eidg. Abstimmungen,30.11.2014: Volksinitiative 'Rettet unser Schweizer Gold (Gold-Initiative)'
-ds_0198,gemeinde,Staat und Politik,2014: Eidg. Abstimmungen,30.11.2014: Volksinitiative 'Schluss mit Steuerprivilegien für Millionäre (Abschaffung der Pauschalbesteuerung)'
-ds_0199,gemeinde,Staat und Politik,2014: Eidg. Abstimmungen,30.11.2014: Volksinitiative 'Stopp der Überbevölkerung - zur Sicherung der natürlichen Lebensgrundlage'
-ds_0200,gemeinde,Staat und Politik,2014: Eidg. Abstimmungen,28.09.2014: Volksinitiative 'Für eine öffentliche Krankenkasse'
-ds_0201,gemeinde,Staat und Politik,2014: Eidg. Abstimmungen,28.09.2014: Volksinitiative 'Schluss mit der Mehrwertsteuer-Diskriminierung des Gastgewerbes!'
-ds_0202,gemeinde,Staat und Politik,2014: Eidg. Abstimmungen,18.05.2014: Bundesbeschluss über die medizinische Grundversorgung (direkter Gegenentwurf zur Volksinitiative 'Ja zur Hausarztmedizin')
-ds_0203,gemeinde,Staat und Politik,2014: Eidg. Abstimmungen,18.05.2014: Bundesgesetz über den Fonds zur Beschaffung des Kampfflugzeugs Gripen (Gripen-Fonds-Gesetz)
-ds_0204,gemeinde,Staat und Politik,2014: Eidg. Abstimmungen,18.05.2014: Volkinitiative 'Pädophile sollen nicht mehr mit Kindern arbeiten dürfen'
-ds_0205,gemeinde,Staat und Politik,2014: Eidg. Abstimmungen,18.05.2014: Volksinitiative 'Für den Schutz fairer Löhne (Mindestlohn-Initiative)'
-ds_0206,gemeinde,Staat und Politik,2014: Eidg. Abstimmungen,09.02.2014: Bundesbeschluss über die Finanzierung und den Ausbau der Eisenbahninfrastruktur (direkter Gegenentwurf zur Volksinitiative 'Für den öffentlichen Verkehr')
-ds_0207,gemeinde,Staat und Politik,2014: Eidg. Abstimmungen,09.02.2014: Volksinitiative 'Abtreibungsfinanzierung ist Privatsache - Entlastung der Krankenversicherung durch Streichung der Kosten des Schwangerschaftsabbruchs aus der obligatorischen Grundversicherung'
-ds_0208,gemeinde,Staat und Politik,2014: Eidg. Abstimmungen,09.02.2014: Volksinitiative 'Gegen Masseneinwanderung'
-ds_0209,gemeinde,Staat und Politik,2015: Eidg. Abstimmungen,14.06.2015: Änderung des Bundesgesetzes über Radio und Fernsehen (RTVG)
-ds_0210,gemeinde,Staat und Politik,2015: Eidg. Abstimmungen,14.06.2015: Bundesbeschluss über die Änderung der Verfassungsbestimmung zur Fortpflanzungsmedizin und Gentechnologie im Humanbereich
-ds_0211,gemeinde,Staat und Politik,2015: Eidg. Abstimmungen,14.06.2015: Volksinitiative 'Millionen-Erbschaften besteuern für unsere AHV (Erbschaftssteuerreform)'
-ds_0212,gemeinde,Staat und Politik,2015: Eidg. Abstimmungen,14.06.2015: Volksinitiative 'Stipendieninitiative'
-ds_0213,gemeinde,Staat und Politik,2015: Eidg. Abstimmungen,08.03.2015: Volksinitiative 'Energie- statt Mehrwertsteuer'
-ds_0214,gemeinde,Staat und Politik,2015: Eidg. Abstimmungen,08.03.2015: Volksinitiative 'Familie stärken! Steuerfreie Kinder- und Ausbildungszulagen'
-ds_0215,gemeinde,Staat und Politik,2016: Eidg. Abstimmungen,27.11.2016: Volksinitiative 'für den geordneten Ausstieg aus der Atomenergie (Atomausstiegsinitiative)'
-ds_0216,gemeinde,Staat und Politik,2016: Eidg. Abstimmungen,"25.09.2016: Bundesgesetz über den Nachrichtendienst (Nachrichtendienstgesetz, NDG)"
-ds_0217,gemeinde,Staat und Politik,2016: Eidg. Abstimmungen,25.09.2016: Volksinitiative 'AHVplus: für eine starke AHV'
-ds_0218,gemeinde,Staat und Politik,2016: Eidg. Abstimmungen,25.09.2016: Volksinitiative 'für eine nachhaltige und ressourceneffiziente Wirtschaft (Grüne Wirtschaft)'
-ds_0219,gemeinde,Staat und Politik,2016: Eidg. Abstimmungen,05.06.2016: Änderung des Asylgesetzes (AsylG)
-ds_0220,gemeinde,Staat und Politik,2016: Eidg. Abstimmungen,"05.06.2016: Änderung des Bundesgesetzes über die medizinisch unterstützte Fortpflanzung (Fortpflanzungsmedizingesetz, FMedG)"
-ds_0221,gemeinde,Staat und Politik,2016: Eidg. Abstimmungen,05.06.2016: Volksinitiative 'Für ein bedingungsloses Grundeinkommen'
-ds_0222,gemeinde,Staat und Politik,2016: Eidg. Abstimmungen,05.06.2016: Volksinitiative 'Für eine faire Verkehrsfinanzierung'
-ds_0223,gemeinde,Staat und Politik,2016: Eidg. Abstimmungen,05.06.2016: Volksinitiative 'Pro Service public'
-ds_0224,gemeinde,Staat und Politik,2016: Eidg. Abstimmungen,28.02.2016: Änderung des Bundesgesetzes über den Strassentransitverkehr im Alpengebiet (STVG) (Sanierung Gotthard-Strassentunnel)
-ds_0225,gemeinde,Staat und Politik,2016: Eidg. Abstimmungen,28.02.2016: Volksinitiative 'Für Ehe und Familie - gegen die Heiratsstrafe'
-ds_0226,gemeinde,Staat und Politik,2016: Eidg. Abstimmungen,28.02.2016: Volksinitiative 'Keine Spekulation mit Nahrungsmitteln!'
-ds_0227,gemeinde,Staat und Politik,2016: Eidg. Abstimmungen,28.02.2016: Volksinitiative 'Zur Durchsetzung der Ausschaffung krimineller Ausländer (Durchsetzungsinitiative)'
-ds_0228,gemeinde,Staat und Politik,2017: Eidg. Abstimmungen,24.09.2017: Bundesbeschluss über die Ernährungssicherheit (direkter Gegenentwurf zur zurückgezogenen Volksinitiative 'Für Ernährungssicherheit')
-ds_0229,gemeinde,Staat und Politik,2017: Eidg. Abstimmungen,24.09.2017: Bundesbeschluss über die Zusatzfinanzierung der AHV durch eine Erhöhung der Mehrwertsteuer
-ds_0230,gemeinde,Staat und Politik,2017: Eidg. Abstimmungen,24.09.2017: Bundesgesetz über die Reform der Altersvorsorge 2020
-ds_0231,gemeinde,Staat und Politik,2017: Eidg. Abstimmungen,21.05.2017: Energiegesetz (EnG)
-ds_0232,gemeinde,Staat und Politik,2017: Eidg. Abstimmungen,12.02.2017: Bundesbeschluss über die erleichterte Einbürgerung von Personen der dritten Ausländergeneration
-ds_0233,gemeinde,Staat und Politik,2017: Eidg. Abstimmungen,12.02.2017: Bundesbeschluss über die Schaffung eines Fonds für die Nationalstrassen und den Agglomerationsverkehr
-ds_0234,gemeinde,Staat und Politik,2017: Eidg. Abstimmungen,12.02.2017: Bundesgesetz über steuerliche Massnahmen zur Stärkung der Wettbewerbsfähigkeit des Unternehmensstandorts Schweiz (Unternehmenssteuerreformgesetz III)
-ds_0235,gemeinde,Staat und Politik,2018: Eidg. Abstimmungen,25.11.2018: Volksinitiative 'Für die Würde der landwirtschaftlichen Nutztiere (Hornkuh-Initiative)'
-ds_0236,gemeinde,Staat und Politik,2018: Eidg. Abstimmungen,25.11.2018: Volksinitiatve 'Schweizer Recht statt fremde Richter (Selbstbestimmungsinitiative)'
-ds_0237,gemeinde,Staat und Politik,2018: Eidg. Abstimmungen,25.11.2018: Änderung des Bundesgesetzes über den Allgemeinen Teil des Sozialversicherungsrechts (ATSG) (Gesetzliche Grundlage für die Überwachung von Versicherten)
-ds_0238,gemeinde,Staat und Politik,2018: Eidg. Abstimmungen,"23.09.2018: Bundesbeschluss über die Velowege sowie die Fuss- und Wanderwege (direkter Gegenentwurf zur Volksinitiative 'Zur Förderung der Velo-, Fuss- und Wanderwege [Velo-Initiative]')"
-ds_0239,gemeinde,Staat und Politik,2018: Eidg. Abstimmungen,23.09.2018: Volksinitiative 'Für gesunde sowie umweltfreundliche und fair hergestellte Lebensmittel (Fair-Food-Initiative)'
-ds_0240,gemeinde,Staat und Politik,2018: Eidg. Abstimmungen,23.09.2018: Volksinitiative 'Für die Würde der landwirtschaftlichen Nutztiere (Hornkuh-Initiative)'
-ds_0241,gemeinde,Staat und Politik,2018: Eidg. Abstimmungen,10.06.2018: Volksinitiative 'Für krisensicheres Geld: Geldschöpfung allein durch die Nationalbank! (Vollgeld-Initiative)
-ds_0242,gemeinde,Staat und Politik,2018: Eidg. Abstimmungen,"10.06.2018: Bundesgesetz über Geldspiele (Geldspielgesetz, BSG)"
-ds_0243,gemeinde,Staat und Politik,2018: Eidg. Abstimmungen,04.03.2018: Bundesbeschluss über die neue Finanzordnung 2021
-ds_0244,gemeinde,Staat und Politik,2018: Eidg. Abstimmungen,04.03.2018: Volksinitiative 'Ja zur Abschaffung der Radio- und Fernsehgebühren (Abschaffung der Billag-Gebühren)'
-ds_0245,gemeinde,Staat und Politik,2019: Eidg. Abstimmungen,19.05.2019: Bundesgesetz über die Steuerreform und AHV-Finanzierung (STAF)
-ds_0246,gemeinde,Staat und Politik,2019: Eidg. Abstimmungen,19.05.2019: Bundesbeschluss über die Genehmigung und die Umsetzung des Notenaustauschs zwischen der Schweiz und der EU betreffend die Übernahme der Richtlinie (EU) 2017/853 zur Änderung der EU-Waffenrichtlinie (Weiterentwicklung des Schengen-Besitzstands)
-ds_0247,gemeinde,Staat und Politik,2019: Eidg. Abstimmungen,10.02.2019: Volksinitiative 'Zersiedelung stoppen - für eine nachhaltige Siedlungsentwicklung (Zersiedelungsinitiative)'
-ds_0248,gemeinde,Staat und Politik,2020: Eidg. Abstimmungen,29.11.2020: Volksinitiative 'Für verantwortungsvolle Unternehmen - zum Schutz von Mensch und Umwelt'
-ds_0249,gemeinde,Staat und Politik,2020: Eidg. Abstimmungen,29.11.2020: Volksinitiative 'Für ein Verbot der Finanzierung von Kriegsmaterialproduzenten'
-ds_0250,gemeinde,Staat und Politik,2020: Eidg. Abstimmungen,27.09.2020: Volksinitiative 'Für eine massvolle Zuwanderung'
-ds_0251,gemeinde,Staat und Politik,2020: Eidg. Abstimmungen,27.09.2020: Änderung des Jagdgesetzes
-ds_0252,gemeinde,Staat und Politik,2020: Eidg. Abstimmungen,27.09.2020: Änderung des Bundesgesetzes über die direkte Bundessteuer (Steuerliche Berücksichtigung der Kinderdrittbetreuungskosten)
-ds_0253,gemeinde,Staat und Politik,2020: Eidg. Abstimmungen,27.09.2020: Änderung des Erwerbsersatzgesetzes (Vaterschaftsurlaub)
-ds_0254,gemeinde,Staat und Politik,2020: Eidg. Abstimmungen,27.09.2020: Bundesbeschluss über die Beschaffung neuer Kampfflugzeuge
-ds_0255,gemeinde,Staat und Politik,2020: Eidg. Abstimmungen,09.02.2020: Volksinitiative 'Mehr bezahlbare Wohnungen'
-ds_0256,gemeinde,Staat und Politik,2020: Eidg. Abstimmungen,09.02.2020: Änderung des Strafgesetzbuches und des Militärstrafgesetzes (Diskriminierung und Aufruf zu Hass aufgrund der sexuellen Orientierung)
-ds_0257,gemeinde,Staat und Politik,2021: Eidg. Abstimmungen,28.11.2021: Volksinitiative 'Für eine starke Pflege (Pflegeinitiative)'
-ds_0258,gemeinde,Staat und Politik,2021: Eidg. Abstimmungen,28.11.2021: Volksinitiative 'Bestimmung der Bundesrichterinnen und Bundesrichter im Losverfahren (Justiz-Initiative)'
-ds_0259,gemeinde,Staat und Politik,2021: Eidg. Abstimmungen,28.11.2021: Änderung des Covid-19-Gesetzes
-ds_0260,gemeinde,Staat und Politik,2021: Eidg. Abstimmungen,"26.09.2021: Volksinitiative 'Löhne entlasten, Kapital gerecht besteuern'"
-ds_0261,gemeinde,Staat und Politik,2021: Eidg. Abstimmungen,26.09.2021: Änderung des Schweizerischen Zivilgesetzbuches (Ehe für alle)
-ds_0262,gemeinde,Staat und Politik,2021: Eidg. Abstimmungen,13.06.2021: Volksinitiative'Für sauberes Trinkwasser und gesunde Nahrung - Keine Subventionen für den Pestizid- und den prophylaktischen Antibiotika-Einsatz'
-ds_0263,gemeinde,Staat und Politik,2021: Eidg. Abstimmungen,13.06.2021: Volksinitiative'Für eine Schweiz ohne synthetische Pestizide'
-ds_0264,gemeinde,Staat und Politik,2021: Eidg. Abstimmungen,13.06.2021: Bundesgesetz über die gesetzlichen Grundlagen für Verordnungen des Bundesrates zur Bewältigung der Covid-19-Epidemie (Covid-19-Gesetz)
-ds_0265,gemeinde,Staat und Politik,2021: Eidg. Abstimmungen,13.06.2021: Bundesgesetz über die Verminderung von Treibhausgasemissionen (CO2-Gesetz)
-ds_0266,gemeinde,Staat und Politik,2021: Eidg. Abstimmungen,13.06.2021: Bundesgesetz über polizeiliche Massnahmen zur Bekämpfung von Terrorismus (PMT)
-ds_0267,gemeinde,Staat und Politik,2021: Eidg. Abstimmungen,07.03.2021: Volksinitiative 'Ja zum Verhüllungsverbot'
-ds_0268,gemeinde,Staat und Politik,2021: Eidg. Abstimmungen,07.03.2021: Bundesgesetz über elektronische Identifizierungsdienste (E-ID-Gesetz)
-ds_0269,gemeinde,Staat und Politik,2021: Eidg. Abstimmungen,07.03.2021: Wirtschaftspartnerschaftsabkommen mit Indonesien
-ds_0270,gemeinde,Staat und Politik,2022: Eidg. Abstimmungen,25.09.2022: Massentierhaltungsinitiative
-ds_0271,gemeinde,Staat und Politik,2022: Eidg. Abstimmungen,25.09.2022: Zusatzfinanzierung der AHV durch eine Erhöhung der Mehrwertsteuer
-ds_0272,gemeinde,Staat und Politik,2022: Eidg. Abstimmungen,25.09.2022: Änderung des Bundesgesetzes über die Alters- und Hinterlassenenversicherung (AHV 21)
-ds_0273,gemeinde,Staat und Politik,2022: Eidg. Abstimmungen,25.09.2022: Änderung des Bundesgesetzes über die Verrechnungssteuer
-ds_0274,gemeinde,Staat und Politik,2022: Eidg. Abstimmungen,15.05.2022: Änderung des Filmgesetzes
-ds_0275,gemeinde,Staat und Politik,2022: Eidg. Abstimmungen,15.05.2022: Änderung des Transplatationsgesetzes
-ds_0276,gemeinde,Staat und Politik,2022: Eidg. Abstimmungen,15.05.2022: Übernahme der EU-Verordnung über die Europäische Grenz- und Küstenwache (Weiterentwicklung des Schengen-Besitzstands)
-ds_0277,gemeinde,Staat und Politik,2022: Eidg. Abstimmungen,13.02.2022: Volksinitiative 'Ja zum Tier- und Menschenversuchsverbot'
-ds_0278,gemeinde,Staat und Politik,2022: Eidg. Abstimmungen,13.02.2022: Volksinitiative 'Ja zum Schutz der Kinder und Jugendlichen vor Tabakwerbung '
-ds_0279,gemeinde,Staat und Politik,2022: Eidg. Abstimmungen,13.02.2022: Änderung des Bundesgesetzes über die Stempelabgaben
-ds_0280,gemeinde,Staat und Politik,2022: Eidg. Abstimmungen,13.02.2022: Bundesgesetz über ein Massnahmenpaket zugunsten der Medien
-ds_0281,gemeinde,Staat und Politik,2023: Eidg. Abstimmungen,18.06.2023: Bundesbeschluss über eine besondere Besteuerung grosser Unternehmensgruppen (Umsetzung des OECD/G20-Projekts zur Besteuerung grosser Unternehmensgruppen)
-ds_0282,gemeinde,Staat und Politik,2023: Eidg. Abstimmungen,"18.06.2023: Bundesgesetz über die Ziele im Klimaschutz, die Innovation und die Stärkung der Energiesicherheit (KlG)"
-ds_0283,gemeinde,Staat und Politik,2023: Eidg. Abstimmungen,18.06.2023: Änderung des Bundesgesetzes über die gesetzlichen Grundlagen für Verordnungen des Bundesrates zur Bewältigung der Covid-19-Epidemie (Covid-19-Gesetz)
-ds_0284,gemeinde,Staat und Politik,2024: Eidg. Abstimmungen,24.11.2024: Bundesbeschluss vom 29. September 2023 über den Ausbauschritt 2023 für die Nationalstrassen (BBl 2023 2302)
-ds_0285,gemeinde,Staat und Politik,2024: Eidg. Abstimmungen,24.11.2024: Änderung vom 29. September 2023 des Obligationenrechts (Mietrecht: Untermiete) (BBl 2023 2288)
-ds_0286,gemeinde,Staat und Politik,2024: Eidg. Abstimmungen,24.11.2024: Änderung vom 29. September 2023 des Obligationenrechts (Mietrecht: Kündigung wegen Eigenbedarfs) (BBl 2023 2291)
-ds_0287,gemeinde,Staat und Politik,2024: Eidg. Abstimmungen,24.11.2024: Änderung vom 22. Dezember 2023 des Bundesgesetzes über die Krankenversicherung (KVG) (Einheitliche Finanzierung der Leistungen) (BBl 2024 31)
-ds_0288,gemeinde,Staat und Politik,2024: Eidg. Abstimmungen,22.09.2024: Volksinitiative vom 8. September 2020 'Für die Zukunft unserer Natur und Landschaft (Biodiversitätsinitiative)» (BBl 2024 28)
-ds_0289,gemeinde,Staat und Politik,2024: Eidg. Abstimmungen,"22.09.2024: Änderung vom 17. März 2023 des Bundesgesetzes über die berufliche Alters-, Hinterlassenen- und Invalidenvorsorge (BVG) (Reform der beruflichen Vorsorge) (BBl 2023 785)"
-ds_0290,gemeinde,Staat und Politik,2024: Eidg. Abstimmungen,09.06.2024: Volksinitiative vom 23. Januar 2020 'Maximal 10 % des Einkommens für die Krankenkassenprämien (Prämien-Entlastungs-Initiative)» (BBl 2023 2285)
-ds_0291,gemeinde,Staat und Politik,2024: Eidg. Abstimmungen,09.06.2024: Volksinitiative vom 10. März 2020 'Für tiefere Prämien - Kostenbremse im Gesundheitswesen (Kostenbremse-Initiative)» (BBl 2023 2286)
-ds_0292,gemeinde,Staat und Politik,2024: Eidg. Abstimmungen,09.06.2024: Volksinitiative vom 16. Dezember 2021 'Für Freiheit und körperliche Unversehrtheit» (BBl 2023 2287)
-ds_0293,gemeinde,Staat und Politik,2024: Eidg. Abstimmungen,09.06.2024: Bundesgesetz vom 29. September 2023 über eine sichere Stromversorgung mit erneuerbaren Energien (Änderung des Energiegesetzes und des Stromversorgungsgesetzes) (BBl 2023 2301)
-ds_0294,gemeinde,Staat und Politik,2024: Eidg. Abstimmungen,03.03.2024: 13. AHV-Rente
-ds_0295,gemeinde,Staat und Politik,2024: Eidg. Abstimmungen,03.03.2024: Renteninitiative
-ds_0296,gemeinde,Staat und Politik,2025: Eidg. Abstimmungen,09.02.2025: Volksinitiative 'Für eine verantwortungsvolle Wirtschaft innerhalb der planetaren Grenzen (Umweltverantwortungsinitiative)'
-ds_0297,gemeinde,Staat und Politik,2025: Eidg. Abstimmungen,30.11.2025: Volksinitiative 'Für eine engagierte Schweiz (Service-citoyen-Initiative)»
-ds_0298,gemeinde,Staat und Politik,2025: Eidg. Abstimmungen,30.11.2025: Volksinitiative 'Für eine soziale Klimapolitik – steuerlich gerecht finanziert (Initiative für eine Zukunft)»
-ds_0299,gemeinde,Staat und Politik,2025: Eidg. Abstimmungen,28.09.2025: Bundesbeschluss vom 20. Dezember 2024 über die kantonalen Liegenschaftssteuern auf Zweitliegenschaften
-ds_0300,gemeinde,Staat und Politik,2025: Eidg. Abstimmungen,"28.09.2025: Bundesgesetz vom 20. Dezember 2024 über den elektronischen Identitätsnachweis und andere elektronische Nachweise (E-ID-Gesetz, BGEID)"
-ds_0301,gemeinde,Staat und Politik,2009: Kantonale Abstimmungen,29.11.2009: Gesetz betreffend die Änderung der Verfassung des Kantons Thurgau
-ds_0302,gemeinde,Staat und Politik,2009: Kantonale Abstimmungen,27.09.2009: Gesetz betreffend die Änderung des Einführungsgesetzes zum Schweizer Zivilgesetzbuch
-ds_0303,gemeinde,Staat und Politik,2009: Kantonale Abstimmungen,27.09.2009: Gesetz betreffend die Änderung des Gesetzes über die Staats- und Gemeindesteuern (Steuergesetz)
-ds_0304,gemeinde,Staat und Politik,2009: Kantonale Abstimmungen,17.05.2009: Gegenvorschlag des Grossen Rates zur Volksinitiative 'Schutz vor Passivrauchen'
-ds_0305,gemeinde,Staat und Politik,2009: Kantonale Abstimmungen,17.05.2009: Volksinitiative 'Schutz vor Passivrauchen'
-ds_0306,gemeinde,Staat und Politik,2009: Kantonale Abstimmungen,08.02.2009: Gesetz betreffend die Änderung der Verfassung des Kantons Thurgau
-ds_0307,gemeinde,Staat und Politik,2010: Kantonale Abstimmungen,07.03.2010: Thurgauische Volksinitiative 'Ja! Freie Schulwahl für alle.'
-ds_0308,gemeinde,Staat und Politik,2011: Kantonale Abstimmungen,23.10.2011: Gesetz betreffend die Änderung der Verfassung des Kantons Thurgau (Abschaffung der Volkswahlen für die Grundbuchämter und Notariate)
-ds_0309,gemeinde,Staat und Politik,2011: Kantonale Abstimmungen,15.05.2011: Gegenvorschlag zur Volksinitiative 'Abschaffung der Pauschalbesteuerung - Schweizer und Ausländer gleich behandeln'
-ds_0310,gemeinde,Staat und Politik,2011: Kantonale Abstimmungen,15.05.2011: Stichfrage zur Volksinitiative mit Gegenvorschlag 'Abschaffung der Pauschalbesteuerung - Schweizer und Ausländer gleich behandeln'
-ds_0311,gemeinde,Staat und Politik,2011: Kantonale Abstimmungen,15.05.2011: Volksinitiative 'Abschaffung der Pauschalbesteuerung - Schweizer und Ausländer gleich behandeln'
-ds_0312,gemeinde,Staat und Politik,2011: Kantonale Abstimmungen,15.05.2011: Volksinitiative 'Faires Wahlsystem für die Grossratswahlen'
-ds_0313,gemeinde,Staat und Politik,2011: Kantonale Abstimmungen,15.05.2011: Volksinitiative 'Ja zu effizienter und erneuerbarer Energie - natürlich Thurgau!'
-ds_0314,gemeinde,Staat und Politik,2011: Kantonale Abstimmungen,13.02.2011: Gesetz betreffend die Änderung der Verfassung des Kantons Thurgau
-ds_0315,gemeinde,Staat und Politik,2011: Kantonale Abstimmungen,13.02.2011: Kreditbegehren von 4'800'000 Franken als Baubeitrag des Kantons Thurgau an den Neubau der Dreifachsporthalle Arbon
-ds_0316,gemeinde,Staat und Politik,2011: Kantonale Abstimmungen,13.02.2011: Kreditbegehren von 7'630'000 Franken für die Aufstockung des Berufsbildungszentrums Weinfelden
-ds_0317,gemeinde,Staat und Politik,2012: Kantonale Abstimmungen,23.09.2012: Beschluss des Grossen Rates betreffend Erweiterung des Strassennetzes (Netzbeschluss um die Bodensee-Thurtalstrasse (BTS) und Oberlandstrasse (OLS))
-ds_0318,gemeinde,Staat und Politik,2012: Kantonale Abstimmungen,23.09.2012: Gesetz betreffend die Änderung des Gesetzes über die Strassenverkehrsabgaben
-ds_0319,gemeinde,Staat und Politik,2012: Kantonale Abstimmungen,17.06.2012: Planungs- und Baugesetz
-ds_0320,gemeinde,Staat und Politik,2016: Kantonale Abstimmungen,27.11.2016: Volksinitiative 'Ja zu einer guten Thurgauer Volksschule'
-ds_0321,gemeinde,Staat und Politik,2016: Kantonale Abstimmungen,05.06.2016: Kreditbegehren von 3'000'000 Franken als Anteil des Kantons Thurgau an den Kosten für die nächste Phase (2016-2019) des gemeinsam mit den Kantonen Appenzell Ausserrhoden und St. Gallen geführten Projekts 'Expo2027 Bodensee-Ostschweiz'
-ds_0322,gemeinde,Staat und Politik,2017: Kantonale Abstimmungen,26.11.2017: Kreditbegehren von 26'880'000 Franken für Erweiterungsbau 2 der Pädagogischen Hochschule Kreuzlingen
-ds_0323,gemeinde,Staat und Politik,2017: Kantonale Abstimmungen,12.02.2017: Volksabstimmung zum Gegenvorschlag zur Volksinitiative 'Ja zu einer intakten Thurgauer Kulturlandschaft'
-ds_0324,gemeinde,Staat und Politik,2018: Kantonale Abstimmungen,23.09.2018: Beschluss des Grossen Rates über die Gewährung eines Darlehens von 25.416 Mio. Franken als Anteil des Kantons Thurgau für den Neubau des Ostschweizer Kinderspitals (OKS) in St. Gallen
-ds_0325,gemeinde,Staat und Politik,2019: Kantonale Abstimmungen,19.05.2019: Volksinitiative 'Offenheit statt Geheimhaltung / Für transparente Behörden im Thurgau'
-ds_0326,gemeinde,Staat und Politik,2020: Kantonale Abstimmungen,29.11.2020: Neubau Schulsportturnhalle am Bildungszentrum für Technik in Frauenfeld
-ds_0327,gemeinde,Staat und Politik,2020: Kantonale Abstimmungen,27.09.2020: Ergänzungsbau Regierungsgebäude
-ds_0328,gemeinde,Staat und Politik,2020: Kantonale Abstimmungen,09.02.2020: Änderung des Gesetzes über die Staats- und Gemeindesteuern (Steuergesetz)
-ds_0329,gemeinde,Staat und Politik,2022: Kantonale Abstimmungen,27.11.2022: Objektkredit von Fr. 16’300’000 für den Erweiterungsbau der Kantonsschule Frauenfeld
-ds_0330,gemeinde,Staat und Politik,2023: Kantonale Abstimmungen,18.06.2023: Änderung des Gesetzes über die Energienutzung
-ds_0331,gemeinde,Staat und Politik,2023: Kantonale Abstimmungen,18.06.2023: Kreditbegehren über 127.2 Mio. Franken (Fr. 127'203'243.85) betreffend die Verwendung des Agios aus der Ausgabe von Partizipationsscheinen der Thurgauer Kantonalbank (TKB)
-ds_0332,gemeinde,Staat und Politik,Gemeindefinanzkennzahlen,Gemeindefinanzkennzahlen
-ds_0333,gemeinde,Staat und Politik,2026: Eidg. Abstimmungen,"08.03.2026: Volksinitiative 'Ja zu einer unabhängigen, freien Schweizer Währung mit Münzen oder Banknoten (Bargeld ist Freiheit)»"
-ds_0334,gemeinde,Staat und Politik,2026: Eidg. Abstimmungen,08.03.2026: Bundesbeschluss über die schweizerische Währung und die Bargeldversorgung (Gegenvorschlag zur Bargeldinitiative)
-ds_0335,gemeinde,Staat und Politik,2026: Eidg. Abstimmungen,08.03.2026: Bargeldinitiative und Gegenvorschlag: Stichfrage
-ds_0336,gemeinde,Staat und Politik,2026: Eidg. Abstimmungen,08.03.2026: Volksinitiative '200 Franken sind genug! (SRG-Initiative)»
-ds_0337,gemeinde,Staat und Politik,2026: Eidg. Abstimmungen,"08.03.2026: Volksinitiative 'Für eine gerechte Energie- und Klimapolitik: Investieren für Wohlstand, Arbeit und Umwelt (Klimafonds-Initiative)»"
-ds_0338,gemeinde,Staat und Politik,2026: Eidg. Abstimmungen,08.03.2026: Bundesgesetz vom 20. Juni 2025 über die Individualbesteuerung
-ds_0339,gemeinde,Staat und Politik,2025: Kantonale Abstimmungen,28.09.2025: Ruhetagsgesetz
-ds_0340,gemeinde,Staat und Politik,2025: Kantonale Abstimmungen,18.05.2025: Abschaffung der Liegenschaftensteuer
-ds_0341,gemeinde,Wirtschaft und Arbeit,Beschäftigte,Veränderung Beschäftigte total gegenüber vor 5 Jahren
-ds_0342,gemeinde,Wirtschaft und Arbeit,Beschäftigte,Vorjahresveränderung Beschäftigte total
-ds_0343,gemeinde,Wirtschaft und Arbeit,Beschäftigte,Veränderung Beschäftigte nach Sektor gegenüber vor 5 Jahren (in % Punkten)
-ds_0344,gemeinde,Wirtschaft und Arbeit,Beschäftigte,Vorjahresveränderung Beschäftigte nach Sektor (in %)
-ds_0345,gemeinde,Wirtschaft und Arbeit,Beschäftigte,Beschäftigte total
-ds_0346,gemeinde,Wirtschaft und Arbeit,Beschäftigte,Beschäftigte nach Sektor
-ds_0347,gemeinde,Wirtschaft und Arbeit,Arbeitsstätten,Veränderung Arbeitsstätten total gegenüber vor 5 Jahren
-ds_0348,gemeinde,Wirtschaft und Arbeit,Arbeitsstätten,Vorjahresveränderung Arbeitsstätten total
-ds_0349,gemeinde,Wirtschaft und Arbeit,Arbeitsstätten,Veränderung Arbeitsstätten nach Sektor gegenüber vor 5 Jahren (in % Punkten)
-ds_0350,gemeinde,Wirtschaft und Arbeit,Arbeitsstätten,Vorjahresveränderung Arbeitsstätten nach Sektor (in %)
-ds_0351,gemeinde,Wirtschaft und Arbeit,Arbeitsstätten,Arbeitsstätten total
-ds_0352,gemeinde,Wirtschaft und Arbeit,Arbeitsstätten,Arbeitsstätten nach Sektor
-ds_0353,gemeinde,Wirtschaft und Arbeit,Grenzgänger/innen,Grenzgänger/innen total
-ds_0354,gemeinde,Wirtschaft und Arbeit,Grenzgänger/innen,Anteil Grenzgänger/innen am Total der Beschäftigten
-ds_0355,zusatzdaten,Bevölkerung und Soziales,Bevölkerung nach Altersklasse Geschlecht,NA
+id,geo_unit,level_1,level_2,level_3,source_ids,source_urls
+ds_0001,gemeinde,Bevölkerung und Soziales,Bevölkerungsstand,Durchschnittsalter der Bevölkerung,sk-stat-57,https://data.tg.ch/explore/dataset/sk-stat-57/table/
+ds_0002,gemeinde,Bevölkerung und Soziales,Bevölkerungsstand,Durchschnittsalter der Rentnerinnen und Rentner,sk-stat-57,https://data.tg.ch/explore/dataset/sk-stat-57/table/
+ds_0003,gemeinde,Bevölkerung und Soziales,Bevölkerungsstand,Bevölkerungsverteilung nach Geschlecht,sk-stat-59,https://data.tg.ch/explore/dataset/sk-stat-59/table/
+ds_0004,gemeinde,Bevölkerung und Soziales,Bevölkerungsstand,Bevölkerungsverteilung nach Altersklasse,sk-stat-57,https://data.tg.ch/explore/dataset/sk-stat-57/table/
+ds_0005,gemeinde,Bevölkerung und Soziales,Bevölkerungsstand,Bevölkerungsverteilung nach Konfession,sk-stat-62,https://data.tg.ch/explore/dataset/sk-stat-62/table/
+ds_0006,gemeinde,Bevölkerung und Soziales,Bevölkerungsstand,Bevölkerungsverteilung nach Nationalität,sk-stat-59,https://data.tg.ch/explore/dataset/sk-stat-59/table/
+ds_0007,gemeinde,Bevölkerung und Soziales,Bevölkerungsstand,Gesamtbevölkerung,sk-stat-59,https://data.tg.ch/explore/dataset/sk-stat-59/table/
+ds_0008,gemeinde,Bevölkerung und Soziales,Bevölkerungsentwicklung,Bevölkerungsentwicklung (Vorjahr/5 Jahre),sk-stat-56,https://data.tg.ch/explore/dataset/sk-stat-56/table/
+ds_0009,gemeinde,Bevölkerung und Soziales,Bevölkerungsbewegung,Lebendgeburten,px-x-0102020204_102,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020204_102/-/px-x-0102020204_102.px/
+ds_0010,gemeinde,Bevölkerung und Soziales,Bevölkerungsbewegung,Todesfälle,px-x-0102020206_102,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020206_102/-/px-x-0102020206_102.px/
+ds_0011,gemeinde,Bevölkerung und Soziales,Bevölkerungsbewegung,Geburtensaldo,"px-x-0102020206_102, px-x-0102020204_102","https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020206_102/-/px-x-0102020206_102.px/, https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020204_102/-/px-x-0102020204_102.px/"
+ds_0012,gemeinde,Bevölkerung und Soziales,Bevölkerungsbewegung,Heiraten,px-x-0102020202_102,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020202_102/-/px-x-0102020202_102.px/
+ds_0013,gemeinde,Bevölkerung und Soziales,Bevölkerungsbewegung,Scheidungen,px-x-0102020203_103,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020203_103/-/px-x-0102020203_103.px/
+ds_0014,gemeinde,Bevölkerung und Soziales,Bevölkerungsbewegung,Wanderungssaldo,px-x-0103010200_121,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0103010200_121/-/px-x-0103010200_121.px/
+ds_0015,gemeinde,Bevölkerung und Soziales,Bevölkerungsbewegung,Zuzüge,px-x-0103010200_121,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0103010200_121/-/px-x-0103010200_121.px/
+ds_0016,gemeinde,Bevölkerung und Soziales,Bevölkerungsbewegung,Wegzüge,px-x-0103010200_121,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0103010200_121/-/px-x-0103010200_121.px/
+ds_0017,gemeinde,Bevölkerung und Soziales,Haushalte,Haushalte nach Haushaltsgrösse,px-x-0102020000_402,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020000_402/-/px-x-0102020000_402.px/
+ds_0018,gemeinde,Bevölkerung und Soziales,Haushalte,Haushalte insgesamt,px-x-0102020000_402,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020000_402/-/px-x-0102020000_402.px/
+ds_0019,gemeinde,Bevölkerung und Soziales,Sozialhilfe,Brutto Sozialhilfeausgaben je Einwohner,sk-stat-54,https://data.tg.ch/explore/dataset/sk-stat-54/table/
+ds_0020,gemeinde,Bevölkerung und Soziales,Sozialhilfe,Brutto Sozialhilfeausgaben total,sk-stat-54,https://data.tg.ch/explore/dataset/sk-stat-54/table/
+ds_0021,gemeinde,Bevölkerung und Soziales,Sozialhilfe,Netto Sozialhilfeausgaben je Einwohner,sk-stat-55,https://data.tg.ch/explore/dataset/sk-stat-55/table/
+ds_0022,gemeinde,Bevölkerung und Soziales,Sozialhilfe,Netto Sozialhilfeausgaben total,sk-stat-55,https://data.tg.ch/explore/dataset/sk-stat-55/table/
+ds_0023,gemeinde,Bevölkerung und Soziales,Sozialhilfe,Sozialhilfequote,sk-stat-80,https://data.tg.ch/explore/dataset/sk-stat-80/table/
+ds_0024,gemeinde,Wirtschaft und Arbeit,Beschäftigte,Veränderung Beschäftigte total gegenüber vor 5 Jahren,sk-stat-98,https://data.tg.ch/explore/dataset/sk-stat-98/table/
+ds_0025,gemeinde,Wirtschaft und Arbeit,Beschäftigte,Vorjahresveränderung Beschäftigte total,sk-stat-98,https://data.tg.ch/explore/dataset/sk-stat-98/table/
+ds_0026,gemeinde,Wirtschaft und Arbeit,Beschäftigte,Veränderung Beschäftigte nach Sektor gegenüber vor 5 Jahren (in % Punkten),sk-stat-98,https://data.tg.ch/explore/dataset/sk-stat-98/table/
+ds_0027,gemeinde,Wirtschaft und Arbeit,Beschäftigte,Vorjahresveränderung Beschäftigte nach Sektor (in %),sk-stat-98,https://data.tg.ch/explore/dataset/sk-stat-98/table/
+ds_0028,gemeinde,Wirtschaft und Arbeit,Beschäftigte,Beschäftigte total,sk-stat-98,https://data.tg.ch/explore/dataset/sk-stat-98/table/
+ds_0029,gemeinde,Wirtschaft und Arbeit,Beschäftigte,Beschäftigte nach Sektor,sk-stat-98,https://data.tg.ch/explore/dataset/sk-stat-98/table/
+ds_0030,gemeinde,Wirtschaft und Arbeit,Arbeitsstätten,Veränderung Arbeitsstätten total gegenüber vor 5 Jahren,sk-stat-97,https://data.tg.ch/explore/dataset/sk-stat-97/table/
+ds_0031,gemeinde,Wirtschaft und Arbeit,Arbeitsstätten,Vorjahresveränderung Arbeitsstätten total,sk-stat-97,https://data.tg.ch/explore/dataset/sk-stat-97/table/
+ds_0032,gemeinde,Wirtschaft und Arbeit,Arbeitsstätten,Veränderung Arbeitsstätten nach Sektor gegenüber vor 5 Jahren (in % Punkten),sk-stat-97,https://data.tg.ch/explore/dataset/sk-stat-97/table/
+ds_0033,gemeinde,Wirtschaft und Arbeit,Arbeitsstätten,Vorjahresveränderung Arbeitsstätten nach Sektor (in %),sk-stat-97,https://data.tg.ch/explore/dataset/sk-stat-97/table/
+ds_0034,gemeinde,Wirtschaft und Arbeit,Arbeitsstätten,Arbeitsstätten total,sk-stat-97,https://data.tg.ch/explore/dataset/sk-stat-97/table/
+ds_0035,gemeinde,Wirtschaft und Arbeit,Arbeitsstätten,Arbeitsstätten nach Sektor,sk-stat-97,https://data.tg.ch/explore/dataset/sk-stat-97/table/
+ds_0036,gemeinde,Wirtschaft und Arbeit,Grenzgänger/innen,Grenzgänger/innen total,px-x-0302010000_101,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0302010000_101/-/px-x-0302010000_101.px/
+ds_0037,gemeinde,Wirtschaft und Arbeit,Grenzgänger/innen,Anteil Grenzgänger/innen am Total der Beschäftigten,"sk-stat-98, px-x-0302010000_101","https://data.tg.ch/explore/dataset/sk-stat-98/table/, https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0302010000_101/-/px-x-0302010000_101.px/"
+ds_0038,gemeinde,Wirtschaft und Arbeit,Pendler,Anzahl Binnenpendler,https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master,https://data.tg.ch/explore/dataset/https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master/table/
+ds_0039,gemeinde,Wirtschaft und Arbeit,Pendler,Anzahl Wegpendler,https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master,https://data.tg.ch/explore/dataset/https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master/table/
+ds_0040,gemeinde,Wirtschaft und Arbeit,Pendler,Anzahl Zupendler,https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master,https://data.tg.ch/explore/dataset/https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master/table/
+ds_0041,gemeinde,Wirtschaft und Arbeit,Pendler,Zupendlerquote,https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master,https://data.tg.ch/explore/dataset/https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master/table/
+ds_0042,gemeinde,Wirtschaft und Arbeit,Pendler,Wegpendlerquote,https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master,https://data.tg.ch/explore/dataset/https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master/table/
+ds_0043,gemeinde,Wirtschaft und Arbeit,Pendler,Pendlersaldoquote,https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master,https://data.tg.ch/explore/dataset/https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master/table/
+ds_0044,gemeinde,Bauen und Wohnen,Leer stehende Wohnungen,Leer stehende Wohnungen total,sk-stat-93,https://data.tg.ch/explore/dataset/sk-stat-93/table/
+ds_0045,gemeinde,Bauen und Wohnen,Leer stehende Wohnungen,Leerwohnungsziffer,sk-stat-93,https://data.tg.ch/explore/dataset/sk-stat-93/table/
+ds_0046,gemeinde,Bauen und Wohnen,Bauinvestitionen,Bauinvestitionen nach Kategorie,px-x-0904010000_203,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0904010000_203/-/px-x-0904010000_203.px/
+ds_0047,gemeinde,Bauen und Wohnen,Bauinvestitionen,Bauinvestitionen nach Art der Auftraggeber,px-x-0904010000_203,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0904010000_203/-/px-x-0904010000_203.px/
+ds_0048,gemeinde,Bauen und Wohnen,Bauinvestitionen,Bauinvestitionen total,px-x-0904010000_203,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0904010000_203/-/px-x-0904010000_203.px/
+ds_0049,gemeinde,Bauen und Wohnen,Bauinvestitionen,Bauinvestitionen im Vorjahresvergleich,px-x-0904010000_203,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0904010000_203/-/px-x-0904010000_203.px/
+ds_0050,gemeinde,Bauen und Wohnen,Gebäude und Wohnungen,Wohngebäude total,px-x-0902010000_103,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0902010000_103/-/px-x-0902010000_103.px/
+ds_0051,gemeinde,Bauen und Wohnen,Gebäude und Wohnungen,Wohngebäude nach Bauperiode,px-x-0902010000_103,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0902010000_103/-/px-x-0902010000_103.px/
+ds_0052,gemeinde,Bauen und Wohnen,Gebäude und Wohnungen,Wohngebäude nach Kategorie des Gebäudes,px-x-0902010000_103,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0902010000_103/-/px-x-0902010000_103.px/
+ds_0053,gemeinde,Bauen und Wohnen,Gebäude und Wohnungen,Neu erstellte Wohngebäude,px-x-0904030000_106,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0904030000_106/-/px-x-0904030000_106.px/
+ds_0054,gemeinde,Bauen und Wohnen,Gebäude und Wohnungen,Wohnungen nach Zimmerzahl,sk-stat-90,https://data.tg.ch/explore/dataset/sk-stat-90/table/
+ds_0055,gemeinde,Bauen und Wohnen,Gebäude und Wohnungen,Wohnungen total,sk-stat-90,https://data.tg.ch/explore/dataset/sk-stat-90/table/
+ds_0056,gemeinde,Bauen und Wohnen,Gebäude und Wohnungen,Neu erstellte Wohnungen nach Zimmerzahl,sk-stat-92,https://data.tg.ch/explore/dataset/sk-stat-92/table/
+ds_0057,gemeinde,Bauen und Wohnen,Gebäude und Wohnungen,Neu erstellte Wohnungen total,sk-stat-92,https://data.tg.ch/explore/dataset/sk-stat-92/table/
+ds_0058,gemeinde,Bauen und Wohnen,Gebäude und Wohnungen,Anteil neu erstellter Wohnungen am Wohnungsbestand des Vorjahres,"sk-stat-92, sk-stat-90","https://data.tg.ch/explore/dataset/sk-stat-92/table/, https://data.tg.ch/explore/dataset/sk-stat-90/table/"
+ds_0059,gemeinde,Bauen und Wohnen,Gebäude und Wohnungen,Wohngebäude nach Energiequelle der Heizung,px-x-0902010000_104,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0902010000_104/-/px-x-0902010000_104.px/
+ds_0060,gemeinde,"Raum, Verkehr und Umwelt",Flächennutzung,Fläche nach Flächenart,px-x-0202020000_102,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0202020000_102/-/px-x-0202020000_102.px/
+ds_0061,gemeinde,"Raum, Verkehr und Umwelt",Flächennutzung,Fläche total,px-x-0202020000_102,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0202020000_102/-/px-x-0202020000_102.px/
+ds_0062,gemeinde,"Raum, Verkehr und Umwelt",Flächennutzung,Landfläche,px-x-0202020000_102,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0202020000_102/-/px-x-0202020000_102.px/
+ds_0063,gemeinde,"Raum, Verkehr und Umwelt",Flächennutzung,Bevölkerungsdichte,"px-x-0202020000_102, sk-stat-59","https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0202020000_102/-/px-x-0202020000_102.px/, https://data.tg.ch/explore/dataset/sk-stat-59/table/"
+ds_0064,gemeinde,"Raum, Verkehr und Umwelt",Personenwagenbestand,Motorisierungsgrad,"djs-stv-14, sk-stat-59","https://data.tg.ch/explore/dataset/djs-stv-14/table/, https://data.tg.ch/explore/dataset/sk-stat-59/table/"
+ds_0065,gemeinde,"Raum, Verkehr und Umwelt",Personenwagenbestand,Personenwagenbestand,djs-stv-14,https://data.tg.ch/explore/dataset/djs-stv-14/table/
+ds_0066,gemeinde,Staat und Politik,Grossratswahlen,Parteistärken nach Partei,sk-stat-9,https://data.tg.ch/explore/dataset/sk-stat-9/table/
+ds_0067,gemeinde,Staat und Politik,Grossratswahlen,Veränderung Parteistärken im Vorjahresvergleich (%-Punkte),sk-stat-9,https://data.tg.ch/explore/dataset/sk-stat-9/table/
+ds_0068,gemeinde,Staat und Politik,Grossratswahlen,Wahlbeteiligung,sk-stat-11,https://data.tg.ch/explore/dataset/sk-stat-11/table/
+ds_0069,gemeinde,Staat und Politik,Nationalratswahlen,Parteistärken nach Partei,sk-stat-123,https://data.tg.ch/explore/dataset/sk-stat-123/table/
+ds_0070,gemeinde,Staat und Politik,Nationalratswahlen,Veränderung Parteistärken im Vorjahresvergleich (%-Punkte),sk-stat-123,https://data.tg.ch/explore/dataset/sk-stat-123/table/
+ds_0071,gemeinde,Staat und Politik,Nationalratswahlen,Wahlbeteiligung,sk-stat-120,https://data.tg.ch/explore/dataset/sk-stat-120/table/
+ds_0072,gemeinde,Staat und Politik,2009: Eidg. Abstimmungen,29.11.2009: Bundesbeschluss zur Schaffung einer Spezialfinanzierung für Aufgaben im Luftverkehr,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0073,gemeinde,Staat und Politik,2009: Eidg. Abstimmungen,29.11.2009: Volksinitiative 'Für ein Verbot von Kriegsmaterial-Exporten',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0074,gemeinde,Staat und Politik,2009: Eidg. Abstimmungen,29.11.2009: Volksinitiative 'Gegen den Bau von Minaretten',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0075,gemeinde,Staat und Politik,2009: Eidg. Abstimmungen,27.09.2009: Bundesbeschluss über den Verzicht auf die Einführung der allgemeinen Volksinitiative,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0076,gemeinde,Staat und Politik,2009: Eidg. Abstimmungen,"27.09.2009: Bundesbeschluss über eine befristete Zusatzfinanzierung der Invalidenversicherung durch Anhebung der Mehrwertsteuersätze, geändert durch den Bundesbeschluss vom 12.06.2009 über die Änderung dieses Beschlusses",sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0077,gemeinde,Staat und Politik,2009: Eidg. Abstimmungen,17.05.2009: Bundesbeschluss über die Genehmigung und die Umsetzung des Notenaustauschs zwischen der Schweiz und der Europäischen Gemeinschaft betreffend die Übernahme der Verordnung (EG) Nr. 2252/2004 über biometrische Pässe und Reisedokumente (Weiterentwicklung des Schengen-Besitzstands),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0078,gemeinde,Staat und Politik,2009: Eidg. Abstimmungen,17.05.2009: Verfassungsartikel 'Zukunft mit Komplementärmedizin',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0079,gemeinde,Staat und Politik,2009: Eidg. Abstimmungen,08.02.2009: Bundesbeschluss über die Genehmigung der Weiterführung des Freizügigkeitsabkommens zwischen der Schweiz und der Europäischen Gemeinschaft und ihren Mitgliedstaaten sowie über die Genehmigung und die Umsetzung des Protokolls über die Ausdehnung des Freizügigkeitsabkommens auf Bulgarien und Rumänien,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0080,gemeinde,Staat und Politik,2010: Eidg. Abstimmungen,28.11.2010: Volksabstimmung 'Für die Ausschaffung krimineller Ausländer (Ausschaffungsinitiative)',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0081,gemeinde,Staat und Politik,2010: Eidg. Abstimmungen,28.11.2010: Volksinitiative 'Für die Ausschaffung von kriminellen Ausländern': Stichfrage,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0082,gemeinde,Staat und Politik,2010: Eidg. Abstimmungen,28.11.2010: Volksinitiative 'Für faire Steuern. Stopp dem Missbrauch beim Steuerwettbewerb (Steuergerechtigskeits-Initiative)',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0083,gemeinde,Staat und Politik,2010: Eidg. Abstimmungen,28.11.2010: Bundesbeschluss über die Aus- und Wegweisung krimineller Ausländerinnen und Ausländer im Rahmen der Bundesverfassung (Gegenentwurf zur Volksinitiative 'für die Ausschaffung krimineller Ausländer (Ausschaffungsinitiative)),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0084,gemeinde,Staat und Politik,2010: Eidg. Abstimmungen,"26.09.2010: Änderung des Bundesgesetzes über die obligatorische Arbeitslosenversicherung und die Insolvenzentschädigung (Arbeitslosenversicherungsgesetz, AVIG)",sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0085,gemeinde,Staat und Politik,2010: Eidg. Abstimmungen,"07.03.2010: Änderung des Bundesgesetzes über die berufliche Alters-, Hinterlassenen- und Invalidenvorsorge (BVG) (Mindestumwandlungssatz)",sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0086,gemeinde,Staat und Politik,2010: Eidg. Abstimmungen,07.03.2010: Bundesbeschluss zu einem Verfassungsartikel über die Forschung am Menschen,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0087,gemeinde,Staat und Politik,2010: Eidg. Abstimmungen,07.03.2010: Volksinitiative 'Gegen Tierquälerei und für einen besseren Rechtsschutz für Tiere (Tierschutzanwalt-Initiative)',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0088,gemeinde,Staat und Politik,2011: Eidg. Abstimmungen,13.02.2011: Volksinitiative 'Für den Schutz vor Waffengewalt',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0089,gemeinde,Staat und Politik,2012: Eidg. Abstimmungen,25.11.2012: Änderung des Tierseuchengesetzes,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0090,gemeinde,Staat und Politik,2012: Eidg. Abstimmungen,23.09.2012: Bundesbeschluss über die Jugendmusikförderung (Gegenentwurf zur Volksinitiative 'jugend + musik'),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0091,gemeinde,Staat und Politik,2012: Eidg. Abstimmungen,23.09.2012: Volksinitiative 'Schutz vor Passivrauchen',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0092,gemeinde,Staat und Politik,2012: Eidg. Abstimmungen,23.09.2012: Volksinitiative 'Sicheres Wohnen im Alter',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0093,gemeinde,Staat und Politik,2012: Eidg. Abstimmungen,17.06.2012: Änderung des Bundesgesetzes über die Krankenversicherung (KVG) (Managed Care),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0094,gemeinde,Staat und Politik,2012: Eidg. Abstimmungen,17.06.2012: Volksinitiative 'Eigene vier Wände dank Bausparen',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0095,gemeinde,Staat und Politik,2012: Eidg. Abstimmungen,17.06.2012: Volksinitiative 'Für die Stärkung der Volksrechte in der Aussenpolitik (Staatsverträge vors Volk!)',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0096,gemeinde,Staat und Politik,2012: Eidg. Abstimmungen,11.03.2012: Volksinitiative '6 Wochen Ferien für alle',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0097,gemeinde,Staat und Politik,2012: Eidg. Abstimmungen,11.03.2012: Volksinitiative 'Für ein steuerlich begünstigtes Bausparen zum Erwerb von selbst genutztem Wohneigentum und zur Finanzierung von baulichen Energiespar- und Umweltschutzmassnahmen (Bau-Sparinitiative)',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0098,gemeinde,Staat und Politik,2012: Eidg. Abstimmungen,11.03.2012: Volksinitiative 'Schluss mit uferlosem Bau von Zweitwohnungen',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0099,gemeinde,Staat und Politik,2012: Eidg. Abstimmungen,11.03.2012: Bundesbeschluss über die Regelung der Geldspiele zugunsten gemeinnütziger Zwecke (Gegenentwurf zur Volksinitiative 'Für Geldspiele im Dienste des Gemeinwohls'),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0100,gemeinde,Staat und Politik,2012: Eidg. Abstimmungen,11.03.2012: Bundesgesetz über die Buchpreisbindung (BuPG),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0101,gemeinde,Staat und Politik,2013: Eidg. Abstimmungen,"24.11.2013: Änderung des Bundesgesetzes über die Abgabe für die Benützung von Nationalstrassen (Nationalstrassengesetz, NSAG)",sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0102,gemeinde,Staat und Politik,2013: Eidg. Abstimmungen,24.11.2013: Volksinitiative '1:12 - für gerechte Löhne',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0103,gemeinde,Staat und Politik,2013: Eidg. Abstimmungen,"24.11.2013: Volksinitiative 'Familieninitiative: Steuerabzüge auch für Eltern, die ihre Kinder selber betreuen'",sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0104,gemeinde,Staat und Politik,2013: Eidg. Abstimmungen,"22.09.2013: Änderung des Bundesgesetzes über die Arbeit, Industrie, Gewerbe und Handel (Arbeitsgesetz, ArG)",sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0105,gemeinde,Staat und Politik,2013: Eidg. Abstimmungen,"22.09.2013: Bundesgesetz über die Bekämpfung übertragbarer Krankheiten des Menschen (Epidemiengesetz, EpG)",sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0106,gemeinde,Staat und Politik,2013: Eidg. Abstimmungen,22.09.2013: Volksinitiative 'Ja zur Aufhebung der Wehrpflicht',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0107,gemeinde,Staat und Politik,2013: Eidg. Abstimmungen,09.06.2013: Änderung des Asylgesetzes (AsylG) (Dringliche Änderung des Asylgesetzes),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0108,gemeinde,Staat und Politik,2013: Eidg. Abstimmungen,09.06.2013: Volksinitiative 'Volkswahl des Bundesrates',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0109,gemeinde,Staat und Politik,2013: Eidg. Abstimmungen,"03.03.2013: Änderung des Bundesgesetzes über die Raumplanung (Raumplanungsgesetz, RPG)",sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0110,gemeinde,Staat und Politik,2013: Eidg. Abstimmungen,03.03.2013: Bundesbeschluss über die Familienpolitik,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0111,gemeinde,Staat und Politik,2013: Eidg. Abstimmungen,03.03.2013: Volksinitiative 'Gegen die Abzockerei',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0112,gemeinde,Staat und Politik,2014: Eidg. Abstimmungen,30.11.2014: Volksinitiative 'Rettet unser Schweizer Gold (Gold-Initiative)',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0113,gemeinde,Staat und Politik,2014: Eidg. Abstimmungen,30.11.2014: Volksinitiative 'Schluss mit Steuerprivilegien für Millionäre (Abschaffung der Pauschalbesteuerung)',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0114,gemeinde,Staat und Politik,2014: Eidg. Abstimmungen,30.11.2014: Volksinitiative 'Stopp der Überbevölkerung - zur Sicherung der natürlichen Lebensgrundlage',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0115,gemeinde,Staat und Politik,2014: Eidg. Abstimmungen,28.09.2014: Volksinitiative 'Für eine öffentliche Krankenkasse',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0116,gemeinde,Staat und Politik,2014: Eidg. Abstimmungen,28.09.2014: Volksinitiative 'Schluss mit der Mehrwertsteuer-Diskriminierung des Gastgewerbes!',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0117,gemeinde,Staat und Politik,2014: Eidg. Abstimmungen,18.05.2014: Bundesbeschluss über die medizinische Grundversorgung (direkter Gegenentwurf zur Volksinitiative 'Ja zur Hausarztmedizin'),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0118,gemeinde,Staat und Politik,2014: Eidg. Abstimmungen,18.05.2014: Bundesgesetz über den Fonds zur Beschaffung des Kampfflugzeugs Gripen (Gripen-Fonds-Gesetz),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0119,gemeinde,Staat und Politik,2014: Eidg. Abstimmungen,18.05.2014: Volkinitiative 'Pädophile sollen nicht mehr mit Kindern arbeiten dürfen',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0120,gemeinde,Staat und Politik,2014: Eidg. Abstimmungen,18.05.2014: Volksinitiative 'Für den Schutz fairer Löhne (Mindestlohn-Initiative)',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0121,gemeinde,Staat und Politik,2014: Eidg. Abstimmungen,09.02.2014: Bundesbeschluss über die Finanzierung und den Ausbau der Eisenbahninfrastruktur (direkter Gegenentwurf zur Volksinitiative 'Für den öffentlichen Verkehr'),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0122,gemeinde,Staat und Politik,2014: Eidg. Abstimmungen,09.02.2014: Volksinitiative 'Abtreibungsfinanzierung ist Privatsache - Entlastung der Krankenversicherung durch Streichung der Kosten des Schwangerschaftsabbruchs aus der obligatorischen Grundversicherung',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0123,gemeinde,Staat und Politik,2014: Eidg. Abstimmungen,09.02.2014: Volksinitiative 'Gegen Masseneinwanderung',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0124,gemeinde,Staat und Politik,2015: Eidg. Abstimmungen,14.06.2015: Änderung des Bundesgesetzes über Radio und Fernsehen (RTVG),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0125,gemeinde,Staat und Politik,2015: Eidg. Abstimmungen,14.06.2015: Bundesbeschluss über die Änderung der Verfassungsbestimmung zur Fortpflanzungsmedizin und Gentechnologie im Humanbereich,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0126,gemeinde,Staat und Politik,2015: Eidg. Abstimmungen,14.06.2015: Volksinitiative 'Millionen-Erbschaften besteuern für unsere AHV (Erbschaftssteuerreform)',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0127,gemeinde,Staat und Politik,2015: Eidg. Abstimmungen,14.06.2015: Volksinitiative 'Stipendieninitiative',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0128,gemeinde,Staat und Politik,2015: Eidg. Abstimmungen,08.03.2015: Volksinitiative 'Energie- statt Mehrwertsteuer',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0129,gemeinde,Staat und Politik,2015: Eidg. Abstimmungen,08.03.2015: Volksinitiative 'Familie stärken! Steuerfreie Kinder- und Ausbildungszulagen',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0130,gemeinde,Staat und Politik,2016: Eidg. Abstimmungen,27.11.2016: Volksinitiative 'für den geordneten Ausstieg aus der Atomenergie (Atomausstiegsinitiative)',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0131,gemeinde,Staat und Politik,2016: Eidg. Abstimmungen,"25.09.2016: Bundesgesetz über den Nachrichtendienst (Nachrichtendienstgesetz, NDG)",sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0132,gemeinde,Staat und Politik,2016: Eidg. Abstimmungen,25.09.2016: Volksinitiative 'AHVplus: für eine starke AHV',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0133,gemeinde,Staat und Politik,2016: Eidg. Abstimmungen,25.09.2016: Volksinitiative 'für eine nachhaltige und ressourceneffiziente Wirtschaft (Grüne Wirtschaft)',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0134,gemeinde,Staat und Politik,2016: Eidg. Abstimmungen,05.06.2016: Änderung des Asylgesetzes (AsylG),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0135,gemeinde,Staat und Politik,2016: Eidg. Abstimmungen,"05.06.2016: Änderung des Bundesgesetzes über die medizinisch unterstützte Fortpflanzung (Fortpflanzungsmedizingesetz, FMedG)",sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0136,gemeinde,Staat und Politik,2016: Eidg. Abstimmungen,05.06.2016: Volksinitiative 'Für ein bedingungsloses Grundeinkommen',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0137,gemeinde,Staat und Politik,2016: Eidg. Abstimmungen,05.06.2016: Volksinitiative 'Für eine faire Verkehrsfinanzierung',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0138,gemeinde,Staat und Politik,2016: Eidg. Abstimmungen,05.06.2016: Volksinitiative 'Pro Service public',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0139,gemeinde,Staat und Politik,2016: Eidg. Abstimmungen,28.02.2016: Änderung des Bundesgesetzes über den Strassentransitverkehr im Alpengebiet (STVG) (Sanierung Gotthard-Strassentunnel),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0140,gemeinde,Staat und Politik,2016: Eidg. Abstimmungen,28.02.2016: Volksinitiative 'Für Ehe und Familie - gegen die Heiratsstrafe',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0141,gemeinde,Staat und Politik,2016: Eidg. Abstimmungen,28.02.2016: Volksinitiative 'Keine Spekulation mit Nahrungsmitteln!',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0142,gemeinde,Staat und Politik,2016: Eidg. Abstimmungen,28.02.2016: Volksinitiative 'Zur Durchsetzung der Ausschaffung krimineller Ausländer (Durchsetzungsinitiative)',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0143,gemeinde,Staat und Politik,2017: Eidg. Abstimmungen,24.09.2017: Bundesbeschluss über die Ernährungssicherheit (direkter Gegenentwurf zur zurückgezogenen Volksinitiative 'Für Ernährungssicherheit'),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0144,gemeinde,Staat und Politik,2017: Eidg. Abstimmungen,24.09.2017: Bundesbeschluss über die Zusatzfinanzierung der AHV durch eine Erhöhung der Mehrwertsteuer,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0145,gemeinde,Staat und Politik,2017: Eidg. Abstimmungen,24.09.2017: Bundesgesetz über die Reform der Altersvorsorge 2020,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0146,gemeinde,Staat und Politik,2017: Eidg. Abstimmungen,21.05.2017: Energiegesetz (EnG),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0147,gemeinde,Staat und Politik,2017: Eidg. Abstimmungen,12.02.2017: Bundesbeschluss über die erleichterte Einbürgerung von Personen der dritten Ausländergeneration,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0148,gemeinde,Staat und Politik,2017: Eidg. Abstimmungen,12.02.2017: Bundesgesetz über steuerliche Massnahmen zur Stärkung der Wettbewerbsfähigkeit des Unternehmensstandorts Schweiz (Unternehmenssteuerreformgesetz III),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0149,gemeinde,Staat und Politik,2017: Eidg. Abstimmungen,12.02.2017: Bundesbeschluss über die Schaffung eines Fonds für die Nationalstrassen und den Agglomerationsverkehr,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0150,gemeinde,Staat und Politik,2018: Eidg. Abstimmungen,25.11.2018: Volksinitiative 'Für die Würde der landwirtschaftlichen Nutztiere (Hornkuh-Initiative)',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0151,gemeinde,Staat und Politik,2018: Eidg. Abstimmungen,25.11.2018: Volksinitiatve 'Schweizer Recht statt fremde Richter (Selbstbestimmungsinitiative)',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0152,gemeinde,Staat und Politik,2018: Eidg. Abstimmungen,25.11.2018: Änderung des Bundesgesetzes über den Allgemeinen Teil des Sozialversicherungsrechts (ATSG) (Gesetzliche Grundlage für die Überwachung von Versicherten),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0153,gemeinde,Staat und Politik,2018: Eidg. Abstimmungen,"23.09.2018: Bundesbeschluss über die Velowege sowie die Fuss- und Wanderwege (direkter Gegenentwurf zur Volksinitiative 'Zur Förderung der Velo-, Fuss- und Wanderwege [Velo-Initiative]')",sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0154,gemeinde,Staat und Politik,2018: Eidg. Abstimmungen,23.09.2018: Volksinitiative 'Für gesunde sowie umweltfreundliche und fair hergestellte Lebensmittel (Fair-Food-Initiative)',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0155,gemeinde,Staat und Politik,2018: Eidg. Abstimmungen,23.09.2018: Volksinitiative 'Für die Würde der landwirtschaftlichen Nutztiere (Hornkuh-Initiative)',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0156,gemeinde,Staat und Politik,2018: Eidg. Abstimmungen,10.06.2018: Volksinitiative 'Für krisensicheres Geld: Geldschöpfung allein durch die Nationalbank! (Vollgeld-Initiative),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0157,gemeinde,Staat und Politik,2018: Eidg. Abstimmungen,"10.06.2018: Bundesgesetz über Geldspiele (Geldspielgesetz, BSG)",sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0158,gemeinde,Staat und Politik,2018: Eidg. Abstimmungen,04.03.2018: Bundesbeschluss über die neue Finanzordnung 2021,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0159,gemeinde,Staat und Politik,2018: Eidg. Abstimmungen,04.03.2018: Volksinitiative 'Ja zur Abschaffung der Radio- und Fernsehgebühren (Abschaffung der Billag-Gebühren)',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0160,gemeinde,Staat und Politik,2019: Eidg. Abstimmungen,19.05.2019: Bundesgesetz über die Steuerreform und AHV-Finanzierung (STAF),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0161,gemeinde,Staat und Politik,2019: Eidg. Abstimmungen,19.05.2019: Bundesbeschluss über die Genehmigung und die Umsetzung des Notenaustauschs zwischen der Schweiz und der EU betreffend die Übernahme der Richtlinie (EU) 2017/853 zur Änderung der EU-Waffenrichtlinie (Weiterentwicklung des Schengen-Besitzstands),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0162,gemeinde,Staat und Politik,2019: Eidg. Abstimmungen,10.02.2019: Volksinitiative 'Zersiedelung stoppen - für eine nachhaltige Siedlungsentwicklung (Zersiedelungsinitiative)',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0163,gemeinde,Staat und Politik,2020: Eidg. Abstimmungen,29.11.2020: Volksinitiative 'Für verantwortungsvolle Unternehmen - zum Schutz von Mensch und Umwelt',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0164,gemeinde,Staat und Politik,2020: Eidg. Abstimmungen,29.11.2020: Volksinitiative 'Für ein Verbot der Finanzierung von Kriegsmaterialproduzenten',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0165,gemeinde,Staat und Politik,2020: Eidg. Abstimmungen,27.09.2020: Volksinitiative 'Für eine massvolle Zuwanderung',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0166,gemeinde,Staat und Politik,2020: Eidg. Abstimmungen,27.09.2020: Änderung des Jagdgesetzes,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0167,gemeinde,Staat und Politik,2020: Eidg. Abstimmungen,27.09.2020: Änderung des Bundesgesetzes über die direkte Bundessteuer (Steuerliche Berücksichtigung der Kinderdrittbetreuungskosten),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0168,gemeinde,Staat und Politik,2020: Eidg. Abstimmungen,27.09.2020: Änderung des Erwerbsersatzgesetzes (Vaterschaftsurlaub),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0169,gemeinde,Staat und Politik,2020: Eidg. Abstimmungen,27.09.2020: Bundesbeschluss über die Beschaffung neuer Kampfflugzeuge,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0170,gemeinde,Staat und Politik,2020: Eidg. Abstimmungen,09.02.2020: Volksinitiative 'Mehr bezahlbare Wohnungen',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0171,gemeinde,Staat und Politik,2020: Eidg. Abstimmungen,09.02.2020: Änderung des Strafgesetzbuches und des Militärstrafgesetzes (Diskriminierung und Aufruf zu Hass aufgrund der sexuellen Orientierung),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0172,gemeinde,Staat und Politik,2021: Eidg. Abstimmungen,28.11.2021: Volksinitiative 'Für eine starke Pflege (Pflegeinitiative)',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0173,gemeinde,Staat und Politik,2021: Eidg. Abstimmungen,28.11.2021: Volksinitiative 'Bestimmung der Bundesrichterinnen und Bundesrichter im Losverfahren (Justiz-Initiative)',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0174,gemeinde,Staat und Politik,2021: Eidg. Abstimmungen,28.11.2021: Änderung des Covid-19-Gesetzes,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0175,gemeinde,Staat und Politik,2021: Eidg. Abstimmungen,"26.09.2021: Volksinitiative 'Löhne entlasten, Kapital gerecht besteuern'",sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0176,gemeinde,Staat und Politik,2021: Eidg. Abstimmungen,26.09.2021: Änderung des Schweizerischen Zivilgesetzbuches (Ehe für alle),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0177,gemeinde,Staat und Politik,2021: Eidg. Abstimmungen,13.06.2021: Volksinitiative'Für sauberes Trinkwasser und gesunde Nahrung - Keine Subventionen für den Pestizid- und den prophylaktischen Antibiotika-Einsatz',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0178,gemeinde,Staat und Politik,2021: Eidg. Abstimmungen,13.06.2021: Volksinitiative'Für eine Schweiz ohne synthetische Pestizide',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0179,gemeinde,Staat und Politik,2021: Eidg. Abstimmungen,13.06.2021: Bundesgesetz über die gesetzlichen Grundlagen für Verordnungen des Bundesrates zur Bewältigung der Covid-19-Epidemie (Covid-19-Gesetz),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0180,gemeinde,Staat und Politik,2021: Eidg. Abstimmungen,13.06.2021: Bundesgesetz über die Verminderung von Treibhausgasemissionen (CO2-Gesetz),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0181,gemeinde,Staat und Politik,2021: Eidg. Abstimmungen,13.06.2021: Bundesgesetz über polizeiliche Massnahmen zur Bekämpfung von Terrorismus (PMT),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0182,gemeinde,Staat und Politik,2021: Eidg. Abstimmungen,07.03.2021: Volksinitiative 'Ja zum Verhüllungsverbot',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0183,gemeinde,Staat und Politik,2021: Eidg. Abstimmungen,07.03.2021: Bundesgesetz über elektronische Identifizierungsdienste (E-ID-Gesetz),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0184,gemeinde,Staat und Politik,2021: Eidg. Abstimmungen,07.03.2021: Wirtschaftspartnerschaftsabkommen mit Indonesien,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0185,gemeinde,Staat und Politik,2022: Eidg. Abstimmungen,25.09.2022: Massentierhaltungsinitiative,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0186,gemeinde,Staat und Politik,2022: Eidg. Abstimmungen,25.09.2022: Zusatzfinanzierung der AHV durch eine Erhöhung der Mehrwertsteuer,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0187,gemeinde,Staat und Politik,2022: Eidg. Abstimmungen,25.09.2022: Änderung des Bundesgesetzes über die Alters- und Hinterlassenenversicherung (AHV 21),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0188,gemeinde,Staat und Politik,2022: Eidg. Abstimmungen,25.09.2022: Änderung des Bundesgesetzes über die Verrechnungssteuer,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0189,gemeinde,Staat und Politik,2022: Eidg. Abstimmungen,15.05.2022: Änderung des Filmgesetzes,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0190,gemeinde,Staat und Politik,2022: Eidg. Abstimmungen,15.05.2022: Änderung des Transplatationsgesetzes,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0191,gemeinde,Staat und Politik,2022: Eidg. Abstimmungen,15.05.2022: Übernahme der EU-Verordnung über die Europäische Grenz- und Küstenwache (Weiterentwicklung des Schengen-Besitzstands),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0192,gemeinde,Staat und Politik,2022: Eidg. Abstimmungen,13.02.2022: Volksinitiative 'Ja zum Tier- und Menschenversuchsverbot',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0193,gemeinde,Staat und Politik,2022: Eidg. Abstimmungen,13.02.2022: Volksinitiative 'Ja zum Schutz der Kinder und Jugendlichen vor Tabakwerbung ',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0194,gemeinde,Staat und Politik,2022: Eidg. Abstimmungen,13.02.2022: Änderung des Bundesgesetzes über die Stempelabgaben,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0195,gemeinde,Staat und Politik,2022: Eidg. Abstimmungen,13.02.2022: Bundesgesetz über ein Massnahmenpaket zugunsten der Medien,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0196,gemeinde,Staat und Politik,2023: Eidg. Abstimmungen,18.06.2023: Bundesbeschluss über eine besondere Besteuerung grosser Unternehmensgruppen (Umsetzung des OECD/G20-Projekts zur Besteuerung grosser Unternehmensgruppen),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0197,gemeinde,Staat und Politik,2023: Eidg. Abstimmungen,"18.06.2023: Bundesgesetz über die Ziele im Klimaschutz, die Innovation und die Stärkung der Energiesicherheit (KlG)",sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0198,gemeinde,Staat und Politik,2023: Eidg. Abstimmungen,18.06.2023: Änderung des Bundesgesetzes über die gesetzlichen Grundlagen für Verordnungen des Bundesrates zur Bewältigung der Covid-19-Epidemie (Covid-19-Gesetz),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0199,gemeinde,Staat und Politik,2024: Eidg. Abstimmungen,24.11.2024: Bundesbeschluss vom 29. September 2023 über den Ausbauschritt 2023 für die Nationalstrassen (BBl 2023 2302),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0200,gemeinde,Staat und Politik,2024: Eidg. Abstimmungen,24.11.2024: Änderung vom 29. September 2023 des Obligationenrechts (Mietrecht: Untermiete) (BBl 2023 2288),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0201,gemeinde,Staat und Politik,2024: Eidg. Abstimmungen,24.11.2024: Änderung vom 29. September 2023 des Obligationenrechts (Mietrecht: Kündigung wegen Eigenbedarfs) (BBl 2023 2291),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0202,gemeinde,Staat und Politik,2024: Eidg. Abstimmungen,24.11.2024: Änderung vom 22. Dezember 2023 des Bundesgesetzes über die Krankenversicherung (KVG) (Einheitliche Finanzierung der Leistungen) (BBl 2024 31),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0203,gemeinde,Staat und Politik,2024: Eidg. Abstimmungen,22.09.2024: Volksinitiative vom 8. September 2020 'Für die Zukunft unserer Natur und Landschaft (Biodiversitätsinitiative)» (BBl 2024 28),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0204,gemeinde,Staat und Politik,2024: Eidg. Abstimmungen,"22.09.2024: Änderung vom 17. März 2023 des Bundesgesetzes über die berufliche Alters-, Hinterlassenen- und Invalidenvorsorge (BVG) (Reform der beruflichen Vorsorge) (BBl 2023 785)",sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0205,gemeinde,Staat und Politik,2024: Eidg. Abstimmungen,09.06.2024: Volksinitiative vom 23. Januar 2020 'Maximal 10 % des Einkommens für die Krankenkassenprämien (Prämien-Entlastungs-Initiative)» (BBl 2023 2285),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0206,gemeinde,Staat und Politik,2024: Eidg. Abstimmungen,09.06.2024: Volksinitiative vom 10. März 2020 'Für tiefere Prämien - Kostenbremse im Gesundheitswesen (Kostenbremse-Initiative)» (BBl 2023 2286),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0207,gemeinde,Staat und Politik,2024: Eidg. Abstimmungen,09.06.2024: Volksinitiative vom 16. Dezember 2021 'Für Freiheit und körperliche Unversehrtheit» (BBl 2023 2287),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0208,gemeinde,Staat und Politik,2024: Eidg. Abstimmungen,09.06.2024: Bundesgesetz vom 29. September 2023 über eine sichere Stromversorgung mit erneuerbaren Energien (Änderung des Energiegesetzes und des Stromversorgungsgesetzes) (BBl 2023 2301),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0209,gemeinde,Staat und Politik,2024: Eidg. Abstimmungen,03.03.2024: 13. AHV-Rente,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0210,gemeinde,Staat und Politik,2024: Eidg. Abstimmungen,03.03.2024: Renteninitiative,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0211,gemeinde,Staat und Politik,2025: Eidg. Abstimmungen,30.11.2025: Volksinitiative 'Für eine engagierte Schweiz (Service-citoyen-Initiative)»,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0212,gemeinde,Staat und Politik,2025: Eidg. Abstimmungen,30.11.2025: Volksinitiative 'Für eine soziale Klimapolitik – steuerlich gerecht finanziert (Initiative für eine Zukunft)»,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0213,gemeinde,Staat und Politik,2025: Eidg. Abstimmungen,28.09.2025: Bundesbeschluss vom 20. Dezember 2024 über die kantonalen Liegenschaftssteuern auf Zweitliegenschaften,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0214,gemeinde,Staat und Politik,2025: Eidg. Abstimmungen,"28.09.2025: Bundesgesetz vom 20. Dezember 2024 über den elektronischen Identitätsnachweis und andere elektronische Nachweise (E-ID-Gesetz, BGEID)",sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0215,gemeinde,Staat und Politik,2025: Eidg. Abstimmungen,09.02.2025: Volksinitiative 'Für eine verantwortungsvolle Wirtschaft innerhalb der planetaren Grenzen (Umweltverantwortungsinitiative)',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0216,gemeinde,Staat und Politik,2026: Eidg. Abstimmungen,"08.03.2026: Volksinitiative 'Ja zu einer unabhängigen, freien Schweizer Währung mit Münzen oder Banknoten (Bargeld ist Freiheit)»",sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0217,gemeinde,Staat und Politik,2026: Eidg. Abstimmungen,08.03.2026: Bundesbeschluss über die schweizerische Währung und die Bargeldversorgung (Gegenvorschlag zur Bargeldinitiative),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0218,gemeinde,Staat und Politik,2026: Eidg. Abstimmungen,08.03.2026: Bargeldinitiative und Gegenvorschlag: Stichfrage,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0219,gemeinde,Staat und Politik,2026: Eidg. Abstimmungen,08.03.2026: Volksinitiative '200 Franken sind genug! (SRG-Initiative)»,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0220,gemeinde,Staat und Politik,2026: Eidg. Abstimmungen,"08.03.2026: Volksinitiative 'Für eine gerechte Energie- und Klimapolitik: Investieren für Wohlstand, Arbeit und Umwelt (Klimafonds-Initiative)»",sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0221,gemeinde,Staat und Politik,2026: Eidg. Abstimmungen,08.03.2026: Bundesgesetz vom 20. Juni 2025 über die Individualbesteuerung,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0222,gemeinde,Staat und Politik,2009: Kantonale Abstimmungen,29.11.2009: Gesetz betreffend die Änderung der Verfassung des Kantons Thurgau,sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
+ds_0223,gemeinde,Staat und Politik,2009: Kantonale Abstimmungen,27.09.2009: Gesetz betreffend die Änderung des Einführungsgesetzes zum Schweizer Zivilgesetzbuch,sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
+ds_0224,gemeinde,Staat und Politik,2009: Kantonale Abstimmungen,27.09.2009: Gesetz betreffend die Änderung des Gesetzes über die Staats- und Gemeindesteuern (Steuergesetz),sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
+ds_0225,gemeinde,Staat und Politik,2009: Kantonale Abstimmungen,17.05.2009: Gegenvorschlag des Grossen Rates zur Volksinitiative 'Schutz vor Passivrauchen',sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
+ds_0226,gemeinde,Staat und Politik,2009: Kantonale Abstimmungen,17.05.2009: Volksinitiative 'Schutz vor Passivrauchen',sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
+ds_0227,gemeinde,Staat und Politik,2009: Kantonale Abstimmungen,08.02.2009: Gesetz betreffend die Änderung der Verfassung des Kantons Thurgau,sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
+ds_0228,gemeinde,Staat und Politik,2010: Kantonale Abstimmungen,07.03.2010: Thurgauische Volksinitiative 'Ja! Freie Schulwahl für alle.',sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
+ds_0229,gemeinde,Staat und Politik,2011: Kantonale Abstimmungen,23.10.2011: Gesetz betreffend die Änderung der Verfassung des Kantons Thurgau (Abschaffung der Volkswahlen für die Grundbuchämter und Notariate),sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
+ds_0230,gemeinde,Staat und Politik,2011: Kantonale Abstimmungen,15.05.2011: Gegenvorschlag zur Volksinitiative 'Abschaffung der Pauschalbesteuerung - Schweizer und Ausländer gleich behandeln',sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
+ds_0231,gemeinde,Staat und Politik,2011: Kantonale Abstimmungen,15.05.2011: Stichfrage zur Volksinitiative mit Gegenvorschlag 'Abschaffung der Pauschalbesteuerung - Schweizer und Ausländer gleich behandeln',sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
+ds_0232,gemeinde,Staat und Politik,2011: Kantonale Abstimmungen,15.05.2011: Volksinitiative 'Abschaffung der Pauschalbesteuerung - Schweizer und Ausländer gleich behandeln',sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
+ds_0233,gemeinde,Staat und Politik,2011: Kantonale Abstimmungen,15.05.2011: Volksinitiative 'Faires Wahlsystem für die Grossratswahlen',sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
+ds_0234,gemeinde,Staat und Politik,2011: Kantonale Abstimmungen,15.05.2011: Volksinitiative 'Ja zu effizienter und erneuerbarer Energie - natürlich Thurgau!',sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
+ds_0235,gemeinde,Staat und Politik,2011: Kantonale Abstimmungen,13.02.2011: Gesetz betreffend die Änderung der Verfassung des Kantons Thurgau,sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
+ds_0236,gemeinde,Staat und Politik,2011: Kantonale Abstimmungen,13.02.2011: Kreditbegehren von 4'800'000 Franken als Baubeitrag des Kantons Thurgau an den Neubau der Dreifachsporthalle Arbon,sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
+ds_0237,gemeinde,Staat und Politik,2011: Kantonale Abstimmungen,13.02.2011: Kreditbegehren von 7'630'000 Franken für die Aufstockung des Berufsbildungszentrums Weinfelden,sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
+ds_0238,gemeinde,Staat und Politik,2012: Kantonale Abstimmungen,23.09.2012: Beschluss des Grossen Rates betreffend Erweiterung des Strassennetzes (Netzbeschluss um die Bodensee-Thurtalstrasse (BTS) und Oberlandstrasse (OLS)),sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
+ds_0239,gemeinde,Staat und Politik,2012: Kantonale Abstimmungen,23.09.2012: Gesetz betreffend die Änderung des Gesetzes über die Strassenverkehrsabgaben,sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
+ds_0240,gemeinde,Staat und Politik,2012: Kantonale Abstimmungen,17.06.2012: Planungs- und Baugesetz,sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
+ds_0241,gemeinde,Staat und Politik,2016: Kantonale Abstimmungen,27.11.2016: Volksinitiative 'Ja zu einer guten Thurgauer Volksschule',sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
+ds_0242,gemeinde,Staat und Politik,2016: Kantonale Abstimmungen,05.06.2016: Kreditbegehren von 3'000'000 Franken als Anteil des Kantons Thurgau an den Kosten für die nächste Phase (2016-2019) des gemeinsam mit den Kantonen Appenzell Ausserrhoden und St. Gallen geführten Projekts 'Expo2027 Bodensee-Ostschweiz',sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
+ds_0243,gemeinde,Staat und Politik,2017: Kantonale Abstimmungen,26.11.2017: Kreditbegehren von 26'880'000 Franken für Erweiterungsbau 2 der Pädagogischen Hochschule Kreuzlingen,sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
+ds_0244,gemeinde,Staat und Politik,2017: Kantonale Abstimmungen,12.02.2017: Volksabstimmung zum Gegenvorschlag zur Volksinitiative 'Ja zu einer intakten Thurgauer Kulturlandschaft',sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
+ds_0245,gemeinde,Staat und Politik,2018: Kantonale Abstimmungen,23.09.2018: Beschluss des Grossen Rates über die Gewährung eines Darlehens von 25.416 Mio. Franken als Anteil des Kantons Thurgau für den Neubau des Ostschweizer Kinderspitals (OKS) in St. Gallen,sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
+ds_0246,gemeinde,Staat und Politik,2019: Kantonale Abstimmungen,19.05.2019: Volksinitiative 'Offenheit statt Geheimhaltung / Für transparente Behörden im Thurgau',sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
+ds_0247,gemeinde,Staat und Politik,2020: Kantonale Abstimmungen,29.11.2020: Neubau Schulsportturnhalle am Bildungszentrum für Technik in Frauenfeld,sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
+ds_0248,gemeinde,Staat und Politik,2020: Kantonale Abstimmungen,27.09.2020: Ergänzungsbau Regierungsgebäude,sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
+ds_0249,gemeinde,Staat und Politik,2020: Kantonale Abstimmungen,09.02.2020: Änderung des Gesetzes über die Staats- und Gemeindesteuern (Steuergesetz),sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
+ds_0250,gemeinde,Staat und Politik,2022: Kantonale Abstimmungen,27.11.2022: Objektkredit von Fr. 16’300’000 für den Erweiterungsbau der Kantonsschule Frauenfeld,sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
+ds_0251,gemeinde,Staat und Politik,2023: Kantonale Abstimmungen,18.06.2023: Änderung des Gesetzes über die Energienutzung,sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
+ds_0252,gemeinde,Staat und Politik,2023: Kantonale Abstimmungen,18.06.2023: Kreditbegehren über 127.2 Mio. Franken (Fr. 127'203'243.85) betreffend die Verwendung des Agios aus der Ausgabe von Partizipationsscheinen der Thurgauer Kantonalbank (TKB),sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
+ds_0253,gemeinde,Staat und Politik,2025: Kantonale Abstimmungen,28.09.2025: Ruhetagsgesetz,sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
+ds_0254,gemeinde,Staat und Politik,2025: Kantonale Abstimmungen,18.05.2025: Abschaffung der Liegenschaftensteuer,sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
+ds_0255,gemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Gesamtsteuerfuss,sk-stat-70,https://data.tg.ch/explore/dataset/sk-stat-70/table/
+ds_0256,gemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Gemeindesteuerfuss,sk-stat-69,https://data.tg.ch/explore/dataset/sk-stat-69/table/
+ds_0257,gemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Veränderung der Gemeindesteuerfüsse im Vergleich zu vor 10 Jahren (%-Punkte),sk-stat-69,https://data.tg.ch/explore/dataset/sk-stat-69/table/
+ds_0258,gemeinde,Staat und Politik,Finanzausgleich,"Gesamtauswirkung Finanzausgleich (positive Werte: Abschöpfung, negative Werte: Auszahlung) (CHF)",sk-stat-1,https://data.tg.ch/explore/dataset/sk-stat-1/table/
+ds_0259,gemeinde,Staat und Politik,Finanzausgleich,"Gesamtauswirkung Finanzausgleich pro Einwohner (positive Werte: Abschöpfung, negative Werte: Auszahlung) (CHF)",sk-stat-1,https://data.tg.ch/explore/dataset/sk-stat-1/table/
+ds_0260,gemeinde,Staat und Politik,Gemeindefinanzkennzahlen,Gemeindefinanzkennzahlen,sk-stat-4,https://data.tg.ch/explore/dataset/sk-stat-4/table/
+ds_0261,zusatzdaten,Bevölkerung und Soziales,Bevölkerung nach Altersklasse Geschlecht,NA,sk-stat-58,https://data.tg.ch/explore/dataset/sk-stat-58/table/
+ds_0262,primarschulgemeinde,Bevölkerung und Soziales,Bevölkerungsstand,Gesamtbevölkerung,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0263,primarschulgemeinde,Bevölkerung und Soziales,Bildung,Anzahl Schülerinnen und Schüler im Durchschnitt der beiden Stichtage 15.2. und 15.9.,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0264,primarschulgemeinde,Bevölkerung und Soziales,Bildung,Anteil Schüler an der Anzahl Einwohner,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0265,primarschulgemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Steuerkraft 100%,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0266,primarschulgemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Steuerkraft pro Einwohner,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0267,primarschulgemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Steuerfuss in %,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0268,primarschulgemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Gesamtsteuerfuss Schule  in %,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0269,primarschulgemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Gemeindesteuerfuss in %,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0270,primarschulgemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Schulsteuerfuss inkl. Gemeindesteuer in %,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0271,primarschulgemeinde,Staat und Politik,Beitragsleistungen,Beitragsleistungen gemäss Basisjahr der Berechnungsparameter in CHF,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0272,primarschulgemeinde,Staat und Politik,Beitragsleistungen,Beitragsleistungen gemäss Basisjahr der Berechnungsparameter im Verhältnis zur Steuerkraft 100%,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0273,primarschulgemeinde,Staat und Politik,Beitragsleistungen,Beitragsleistungen periodisch abgegrenzt in CHF,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0274,primarschulgemeinde,Staat und Politik,Beitragsleistungen,Beitragsleistungen periodisch abgegrenzt im Verhältnis zur Steuerkraft 100%,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0275,primarschulgemeinde,Staat und Politik,Beitragsleistungen,Beitragsleistungen im Mittelflussjahr gerechnet,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0276,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Nettoinvestitionen für das Verwaltungsvermögen im Rechnungsjahr,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0277,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Nettoschuld (-) / Nettovermögen (+) per 31.12. in CHF,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0278,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Fiskalertrag in CHF,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0279,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Nettoverschuldungsquotient im Rechnungsjahr,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0280,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Zinsbelastung im Rechnungsjahr in CHF,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0281,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Laufender Ertrag im Rechnungsjahr in CHF,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0282,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Zinsbelastungsanteil im Rechnungsjahr,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0283,primarschulgemeinde,Staat und Politik,Bilanz,Bilanzkontogruppen 201 und 206 per 31.12. in CHF,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0284,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Zinsbelastungsrisiko,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0285,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Hypothetischer Prozentsatz für Zinsbelastungsrisiko,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0286,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Verbuchte Gewinnverwendung im Rechnungsjahr,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0287,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Verbuchte Einlagen in den Erneuerungsfonds Baufolgekosten,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0288,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Aufwanddeckung,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0289,primarschulgemeinde,Staat und Politik,Bilanz,Eigenkapital Bilanzkontogruppe 29 per 31.12.,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0290,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Laufender Aufwand im Rechnungsjahr,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0291,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Eigenkapital im Verhältnis zur Steuerkraft 100% per 31.12.,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0292,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Eigenkapitaldeckungsgrad,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0293,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Erfolgvorgewinnverwendung,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0294,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Erfolg im Rechnungsjahr in CHF,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0295,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Bilanzüberschuss Kontogruppe 299,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0296,primarschulgemeinde,Staat und Politik,Finanzkennzahlen,Verwaltungsvermögen per 31.12.,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0297,sekundarschulgemeinde,Bevölkerung und Soziales,Bevölkerungsstand,Gesamtbevölkerung,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0298,sekundarschulgemeinde,Bevölkerung und Soziales,Bildung,Anzahl Schülerinnen und Schüler im Durchschnitt der beiden Stichtage 15.2. und 15.9.,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0299,sekundarschulgemeinde,Bevölkerung und Soziales,Bildung,Anteil Schüler an der Anzahl Einwohner,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0300,sekundarschulgemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Steuerkraft 100%,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0301,sekundarschulgemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Steuerkraft pro Einwohner,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0302,sekundarschulgemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Steuerfuss in %,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0303,sekundarschulgemeinde,Staat und Politik,Beitragsleistungen,Beitragsleistungen gemäss Basisjahr der Berechnungsparameter in CHF,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0304,sekundarschulgemeinde,Staat und Politik,Beitragsleistungen,Beitragsleistungen gemäss Basisjahr der Berechnungsparameter im Verhältnis zur Steuerkraft 100%,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0305,sekundarschulgemeinde,Staat und Politik,Beitragsleistungen,Beitragsleistungen periodisch abgegrenzt in CHF,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0306,sekundarschulgemeinde,Staat und Politik,Beitragsleistungen,Beitragsleistungen periodisch abgegrenzt im Verhältnis zur Steuerkraft 100%,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0307,sekundarschulgemeinde,Staat und Politik,Beitragsleistungen,Beitragsleistungen im Mittelflussjahr gerechnet,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0308,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Nettoinvestitionen für das Verwaltungsvermögen im Rechnungsjahr,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0309,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Nettoschuld (-) / Nettovermögen (+) per 31.12. in CHF,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0310,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Fiskalertrag in CHF,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0311,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Nettoverschuldungsquotient im Rechnungsjahr,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0312,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Zinsbelastung im Rechnungsjahr in CHF,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0313,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Laufender Ertrag im Rechnungsjahr in CHF,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0314,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Zinsbelastungsanteil im Rechnungsjahr,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0315,sekundarschulgemeinde,Staat und Politik,Bilanz,Bilanzkontogruppen 201 und 206 per 31.12. in CHF,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0316,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Zinsbelastungsrisiko,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0317,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Hypothetischer Prozentsatz für Zinsbelastungsrisiko,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0318,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Verbuchte Gewinnverwendung im Rechnungsjahr,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0319,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Verbuchte Einlagen in den Erneuerungsfonds Baufolgekosten,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0320,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Aufwanddeckung,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0321,sekundarschulgemeinde,Staat und Politik,Bilanz,Eigenkapital Bilanzkontogruppe 29 per 31.12.,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0322,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Laufender Aufwand im Rechnungsjahr,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0323,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Eigenkapital im Verhältnis zur Steuerkraft 100% per 31.12.,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0324,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Eigenkapitaldeckungsgrad,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0325,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Erfolgvorgewinnverwendung,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0326,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Erfolg im Rechnungsjahr in CHF,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0327,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Bilanzüberschuss Kontogruppe 299,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0328,sekundarschulgemeinde,Staat und Politik,Finanzkennzahlen,Verwaltungsvermögen per 31.12.,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0329,volksschulgemeinde,Bevölkerung und Soziales,Bevölkerungsstand,Gesamtbevölkerung,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0330,volksschulgemeinde,Bevölkerung und Soziales,Bildung,Anzahl Schülerinnen und Schüler im Durchschnitt der beiden Stichtage 15.2. und 15.9.,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0331,volksschulgemeinde,Bevölkerung und Soziales,Bildung,Anteil Schüler an der Anzahl Einwohner,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0332,volksschulgemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Steuerkraft 100%,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0333,volksschulgemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Steuerkraft pro Einwohner,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0334,volksschulgemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Steuerfuss in %,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0335,volksschulgemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Gesamtsteuerfuss Schule  in %,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0336,volksschulgemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Gemeindesteuerfuss in %,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0337,volksschulgemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Schulsteuerfuss inkl. Gemeindesteuer in %,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0338,volksschulgemeinde,Staat und Politik,Beitragsleistungen,Beitragsleistungen gemäss Basisjahr der Berechnungsparameter in CHF,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0339,volksschulgemeinde,Staat und Politik,Beitragsleistungen,Beitragsleistungen gemäss Basisjahr der Berechnungsparameter im Verhältnis zur Steuerkraft 100%,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0340,volksschulgemeinde,Staat und Politik,Beitragsleistungen,Beitragsleistungen periodisch abgegrenzt in CHF,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0341,volksschulgemeinde,Staat und Politik,Beitragsleistungen,Beitragsleistungen periodisch abgegrenzt im Verhältnis zur Steuerkraft 100%,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0342,volksschulgemeinde,Staat und Politik,Beitragsleistungen,Beitragsleistungen im Mittelflussjahr gerechnet,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0343,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Nettoinvestitionen für das Verwaltungsvermögen im Rechnungsjahr,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0344,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Nettoschuld (-) / Nettovermögen (+) per 31.12. in CHF,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0345,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Fiskalertrag in CHF,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0346,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Nettoverschuldungsquotient im Rechnungsjahr,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0347,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Zinsbelastung im Rechnungsjahr in CHF,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0348,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Laufender Ertrag im Rechnungsjahr in CHF,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0349,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Zinsbelastungsanteil im Rechnungsjahr,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0350,volksschulgemeinde,Staat und Politik,Bilanz,Bilanzkontogruppen 201 und 206 per 31.12. in CHF,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0351,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Zinsbelastungsrisiko,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0352,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Hypothetischer Prozentsatz für Zinsbelastungsrisiko,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0353,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Verbuchte Gewinnverwendung im Rechnungsjahr,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0354,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Verbuchte Einlagen in den Erneuerungsfonds Baufolgekosten,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0355,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Aufwanddeckung,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0356,volksschulgemeinde,Staat und Politik,Bilanz,Eigenkapital Bilanzkontogruppe 29 per 31.12.,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0357,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Laufender Aufwand im Rechnungsjahr,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0358,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Eigenkapital im Verhältnis zur Steuerkraft 100% per 31.12.,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0359,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Eigenkapitaldeckungsgrad,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0360,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Erfolgvorgewinnverwendung,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0361,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Erfolg im Rechnungsjahr in CHF,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0362,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Bilanzüberschuss Kontogruppe 299,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0363,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Verwaltungsvermögen per 31.12.,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
