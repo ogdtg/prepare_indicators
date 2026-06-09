@@ -1179,6 +1179,11 @@ for (sg_type in names(sg_geo_units)) {
 # =============================================================================
 # 4. Speichern: flache Datensätze + Mapping + README
 # =============================================================================
+# `save_indicators()` hält die Datensatz-IDs stabil: Indikatoren mit
+# unveränderter Geo-Einheit und Hierarchie behalten ihre bestehende ID (aus dem
+# vorhandenen Mapping), neue Indikatoren erhalten fortlaufende neue IDs. Zudem
+# werden die neu bezogenen Daten mit dem bestehenden Datensatz zusammengeführt,
+# sodass nicht mehr gelieferte (z.B. ältere) Jahre erhalten bleiben.
 print("## Speichern ------------------------------------------------------------")
 
 save_indicators(base_dir = "nested_data", catalog = catalog)

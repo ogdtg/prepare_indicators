@@ -64,15 +64,125 @@ ordered_items <- function() {
   items[order(match(geo, .geo_unit_order), seq_along(items))]
 }
 
+#' Stabiler Identitäts-Schlüssel eines Indikators
+#'
+#' Ein Indikator wird über seine Geo-Einheit und seine Hierarchie-Ebenen
+#' eindeutig identifiziert. Solange sich diese nicht ändern, behält der
+#' Indikator beim erneuten Speichern seine bestehende Datensatz-ID.
+.indicator_key <- function(geo_unit, levels) {
+  levels <- as.character(levels)
+  levels <- levels[!is.na(levels) & nzchar(levels)]
+  # Unit-Separator (0x1f) als Trenner, der in den Hierarchie-Texten nicht vorkommt
+  paste(c(geo_unit, levels), collapse = "")
+}
+
+#' Identitäts-Schlüssel je Zeile einer bestehenden Mapping-Tabelle
+.mapping_keys <- function(mapping_tbl) {
+  level_cols <- grep("^level_", names(mapping_tbl), value = TRUE)
+  vapply(seq_len(nrow(mapping_tbl)), function(i) {
+    lv <- as.character(unlist(mapping_tbl[i, level_cols], use.names = FALSE))
+    .indicator_key(mapping_tbl$geo_unit[i], lv)
+  }, character(1))
+}
+
+#' Neue Daten mit dem bestehenden Datensatz zusammenführen
+#'
+#' Bestehende Werte zu Schlüsseln, die in den neuen Daten nicht mehr vorkommen
+#' (z.B. weil die Quelle ältere Jahre nicht mehr ausliefert), bleiben erhalten.
+#' Schlüssel, die in den neuen Daten vorhanden sind, werden vollständig durch
+#' die neuen Werte ersetzt. Zusammengeführt wird über die vorhandenen
+#' Schlüsselspalten `bfs_nr_gemeinde`, `jahr` und `filter1`.
+#'
+#' Statt eines `anti_join` mit anschliessendem `bind_rows` wäre prinzipiell auch
+#' `dplyr::rows_upsert()` denkbar; dieses setzt jedoch identische Spalten und
+#' eindeutige Schlüssel voraus. Da die Indikatoren unterschiedliche Spalten
+#' (mit/ohne `share`, `filter1`, ...) und teils mehrere Zeilen je Schlüssel
+#' besitzen, ist der `anti_join`-Ansatz hier robuster und bleibt der Weg der Wahl.
+#'
+#' @param new_data neu berechneter data.frame des Indikators
+#' @param old_path Pfad zum bestehenden `ds_XXXX.rds` (kann fehlen)
+merge_with_old <- function(new_data, old_path) {
+  if (is.null(new_data) || !file.exists(old_path)) return(new_data)
+
+  old_data <- tryCatch(readRDS(old_path), error = function(e) NULL)
+  if (is.null(old_data) || nrow(old_data) == 0) return(new_data)
+
+  keys <- Reduce(intersect, list(c("bfs_nr_gemeinde", "jahr", "filter1"),
+                                 names(new_data), names(old_data)))
+  if (length(keys) == 0) return(new_data)
+
+  # Schlüsseltypen angleichen, damit der Join nicht an unterschiedlichen
+  # Spaltentypen (z.B. jahr als character vs. numeric) scheitert.
+  for (k in keys) {
+    if (!identical(class(old_data[[k]]), class(new_data[[k]]))) {
+      old_data[[k]] <- methods::as(old_data[[k]], class(new_data[[k]])[1])
+    }
+  }
+
+  retained_old <- dplyr::anti_join(old_data, new_data, by = keys)
+  dplyr::bind_rows(new_data, retained_old)
+}
+
 #' Alle registrierten Indikatoren als flache Datensätze speichern
 #'
 #' Erzeugt `ds_XXXX.rds` je Indikator sowie `mapping.rds` / `mapping.csv`
 #' mit den Hierarchie-Ebenen, der Geo-Einheit und den Quellenangaben.
 #'
+#' Datensätze, die bereits beim letzten Lauf existierten (identische
+#' Geo-Einheit und Hierarchie-Ebenen), behalten ihre bestehende ID. Neue
+#' Indikatoren erhalten fortlaufende neue IDs oberhalb der bisher höchsten ID.
+#' Ist `merge_old = TRUE`, werden die neuen Daten zudem mit dem bestehenden
+#' Datensatz zusammengeführt, sodass nicht mehr gelieferte (z.B. ältere) Jahre
+#' erhalten bleiben (siehe `merge_with_old()`).
+#'
+#' @param base_dir Zielverzeichnis der flachen Datensätze
+#' @param catalog OGD-Katalog für die Quellen-Auflösung
+#' @param merge_old neue Daten mit dem bestehenden Datensatz zusammenführen?
 #' @return (unsichtbar) die Mapping-Tabelle
-save_indicators <- function(base_dir, catalog = NULL) {
+save_indicators <- function(base_dir, catalog = NULL, merge_old = TRUE) {
 
   items <- ordered_items()
+
+  # Bestehendes Mapping einlesen, um IDs stabil zu halten und alte Daten
+  # wiederzufinden (vor dem Löschen der alten Datensätze).
+  mapping_path <- file.path(base_dir, "mapping.rds")
+  old_mapping  <- if (file.exists(mapping_path)) readRDS(mapping_path) else NULL
+
+  if (!is.null(old_mapping) && nrow(old_mapping) > 0) {
+    old_id_num        <- as.integer(sub("^ds_", "", old_mapping$id))
+    names(old_id_num) <- .mapping_keys(old_mapping)
+    max_id            <- max(old_id_num, 0L)
+  } else {
+    old_id_num <- integer(0)
+    max_id     <- 0L
+  }
+
+  # IDs zuweisen: bestehende Indikatoren behalten ihre ID, neue erhalten
+  # fortlaufende IDs oberhalb der bisher höchsten ID.
+  next_id <- max_id
+  ids_num <- integer(length(items))
+  for (i in seq_along(items)) {
+    key <- .indicator_key(items[[i]]$geo_unit, items[[i]]$levels)
+    if (key %in% names(old_id_num)) {
+      ids_num[i] <- old_id_num[[key]]
+    } else {
+      next_id    <- next_id + 1L
+      ids_num[i] <- next_id
+    }
+  }
+  ids <- sprintf("ds_%04d", ids_num)
+
+  # Daten (ggf. mit Altdaten zusammengeführt) in den Speicher laden, bevor die
+  # bestehenden Datensätze entfernt werden.
+  data_list <- vector("list", length(items))
+  for (i in seq_along(items)) {
+    new_data <- items[[i]]$data
+    data_list[[i]] <- if (merge_old) {
+      merge_with_old(new_data, file.path(base_dir, paste0(ids[i], ".rds")))
+    } else {
+      new_data
+    }
+  }
 
   if (dir.exists(base_dir)) {
     old <- list.files(base_dir, pattern = "^ds_\\d+\\.rds$", full.names = TRUE)
@@ -86,9 +196,9 @@ save_indicators <- function(base_dir, catalog = NULL) {
 
   for (i in seq_along(items)) {
     item <- items[[i]]
-    id   <- sprintf("ds_%04d", i)
+    id   <- ids[i]
 
-    saveRDS(item$data, file = file.path(base_dir, paste0(id, ".rds")))
+    saveRDS(data_list[[i]], file = file.path(base_dir, paste0(id, ".rds")))
 
     lvl <- item$levels
     length(lvl) <- max_depth                       # NA-Auffüllung
@@ -103,7 +213,28 @@ save_indicators <- function(base_dir, catalog = NULL) {
     )
   }
 
+
+  data_list |>
+    setNames(ids) |>
+    purrr::map(function(df) {
+      # Fehlende Spalten ergänzen
+      if (!"filter1" %in% names(df)) df$filter1 <- NA_character_
+      if (!"share"   %in% names(df)) df$share   <- NA_real_
+
+      df |>
+        dplyr::mutate(
+          jahr            = as.character(jahr),
+          bfs_nr_gemeinde = as.character(bfs_nr_gemeinde),
+          filter1         = as.character(filter1),
+          value           = as.numeric(value),
+          share           = as.numeric(share)
+        )
+    }) |>
+    dplyr::bind_rows(.id = "dataset_id") |>
+    saveRDS(file.path(base_dir, "full.rds"))
+
   mapping_tbl <- dplyr::bind_rows(lapply(rows, tibble::as_tibble))
+
 
   saveRDS(mapping_tbl, file = file.path(base_dir, "mapping.rds"))
   readr::write_csv(mapping_tbl, file = file.path(base_dir, "mapping.csv"))
