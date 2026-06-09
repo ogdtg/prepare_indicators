@@ -213,7 +213,28 @@ save_indicators <- function(base_dir, catalog = NULL, merge_old = TRUE) {
     )
   }
 
+
+  data_list |>
+    setNames(ids) |>
+    purrr::map(function(df) {
+      # Fehlende Spalten ergänzen
+      if (!"filter1" %in% names(df)) df$filter1 <- NA_character_
+      if (!"share"   %in% names(df)) df$share   <- NA_real_
+
+      df |>
+        dplyr::mutate(
+          jahr            = as.character(jahr),
+          bfs_nr_gemeinde = as.character(bfs_nr_gemeinde),
+          filter1         = as.character(filter1),
+          value           = as.numeric(value),
+          share           = as.numeric(share)
+        )
+    }) |>
+    dplyr::bind_rows(.id = "dataset_id") |>
+    saveRDS(file.path(base_dir, "full.rds"))
+
   mapping_tbl <- dplyr::bind_rows(lapply(rows, tibble::as_tibble))
+
 
   saveRDS(mapping_tbl, file = file.path(base_dir, "mapping.rds"))
   readr::write_csv(mapping_tbl, file = file.path(base_dir, "mapping.csv"))
