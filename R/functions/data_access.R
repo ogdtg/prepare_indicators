@@ -332,5 +332,3 @@ get_all_gemeinde_indicators <- function(type){
 
 
 
-
-
