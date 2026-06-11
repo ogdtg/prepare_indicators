@@ -11,6 +11,8 @@ jobs:
         run: |
           apt-get update -qq && apt-get install -y libudunits2-dev
       - name: Execute Script
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: Rscript 03_prepare_indikatoren.R
       - name: Set up Git
         run: |-
