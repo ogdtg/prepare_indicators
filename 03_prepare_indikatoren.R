@@ -34,13 +34,13 @@ library(dplyr)
 library(httr)
 library(jsonlite)
 library(tidyr)
-library(BFS)
 library(stringr)
 library(purrr)
 library(lubridate)
 library(tibble)
 library(readxl)
 remotes::install_github("lgnbhl/BFS")
+library(BFS)
 
 # Funktionen aus R/functions/ laden
 for (f in list.files("R/functions", pattern = "\\.R$", full.names = TRUE)) {
