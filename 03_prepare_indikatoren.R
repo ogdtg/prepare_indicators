@@ -27,8 +27,8 @@ ensure_packages <- function(packages) {
   }
 }
 
-ensure_packages(c("dplyr", "httr", "jsonlite", "tidyr", "BFS", "stringr",
-                  "purrr", "lubridate", "glue", "readr", "tibble","readxl"))
+ensure_packages(c("dplyr", "httr", "jsonlite", "tidyr", "stringr",
+                  "purrr", "lubridate", "glue", "readr", "tibble","readxl","remotes"))
 
 library(dplyr)
 library(httr)
@@ -40,6 +40,7 @@ library(purrr)
 library(lubridate)
 library(tibble)
 library(readxl)
+remotes::install_github("lgnbhl/BFS")
 
 # Funktionen aus R/functions/ laden
 for (f in list.files("R/functions", pattern = "\\.R$", full.names = TRUE)) {
