@@ -110,3 +110,29 @@ summarise_bezirk_kanton <- function(data, type = "sum", bezirk_data) {
     bind_rows(data_kt) %>%
     arrange(jahr)
 }
+
+
+make_meta_html <- function(beschreibung, datenquelle, source_urls) {
+
+  # URLs aufsplitten (können mehrere sein, kommasepariert)
+  urls <- stringr::str_split(source_urls, ",\\s*")[[1]] |>
+    stringr::str_trim() |>
+    purrr::discard(~ .x == "" | is.na(.x))
+
+  # Link-Labels bestimmen
+  links_html <- purrr::map_chr(urls, function(url) {
+    label <- if (stringr::str_detect(url, "data\\.tg\\.ch")) "data.tg.ch" else "BFS"
+    sprintf('<a href="%s" target="_blank">%s</a>', url, label)
+  }) |>
+    paste(collapse = " | ")
+
+  # Beschreibung (kann NA sein)
+  desc_html <- if (!is.na(beschreibung) && beschreibung != "") {
+    sprintf('<p style="margin:0 0 6px;">%s</p>', beschreibung)
+  } else ""
+
+  sprintf(
+    '%s<p style="margin:0 0 4px;"><strong>Datenquelle:</strong> %s</p><p style="margin:0;">%s</p>',
+    desc_html, datenquelle, links_html
+  )
+}

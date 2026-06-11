@@ -28,7 +28,7 @@ ensure_packages <- function(packages) {
 }
 
 ensure_packages(c("dplyr", "httr", "jsonlite", "tidyr", "BFS", "stringr",
-                  "purrr", "lubridate", "glue", "readr", "tibble"))
+                  "purrr", "lubridate", "glue", "readr", "tibble","readxl"))
 
 library(dplyr)
 library(httr)
@@ -39,6 +39,7 @@ library(stringr)
 library(purrr)
 library(lubridate)
 library(tibble)
+library(readxl)
 
 # Funktionen aus R/functions/ laden
 for (f in list.files("R/functions", pattern = "\\.R$", full.names = TRUE)) {
@@ -161,17 +162,7 @@ register_indicator(
 )
 
 ### Durchschnittsalter der Rentnerinnen und Rentner
-register_indicator(
-  bev_alter %>%
-    filter(alter_code >= 65) %>%
-    mutate(age_summe = value * alter_code) %>%
-    group_by(bfs_nr_gemeinde, name_gemeinde, jahr) %>%
-    summarise(value = sum(age_summe) / sum(value)) %>%
-    ungroup() %>%
-    select(-name_gemeinde),
-  "Bevölkerung und Soziales", "Bevölkerungsstand",
-  "Durchschnittsalter der Rentnerinnen und Rentner", source_ids = "sk-stat-57"
-)
+
 
 ### Bevölkerungsverteilung nach Geschlecht
 register_indicator(
@@ -1118,6 +1109,20 @@ register_indicator(
   "Staat und Politik", "Gemeindefinanzkennzahlen", "Gemeindefinanzkennzahlen",
   source_ids = "sk-stat-4")
 
+
+### Durchschnittsalter der Rentnerinnen und Rentner
+register_indicator(
+  bev_alter %>%
+    filter(alter_code >= 65) %>%
+    mutate(age_summe = value * alter_code) %>%
+    group_by(bfs_nr_gemeinde, name_gemeinde, jahr) %>%
+    summarise(value = sum(age_summe) / sum(value)) %>%
+    ungroup() %>%
+    select(-name_gemeinde),
+  "Bevölkerung und Soziales", "Bevölkerungsstand",
+  "Durchschnittsalter der Rentnerinnen und Rentner", source_ids = "sk-stat-57"
+)
+
 # -----------------------------------------------------------------------------
 # Schulgemeinden (Primar-, Sekundar-, Volksschulgemeinden)
 # -----------------------------------------------------------------------------
@@ -1187,9 +1192,121 @@ for (sg_type in names(sg_geo_units)) {
 print("## Speichern ------------------------------------------------------------")
 
 save_indicators(base_dir = "nested_data", catalog = catalog)
-save_indicators(base_dir = "../raw.db/inst/extdata/data/", catalog = catalog)
+# save_indicators(base_dir = "../raw.db/inst/extdata/data/", catalog = catalog)
+meta <- read_excel("data/mapping_meta.xlsx")
+mapping <- readRDS("nested_data/mapping.rds") |>
+  select(id:source_urls)
+
+
+meta_mapping <- mapping |>
+  left_join(meta |>
+            select(id,Beschreibung,datenquelle),"id") |>
+  dplyr::mutate(
+    meta_infos = purrr::pmap_chr(
+      list(Beschreibung, datenquelle, source_urls),
+      make_meta_html
+    )
+  )
+
+
+
+
+
+# saveRDS(meta_mapping,"../raw.db/inst/extdata/data/mapping.rds")
+saveRDS(meta_mapping,"nested_data/mapping.rds")
+
+
+
 
 write_readme(catalog = catalog, path = "README.md")
+
+
+library(readxl)
+
+# ── Konfiguration ─────────────────────────────────────────────────────────────
+# Anpassen, wenn das Skript ins prepare_indicators-Repo umzieht.
+XLSX_PATH  <- "data/mapping_berichte.xlsx"
+FULL_PATH  <- "nested_data/full.rds"        # Quelle der Rohdaten (kombiniert)
+OUTPUT_DIR <- "nested_data/"                  # Zielverzeichnis für <id>_report.rds
+
+#' Liefert die Rohdaten eines Quell-Datensatzes `<id>`
+#'
+#' Hier aus dem kombinierten `full.rds` gefiltert. Im prepare_indicators-Repo
+#' kann dies z. B. durch `readRDS(file.path(src_dir, paste0(id, ".rds")))`
+#' ersetzt werden.
+.full_cache <- NULL
+get_source <- function(id) {
+  if (is.null(.full_cache)) .full_cache <<- readRDS(FULL_PATH)
+  d <- .full_cache[as.character(.full_cache$dataset_id) == id, , drop = FALSE]
+  if (nrow(d) == 0) return(NULL)
+  d$dataset_id <- NULL
+  # Join-Artefakte und reine NA-Spalten entfernen, Typen setzen.
+  for (col in grep("^value\\.", names(d), value = TRUE)) d[[col]] <- NULL
+  if ("value" %in% names(d)) d$value <- suppressWarnings(as.numeric(d$value))
+  if ("share" %in% names(d)) d$share <- suppressWarnings(as.numeric(d$share))
+  keep <- vapply(d, function(col) any(!is.na(col)), logical(1))
+  d[, keep, drop = FALSE]
+}
+
+# ── Mapping lesen ─────────────────────────────────────────────────────────────
+mapping <- as.data.frame(read_excel(XLSX_PATH), stringsAsFactors = FALSE)
+
+as_flag <- function(x) {
+  x <- as.character(x)
+  !is.na(x) & tolower(trimws(x)) %in% c("true", "wahr", "1", "ja")
+}
+
+# Welche IDs werden (irgendwo) mit sum_up = TRUE genutzt?
+sum_up_ids <- unique(mapping$id[as_flag(mapping$sum_up)])
+
+# ── Aufbereitung je Quell-ID ──────────────────────────────────────────────────
+
+#' Erstellt den report-fertigen Datensatz für eine Quell-ID
+prepare_report_dataset <- function(id) {
+  src <- get_source(id)
+  if (is.null(src)) {
+    warning("Quell-Datensatz nicht gefunden: ", id)
+    return(NULL)
+  }
+
+  out <- src
+
+  # Total-Zeilen vorberechnen, falls dieser Quell-Datensatz mit sum_up genutzt
+  # wird und Kategorien (filter1) besitzt.
+  if (id %in% sum_up_ids && "filter1" %in% names(src) && any(!is.na(src$filter1))) {
+    totals <- src |>
+      dplyr::group_by(.data$bfs_nr_gemeinde, .data$jahr) |>
+      dplyr::summarise(value = sum(as.numeric(.data$value), na.rm = TRUE), .groups = "drop") |>
+      dplyr::mutate(filter1 = "Total")
+    out <- dplyr::bind_rows(out, totals)
+  }
+
+  out
+}
+
+# ── Ausführen & speichern ─────────────────────────────────────────────────────
+report_ids <- unique(mapping$id)
+report_ids <- report_ids[!is.na(report_ids) & nzchar(report_ids)]
+
+if (!dir.exists(OUTPUT_DIR)) dir.create(OUTPUT_DIR, recursive = TRUE)
+
+combined <- list()
+for (id in report_ids) {
+  d <- prepare_report_dataset(id)
+  if (is.null(d)) next
+  saveRDS(d, file.path(OUTPUT_DIR, paste0(id, "_report.rds")))
+  d$dataset_id <- paste0(id, "_report")
+  combined[[length(combined) + 1]] <- d
+}
+
+# Kombinierte Datei (Spalte dataset_id = "<id>_report") für die Übernahme in
+# den kombinierten Gesamtdatensatz (full.rds).
+full_report <- dplyr::bind_rows(combined)
+saveRDS(full_report, file.path(OUTPUT_DIR, "full_report.rds"))
+
+message(sprintf("Fertig: %d Datensätze als <id>_report aufbereitet (%d Zeilen).",
+                length(report_ids), nrow(full_report)))
+
 
 
 # Probleme/Offene Fragen ------------------------------------------------------
