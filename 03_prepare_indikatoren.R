@@ -39,7 +39,7 @@ library(purrr)
 library(lubridate)
 library(tibble)
 library(readxl)
-remotes::install_github("lgnbhl/BFS")
+remotes::install_github("lgnbhl/BFS", auth_token = Sys.getenv("GITHUB_TOKEN"))
 library(BFS)
 
 # Funktionen aus R/functions/ laden
