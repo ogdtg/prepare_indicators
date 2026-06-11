@@ -95,11 +95,16 @@ df3 <- tg_data[["Anzahl über 64-Jährige (ständige Wohnbevölkerung)"]] |>
 
 bev_alter_mod <- df1 |>
   bind_rows(df2) |>
-  bind_rows(df3)
+  bind_rows(df3) |>
+  rename(jahr="zeitraum")
+
+bev_alter_mod_bez <- bev_alter_mod |>
+  summarise_bezirk(bezirk_data = bezirk_data)
 
 
-bev_alter_final <- bev_alter_mod |>
-  rename(jahr = "zeitraum") |>
+
+
+bev_alter_final <-bev_alter_mod_bez |>
   group_by(bfs_nr_gemeinde,jahr) |>
   mutate(total = sum(value)) |>
   ungroup() |>

@@ -1,7 +1,6 @@
 | Hauptkategorie | Unterkategorie | Indikator | Datensatz ID |
 |---------------|---------------|-----------|----------------|
 Bevölkerung und Soziales|Bevölkerungsstand|Durchschnittsalter der Bevölkerung|[sk-stat-57](https://data.tg.ch/explore/dataset/sk-stat-57/table/)
-Bevölkerung und Soziales|Bevölkerungsstand|Durchschnittsalter der Rentnerinnen und Rentner|[sk-stat-57](https://data.tg.ch/explore/dataset/sk-stat-57/table/)
 Bevölkerung und Soziales|Bevölkerungsstand|Bevölkerungsverteilung nach Geschlecht|[sk-stat-59](https://data.tg.ch/explore/dataset/sk-stat-59/table/)
 Bevölkerung und Soziales|Bevölkerungsstand|Bevölkerungsverteilung nach Altersklasse|[sk-stat-57](https://data.tg.ch/explore/dataset/sk-stat-57/table/)
 Bevölkerung und Soziales|Bevölkerungsstand|Bevölkerungsverteilung nach Konfession|[sk-stat-62](https://data.tg.ch/explore/dataset/sk-stat-62/table/)
@@ -260,6 +259,7 @@ Staat und Politik|Steuerkraft und Steuerfüsse|Veränderung der Gemeindesteuerf�
 Staat und Politik|Finanzausgleich|Gesamtauswirkung Finanzausgleich (positive Werte: Abschöpfung, negative Werte: Auszahlung) (CHF)|[sk-stat-1](https://data.tg.ch/explore/dataset/sk-stat-1/table/)
 Staat und Politik|Finanzausgleich|Gesamtauswirkung Finanzausgleich pro Einwohner (positive Werte: Abschöpfung, negative Werte: Auszahlung) (CHF)|[sk-stat-1](https://data.tg.ch/explore/dataset/sk-stat-1/table/)
 Staat und Politik|Gemeindefinanzkennzahlen|Gemeindefinanzkennzahlen|[sk-stat-4](https://data.tg.ch/explore/dataset/sk-stat-4/table/)
+Bevölkerung und Soziales|Bevölkerungsstand|Durchschnittsalter der Rentnerinnen und Rentner|[sk-stat-57](https://data.tg.ch/explore/dataset/sk-stat-57/table/)
 Bevölkerung und Soziales||Bevölkerung nach Altersklasse Geschlecht|[sk-stat-58](https://data.tg.ch/explore/dataset/sk-stat-58/table/)
 Bevölkerung und Soziales|Bevölkerungsstand|Gesamtbevölkerung|[dek-av-30](https://data.tg.ch/explore/dataset/dek-av-30/table/)
 Bevölkerung und Soziales|Bildung|Anzahl Schülerinnen und Schüler im Durchschnitt der beiden Stichtage 15.2. und 15.9.|[dek-av-30](https://data.tg.ch/explore/dataset/dek-av-30/table/)
