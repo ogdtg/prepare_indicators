@@ -62,6 +62,14 @@ zeit <- readRDS("data/zeit_df.rds") %>% distinct(name, unified_zeit)
 
 catalog <- get_ogd_catalog()
 
+# Datenbezug und Indikator-Erstellung laufen Ausdruck für Ausdruck in je einem
+# try/catch (siehe `run_indicator_steps()`): Schlägt ein einzelner Datenbezug
+# fehl – z.B. weil das BFS einen Datensatz von STAT-TAB in den Swiss Stats
+# Explorer verschoben hat –, wird der Fehler protokolliert und mit dem nächsten
+# Indikator fortgefahren. Welche Indikatoren erstellt werden konnten und welche
+# nicht, hält am Ende `save_indicator_report()` fest.
+run_indicator_steps(quote({
+
 # 2. Datenbezug Themenatlas (data.tg.ch) --------------------------------------
 print("# Datenbezug von data.tg.ch ---------------------------------------------")
 
@@ -1181,8 +1189,10 @@ for (sg_type in names(sg_geo_units)) {
   }
 }
 
+}))  # Ende run_indicator_steps()
+
 # =============================================================================
-# 4. Speichern: flache Datensätze + Mapping + README
+# 4. Speichern: flache Datensätze + Mapping + README + Fehlerbericht
 # =============================================================================
 # `save_indicators()` hält die Datensatz-IDs stabil: Indikatoren mit
 # unveränderter Geo-Einheit und Hierarchie behalten ihre bestehende ID (aus dem
@@ -1191,34 +1201,36 @@ for (sg_type in names(sg_geo_units)) {
 # sodass nicht mehr gelieferte (z.B. ältere) Jahre erhalten bleiben.
 print("## Speichern ------------------------------------------------------------")
 
-save_indicators(base_dir = "nested_data", catalog = catalog)
+tryCatch(save_indicators(base_dir = "nested_data", catalog = catalog),
+         error = function(e) message("save_indicators (nested_data): ", conditionMessage(e)))
 # save_indicators(base_dir = "../raw.db/inst/extdata/data/", catalog = catalog)
-meta <- read_excel("data/mapping_meta.xlsx")
-mapping <- readRDS("nested_data/mapping.rds") |>
-  select(id:source_urls)
 
+# Metadaten (Beschreibung/Quelle) ans Mapping anreichern
+tryCatch({
+  meta <- read_excel("data/mapping_meta.xlsx")
+  mapping <- readRDS("nested_data/mapping.rds") |>
+    select(id:source_urls)
 
-meta_mapping <- mapping |>
-  left_join(meta |>
-            select(id,Beschreibung,datenquelle),"id") |>
-  dplyr::mutate(
-    meta_infos = purrr::pmap_chr(
-      list(Beschreibung, datenquelle, source_urls),
-      make_meta_html
+  meta_mapping <- mapping |>
+    left_join(meta |>
+              select(id, Beschreibung, datenquelle), "id") |>
+    dplyr::mutate(
+      meta_infos = purrr::pmap_chr(
+        list(Beschreibung, datenquelle, source_urls),
+        make_meta_html
+      )
     )
-  )
 
+  # saveRDS(meta_mapping,"../raw.db/inst/extdata/data/mapping.rds")
+  saveRDS(meta_mapping, "nested_data/mapping.rds")
+}, error = function(e) message("Meta-Mapping: ", conditionMessage(e)))
 
+tryCatch(write_readme(catalog = catalog, path = "README.md"),
+         error = function(e) message("write_readme: ", conditionMessage(e)))
 
-
-
-# saveRDS(meta_mapping,"../raw.db/inst/extdata/data/mapping.rds")
-saveRDS(meta_mapping,"nested_data/mapping.rds")
-
-
-
-
-write_readme(catalog = catalog, path = "README.md")
+# Fehlerbericht: welche Indikatoren konnten erstellt werden und welche nicht
+save_indicator_report(rds_path    = "nested_data/indicator_report.rds",
+                      readme_path = "README.md")
 
 
 library(readxl)

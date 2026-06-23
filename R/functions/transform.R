@@ -90,6 +90,25 @@ register_sektor_indicators <- function(ent, label, source_id, bezirk_data) {
 
   topic <- "Wirtschaft und Arbeit"
 
+  # Daten einmalig auswerten; schlägt der Datenbezug fehl, werden alle sechs
+  # Indikatoren als Fehler protokolliert, statt das Skript abzubrechen.
+  ent <- tryCatch(force(ent), error = function(e) e)
+  if (inherits(ent, "error")) {
+    indicators <- c(
+      sprintf("Veränderung %s total gegenüber vor 5 Jahren", label),
+      sprintf("Vorjahresveränderung %s total", label),
+      sprintf("Veränderung %s nach Sektor gegenüber vor 5 Jahren (in %% Punkten)", label),
+      sprintf("Vorjahresveränderung %s nach Sektor (in %%)", label),
+      sprintf("%s total", label),
+      sprintf("%s nach Sektor", label)
+    )
+    for (ind in indicators) {
+      .record(paste(topic, label, ind, sep = " > "), "gemeinde",
+              "Fehler", conditionMessage(ent))
+    }
+    return(invisible(NULL))
+  }
+
   register_indicator(
     ent %>%
       select(bfs_nr_gemeinde:change_fuenf) %>%
@@ -212,6 +231,15 @@ register_abstimmungen <- function(prepared, label, source_id) {
 
   topic <- "Staat und Politik"
 
+  # Datenbezug auswerten; bei Fehler kann nicht je Vorlage aufgeschlüsselt
+  # werden, daher ein Sammel-Fehlereintrag für die Abstimmungsreihe.
+  prepared <- tryCatch(force(prepared), error = function(e) e)
+  if (inherits(prepared, "error")) {
+    .record(paste(topic, label, sep = " > "), "gemeinde",
+            "Fehler", conditionMessage(prepared))
+    return(invisible(NULL))
+  }
+
   for (year in sort(unique(prepared$jahr))) {
 
     subtopic <- paste0(year, ": ", label)
@@ -245,11 +273,23 @@ register_abstimmungen <- function(prepared, label, source_id) {
 register_sg_indicator <- function(sg_type, geo_unit, variable, data,
                                   topic, subtopic, indicator,
                                   source_id = "dek-av-30") {
-  temp <- data %>%
-    filter(sgtyp2 == sg_type) %>%
-    select(all_of(c("sg_id", "jahr", variable))) %>%
-    setNames(c("bfs_nr_gemeinde", "jahr", "value"))
+  name <- paste(topic, subtopic, indicator, sep = " > ")
 
+  temp <- tryCatch(
+    data %>%
+      filter(sgtyp2 == sg_type) %>%
+      select(all_of(c("sg_id", "jahr", variable))) %>%
+      setNames(c("bfs_nr_gemeinde", "jahr", "value")),
+    error = function(e) e
+  )
+
+  if (inherits(temp, "error")) {
+    .record(name, geo_unit, "Fehler", conditionMessage(temp))
+    return(invisible(NULL))
+  }
+
+  # Liegen für diese Schulgemeinde-Art keine Werte vor, wird der Indikator
+  # bewusst übersprungen (kein Fehler).
   if (sum(is.na(temp$value)) != nrow(temp)) {
     register_indicator(temp, topic, subtopic, indicator,
                        geo_unit = geo_unit, source_ids = source_id)

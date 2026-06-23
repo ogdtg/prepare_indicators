@@ -19,35 +19,101 @@
 
 #' Register (neu) initialisieren
 reset_registry <- function() {
-  .registry_env$items <- list()
+  .registry_env$items  <- list()
+  .registry_env$report <- list()
   invisible(NULL)
 }
 
 # Umgebung, in der die Indikatoren gesammelt werden
 .registry_env <- new.env(parent = emptyenv())
-.registry_env$items <- list()
+.registry_env$items  <- list()
+.registry_env$report <- list()
+
+#' Ergebnis eines Indikator-Versuchs protokollieren
+#'
+#' @param name      Voller Indikatorname (Hierarchie mit " > " verbunden)
+#' @param geo_unit  Geo-Einheit
+#' @param status    "Erfolg" oder "Fehler"
+#' @param message   Fehlermeldung (bei Erfolg `NA`)
+.record <- function(name, geo_unit, status, message = NA_character_) {
+  idx <- length(.registry_env$report) + 1L
+  .registry_env$report[[idx]] <- list(
+    name     = name,
+    geo_unit = geo_unit,
+    status   = status,
+    message  = as.character(message)
+  )
+  invisible(NULL)
+}
 
 #' Einen Indikator registrieren
 #'
-#' @param data data.frame des Indikators (wird bei NULL ignoriert)
+#' Die Berechnung der Daten erfolgt – dank verzögerter Auswertung von R – erst
+#' beim Auswerten des `data`-Arguments innerhalb dieser Funktion. Schlägt sie
+#' fehl (z.B. weil das BFS einen Datensatz von STAT-TAB in den Swiss Stats
+#' Explorer verschoben hat), wird der Fehler protokolliert und der Indikator
+#' übersprungen, statt das ganze Skript abzubrechen.
+#'
+#' @param data data.frame des Indikators (wird bei NULL stillschweigend ignoriert)
 #' @param ... Hierarchie-Ebenen von oben nach unten, z.B.
 #'   "Bevölkerung und Soziales", "Bevölkerungsstand", "Gesamtbevölkerung"
 #' @param geo_unit Geo-Einheit (Default "gemeinde")
 #' @param source_ids Vektor der Quell-Datensatz-IDs (Metadaten)
 register_indicator <- function(data, ..., geo_unit = "gemeinde",
                                source_ids = character(0)) {
-  if (is.null(data)) return(invisible(NULL))
 
   levels <- as.character(c(...))
   levels <- levels[!is.na(levels) & nzchar(levels)]
+  name   <- paste(levels, collapse = " > ")
+
+  # Daten-Promise auswerten und Fehler abfangen
+  result <- tryCatch(data, error = function(e) e)
+
+  if (inherits(result, "error")) {
+    .record(name, geo_unit, "Fehler", conditionMessage(result))
+    return(invisible(NULL))
+  }
+  if (is.null(result)) {
+    return(invisible(NULL))                       # bewusst übersprungen
+  }
+  if (is.data.frame(result) && nrow(result) == 0) {
+    .record(name, geo_unit, "Fehler", "leerer Datensatz")
+    return(invisible(NULL))
+  }
 
   idx <- length(.registry_env$items) + 1L
   .registry_env$items[[idx]] <- list(
     geo_unit   = geo_unit,
     levels     = levels,
     source_ids = source_ids,
-    data       = data
+    data       = result
   )
+  .record(name, geo_unit, "Erfolg")
+  invisible(NULL)
+}
+
+#' Eine Folge von Top-Level-Ausdrücken einzeln und fehlertolerant ausführen
+#'
+#' Jeder Ausdruck (z.B. ein Datenbezug oder ein `register_indicator()`-Aufruf)
+#' wird in einem eigenen `tryCatch` ausgeführt. Schlägt einer fehl, wird der
+#' Fehler ausgegeben und mit dem nächsten Ausdruck fortgefahren – ein einzelner
+#' nicht mehr verfügbarer Datensatz legt damit nicht die ganze Pipeline lahm.
+#' Die Erfolgs-/Fehlerbuchhaltung je Indikator erfolgt in `register_indicator()`.
+#'
+#' @param block Ein in `quote({ ... })` gefasster Block von Ausdrücken
+#' @param env   Auswertungsumgebung (Default: aufrufende Umgebung)
+run_indicator_steps <- function(block, env = parent.frame()) {
+  exprs <- as.list(block)
+  if (length(exprs) && identical(exprs[[1]], as.name("{"))) {
+    exprs <- exprs[-1]
+  }
+  for (e in exprs) {
+    tryCatch(
+      eval(e, envir = env),
+      error = function(cond)
+        message("Schritt übersprungen (", conditionMessage(cond), ")")
+    )
+  }
   invisible(NULL)
 }
 
@@ -271,4 +337,87 @@ write_readme <- function(catalog = NULL, path = "README.md") {
 
   writeLines(paste0(header, paste(lines, collapse = "\n")), path)
   invisible(path)
+}
+
+#' Erfolgs-/Fehlerbericht der Indikator-Erstellung als Tabelle
+#'
+#' @return tibble mit `name`, `geo_unit`, `status` ("Erfolg"/"Fehler") und
+#'   `message` (Fehlermeldung bzw. `NA`)
+indicator_report <- function() {
+  rep <- .registry_env$report
+  if (length(rep) == 0) {
+    return(tibble::tibble(name = character(), geo_unit = character(),
+                          status = character(), message = character()))
+  }
+  dplyr::bind_rows(lapply(rep, tibble::as_tibble))
+}
+
+#' Fehlerbericht speichern (RDS) und ans README anhängen
+#'
+#' Hält fest, welche Indikatoren erfolgreich erstellt werden konnten und welche
+#' nicht (inkl. Fehlermeldung). Die fehlgeschlagenen Indikatoren werden als
+#' Tabelle prominent ausgewiesen, die erfolgreichen in einem aufklappbaren
+#' Abschnitt. `write_readme()` sollte vorher laufen, da diese Funktion den
+#' Bericht an das bestehende README anhängt.
+#'
+#' @param rds_path Zielpfad des RDS-Berichts
+#' @param readme_path README, an das der Bericht angehängt wird (NULL = kein README)
+#' @return (unsichtbar) die Bericht-Tabelle
+save_indicator_report <- function(rds_path    = "nested_data/indicator_report.rds",
+                                   readme_path = "README.md") {
+
+  report <- indicator_report()
+
+  dir.create(dirname(rds_path), recursive = TRUE, showWarnings = FALSE)
+  saveRDS(report, rds_path)
+
+  if (is.null(readme_path)) return(invisible(report))
+
+  n_ok   <- sum(report$status == "Erfolg")
+  n_fail <- sum(report$status == "Fehler")
+
+  fail_tbl <- report[report$status == "Fehler", , drop = FALSE]
+  ok_tbl   <- report[report$status == "Erfolg", , drop = FALSE]
+
+  # Pipe-Zeichen und Zeilenumbrüche entschärfen, damit die Tabelle gültig bleibt
+  clean <- function(x) gsub("\\|", "/", gsub("[\r\n]+", " ", x))
+
+  lines <- c(
+    "",
+    "## Fehlerbericht Indikator-Erstellung",
+    "",
+    sprintf("Stand: %s", format(Sys.time(), "%Y-%m-%d %H:%M")),
+    "",
+    sprintf("- Erfolgreich erstellt: **%d**", n_ok),
+    sprintf("- Fehlgeschlagen: **%d**", n_fail),
+    ""
+  )
+
+  if (nrow(fail_tbl) > 0) {
+    lines <- c(lines,
+      "### Fehlgeschlagene Indikatoren",
+      "",
+      "| Indikator | Geo-Einheit | Fehler |",
+      "|-----------|-------------|--------|",
+      sprintf("| %s | %s | %s |",
+              clean(fail_tbl$name), clean(fail_tbl$geo_unit), clean(fail_tbl$message)),
+      "")
+  } else {
+    lines <- c(lines, "Alle Indikatoren konnten erfolgreich erstellt werden.", "")
+  }
+
+  if (nrow(ok_tbl) > 0) {
+    lines <- c(lines,
+      "<details><summary>Erfolgreich erstellte Indikatoren</summary>",
+      "",
+      "| Indikator | Geo-Einheit |",
+      "|-----------|-------------|",
+      sprintf("| %s | %s |", clean(ok_tbl$name), clean(ok_tbl$geo_unit)),
+      "",
+      "</details>",
+      "")
+  }
+
+  cat(paste(lines, collapse = "\n"), file = readme_path, append = TRUE)
+  invisible(report)
 }
