@@ -6,16 +6,9 @@ ds_0005,gemeinde,Bevölkerung und Soziales,Bevölkerungsstand,Bevölkerungsverte
 ds_0006,gemeinde,Bevölkerung und Soziales,Bevölkerungsstand,Bevölkerungsverteilung nach Nationalität,sk-stat-59,https://data.tg.ch/explore/dataset/sk-stat-59/table/
 ds_0007,gemeinde,Bevölkerung und Soziales,Bevölkerungsstand,Gesamtbevölkerung,sk-stat-59,https://data.tg.ch/explore/dataset/sk-stat-59/table/
 ds_0008,gemeinde,Bevölkerung und Soziales,Bevölkerungsentwicklung,Bevölkerungsentwicklung (Vorjahr/5 Jahre),sk-stat-56,https://data.tg.ch/explore/dataset/sk-stat-56/table/
-ds_0009,gemeinde,Bevölkerung und Soziales,Bevölkerungsbewegung,Lebendgeburten,px-x-0102020204_102,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020204_102/-/px-x-0102020204_102.px/
-ds_0010,gemeinde,Bevölkerung und Soziales,Bevölkerungsbewegung,Todesfälle,px-x-0102020206_102,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020206_102/-/px-x-0102020206_102.px/
-ds_0011,gemeinde,Bevölkerung und Soziales,Bevölkerungsbewegung,Geburtensaldo,"px-x-0102020206_102, px-x-0102020204_102","https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020206_102/-/px-x-0102020206_102.px/, https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020204_102/-/px-x-0102020204_102.px/"
-ds_0012,gemeinde,Bevölkerung und Soziales,Bevölkerungsbewegung,Heiraten,px-x-0102020202_102,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020202_102/-/px-x-0102020202_102.px/
-ds_0013,gemeinde,Bevölkerung und Soziales,Bevölkerungsbewegung,Scheidungen,px-x-0102020203_103,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020203_103/-/px-x-0102020203_103.px/
 ds_0014,gemeinde,Bevölkerung und Soziales,Bevölkerungsbewegung,Wanderungssaldo,px-x-0103010200_121,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0103010200_121/-/px-x-0103010200_121.px/
 ds_0015,gemeinde,Bevölkerung und Soziales,Bevölkerungsbewegung,Zuzüge,px-x-0103010200_121,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0103010200_121/-/px-x-0103010200_121.px/
 ds_0016,gemeinde,Bevölkerung und Soziales,Bevölkerungsbewegung,Wegzüge,px-x-0103010200_121,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0103010200_121/-/px-x-0103010200_121.px/
-ds_0017,gemeinde,Bevölkerung und Soziales,Haushalte,Haushalte nach Haushaltsgrösse,px-x-0102020000_402,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020000_402/-/px-x-0102020000_402.px/
-ds_0018,gemeinde,Bevölkerung und Soziales,Haushalte,Haushalte insgesamt,px-x-0102020000_402,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020000_402/-/px-x-0102020000_402.px/
 ds_0019,gemeinde,Bevölkerung und Soziales,Sozialhilfe,Brutto Sozialhilfeausgaben je Einwohner,sk-stat-54,https://data.tg.ch/explore/dataset/sk-stat-54/table/
 ds_0020,gemeinde,Bevölkerung und Soziales,Sozialhilfe,Brutto Sozialhilfeausgaben total,sk-stat-54,https://data.tg.ch/explore/dataset/sk-stat-54/table/
 ds_0021,gemeinde,Bevölkerung und Soziales,Sozialhilfe,Netto Sozialhilfeausgaben je Einwohner,sk-stat-55,https://data.tg.ch/explore/dataset/sk-stat-55/table/
@@ -33,8 +26,6 @@ ds_0032,gemeinde,Wirtschaft und Arbeit,Arbeitsstätten,Veränderung Arbeitsstät
 ds_0033,gemeinde,Wirtschaft und Arbeit,Arbeitsstätten,Vorjahresveränderung Arbeitsstätten nach Sektor (in %),sk-stat-97,https://data.tg.ch/explore/dataset/sk-stat-97/table/
 ds_0034,gemeinde,Wirtschaft und Arbeit,Arbeitsstätten,Arbeitsstätten total,sk-stat-97,https://data.tg.ch/explore/dataset/sk-stat-97/table/
 ds_0035,gemeinde,Wirtschaft und Arbeit,Arbeitsstätten,Arbeitsstätten nach Sektor,sk-stat-97,https://data.tg.ch/explore/dataset/sk-stat-97/table/
-ds_0036,gemeinde,Wirtschaft und Arbeit,Grenzgänger/innen,Grenzgänger/innen total,px-x-0302010000_101,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0302010000_101/-/px-x-0302010000_101.px/
-ds_0037,gemeinde,Wirtschaft und Arbeit,Grenzgänger/innen,Anteil Grenzgänger/innen am Total der Beschäftigten,"sk-stat-98, px-x-0302010000_101","https://data.tg.ch/explore/dataset/sk-stat-98/table/, https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0302010000_101/-/px-x-0302010000_101.px/"
 ds_0038,gemeinde,Wirtschaft und Arbeit,Pendler,Anzahl Binnenpendler,https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master,https://data.tg.ch/explore/dataset/https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master/table/
 ds_0039,gemeinde,Wirtschaft und Arbeit,Pendler,Anzahl Wegpendler,https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master,https://data.tg.ch/explore/dataset/https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master/table/
 ds_0040,gemeinde,Wirtschaft und Arbeit,Pendler,Anzahl Zupendler,https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master,https://data.tg.ch/explore/dataset/https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master/table/
@@ -47,20 +38,12 @@ ds_0046,gemeinde,Bauen und Wohnen,Bauinvestitionen,Bauinvestitionen nach Kategor
 ds_0047,gemeinde,Bauen und Wohnen,Bauinvestitionen,Bauinvestitionen nach Art der Auftraggeber,px-x-0904010000_203,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0904010000_203/-/px-x-0904010000_203.px/
 ds_0048,gemeinde,Bauen und Wohnen,Bauinvestitionen,Bauinvestitionen total,px-x-0904010000_203,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0904010000_203/-/px-x-0904010000_203.px/
 ds_0049,gemeinde,Bauen und Wohnen,Bauinvestitionen,Bauinvestitionen im Vorjahresvergleich,px-x-0904010000_203,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0904010000_203/-/px-x-0904010000_203.px/
-ds_0050,gemeinde,Bauen und Wohnen,Gebäude und Wohnungen,Wohngebäude total,px-x-0902010000_103,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0902010000_103/-/px-x-0902010000_103.px/
-ds_0051,gemeinde,Bauen und Wohnen,Gebäude und Wohnungen,Wohngebäude nach Bauperiode,px-x-0902010000_103,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0902010000_103/-/px-x-0902010000_103.px/
-ds_0052,gemeinde,Bauen und Wohnen,Gebäude und Wohnungen,Wohngebäude nach Kategorie des Gebäudes,px-x-0902010000_103,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0902010000_103/-/px-x-0902010000_103.px/
 ds_0053,gemeinde,Bauen und Wohnen,Gebäude und Wohnungen,Neu erstellte Wohngebäude,px-x-0904030000_106,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0904030000_106/-/px-x-0904030000_106.px/
 ds_0054,gemeinde,Bauen und Wohnen,Gebäude und Wohnungen,Wohnungen nach Zimmerzahl,sk-stat-90,https://data.tg.ch/explore/dataset/sk-stat-90/table/
 ds_0055,gemeinde,Bauen und Wohnen,Gebäude und Wohnungen,Wohnungen total,sk-stat-90,https://data.tg.ch/explore/dataset/sk-stat-90/table/
 ds_0056,gemeinde,Bauen und Wohnen,Gebäude und Wohnungen,Neu erstellte Wohnungen nach Zimmerzahl,sk-stat-92,https://data.tg.ch/explore/dataset/sk-stat-92/table/
 ds_0057,gemeinde,Bauen und Wohnen,Gebäude und Wohnungen,Neu erstellte Wohnungen total,sk-stat-92,https://data.tg.ch/explore/dataset/sk-stat-92/table/
 ds_0058,gemeinde,Bauen und Wohnen,Gebäude und Wohnungen,Anteil neu erstellter Wohnungen am Wohnungsbestand des Vorjahres,"sk-stat-92, sk-stat-90","https://data.tg.ch/explore/dataset/sk-stat-92/table/, https://data.tg.ch/explore/dataset/sk-stat-90/table/"
-ds_0059,gemeinde,Bauen und Wohnen,Gebäude und Wohnungen,Wohngebäude nach Energiequelle der Heizung,px-x-0902010000_104,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0902010000_104/-/px-x-0902010000_104.px/
-ds_0060,gemeinde,"Raum, Verkehr und Umwelt",Flächennutzung,Fläche nach Flächenart,px-x-0202020000_102,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0202020000_102/-/px-x-0202020000_102.px/
-ds_0061,gemeinde,"Raum, Verkehr und Umwelt",Flächennutzung,Fläche total,px-x-0202020000_102,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0202020000_102/-/px-x-0202020000_102.px/
-ds_0062,gemeinde,"Raum, Verkehr und Umwelt",Flächennutzung,Landfläche,px-x-0202020000_102,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0202020000_102/-/px-x-0202020000_102.px/
-ds_0063,gemeinde,"Raum, Verkehr und Umwelt",Flächennutzung,Bevölkerungsdichte,"px-x-0202020000_102, sk-stat-59","https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0202020000_102/-/px-x-0202020000_102.px/, https://data.tg.ch/explore/dataset/sk-stat-59/table/"
 ds_0064,gemeinde,"Raum, Verkehr und Umwelt",Personenwagenbestand,Motorisierungsgrad,"djs-stv-14, sk-stat-59","https://data.tg.ch/explore/dataset/djs-stv-14/table/, https://data.tg.ch/explore/dataset/sk-stat-59/table/"
 ds_0065,gemeinde,"Raum, Verkehr und Umwelt",Personenwagenbestand,Personenwagenbestand,djs-stv-14,https://data.tg.ch/explore/dataset/djs-stv-14/table/
 ds_0066,gemeinde,Staat und Politik,Grossratswahlen,Parteistärken nach Partei,sk-stat-9,https://data.tg.ch/explore/dataset/sk-stat-9/table/
@@ -213,6 +196,8 @@ ds_0212,gemeinde,Staat und Politik,2025: Eidg. Abstimmungen,30.11.2025: Volksini
 ds_0213,gemeinde,Staat und Politik,2025: Eidg. Abstimmungen,28.09.2025: Bundesbeschluss vom 20. Dezember 2024 über die kantonalen Liegenschaftssteuern auf Zweitliegenschaften,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
 ds_0214,gemeinde,Staat und Politik,2025: Eidg. Abstimmungen,"28.09.2025: Bundesgesetz vom 20. Dezember 2024 über den elektronischen Identitätsnachweis und andere elektronische Nachweise (E-ID-Gesetz, BGEID)",sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
 ds_0215,gemeinde,Staat und Politik,2025: Eidg. Abstimmungen,09.02.2025: Volksinitiative 'Für eine verantwortungsvolle Wirtschaft innerhalb der planetaren Grenzen (Umweltverantwortungsinitiative)',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0364,gemeinde,Staat und Politik,2026: Eidg. Abstimmungen,14.06.2026: Volksinitiative 'Keine 10-Millionen-Schweiz! (Nachhaltigkeitsinitiative)»,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0365,gemeinde,Staat und Politik,2026: Eidg. Abstimmungen,"14.06.2026: Änderung vom 26. September 2025 des Bundesgesetzes über den zivilen Ersatzdienst (Zivildienstgesetz, ZDG)",sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
 ds_0216,gemeinde,Staat und Politik,2026: Eidg. Abstimmungen,"08.03.2026: Volksinitiative 'Ja zu einer unabhängigen, freien Schweizer Währung mit Münzen oder Banknoten (Bargeld ist Freiheit)»",sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
 ds_0217,gemeinde,Staat und Politik,2026: Eidg. Abstimmungen,08.03.2026: Bundesbeschluss über die schweizerische Währung und die Bargeldversorgung (Gegenvorschlag zur Bargeldinitiative),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
 ds_0218,gemeinde,Staat und Politik,2026: Eidg. Abstimmungen,08.03.2026: Bargeldinitiative und Gegenvorschlag: Stichfrage,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
@@ -252,6 +237,7 @@ ds_0251,gemeinde,Staat und Politik,2023: Kantonale Abstimmungen,18.06.2023: Änd
 ds_0252,gemeinde,Staat und Politik,2023: Kantonale Abstimmungen,18.06.2023: Kreditbegehren über 127.2 Mio. Franken (Fr. 127'203'243.85) betreffend die Verwendung des Agios aus der Ausgabe von Partizipationsscheinen der Thurgauer Kantonalbank (TKB),sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
 ds_0253,gemeinde,Staat und Politik,2025: Kantonale Abstimmungen,28.09.2025: Ruhetagsgesetz,sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
 ds_0254,gemeinde,Staat und Politik,2025: Kantonale Abstimmungen,18.05.2025: Abschaffung der Liegenschaftensteuer,sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
+ds_0366,gemeinde,Staat und Politik,2026: Kantonale Abstimmungen,14.06.2026: Anpassung der Finanzkompetenzen,sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
 ds_0255,gemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Gesamtsteuerfuss,sk-stat-70,https://data.tg.ch/explore/dataset/sk-stat-70/table/
 ds_0256,gemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Gemeindesteuerfuss,sk-stat-69,https://data.tg.ch/explore/dataset/sk-stat-69/table/
 ds_0257,gemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Veränderung der Gemeindesteuerfüsse im Vergleich zu vor 10 Jahren (%-Punkte),sk-stat-69,https://data.tg.ch/explore/dataset/sk-stat-69/table/

@@ -7,12 +7,9 @@ Bevölkerung und Soziales|Bevölkerungsstand|Bevölkerungsverteilung nach Konfes
 Bevölkerung und Soziales|Bevölkerungsstand|Bevölkerungsverteilung nach Nationalität|[sk-stat-59](https://data.tg.ch/explore/dataset/sk-stat-59/table/)
 Bevölkerung und Soziales|Bevölkerungsstand|Gesamtbevölkerung|[sk-stat-59](https://data.tg.ch/explore/dataset/sk-stat-59/table/)
 Bevölkerung und Soziales|Bevölkerungsentwicklung|Bevölkerungsentwicklung (Vorjahr/5 Jahre)|[sk-stat-56](https://data.tg.ch/explore/dataset/sk-stat-56/table/)
-Bevölkerung und Soziales|Bevölkerungsbewegung|Lebendgeburten|[px-x-0102020204_102](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020204_102/-/px-x-0102020204_102.px/)
 Bevölkerung und Soziales|Bevölkerungsbewegung|Wanderungssaldo|[px-x-0103010200_121](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0103010200_121/-/px-x-0103010200_121.px/)
 Bevölkerung und Soziales|Bevölkerungsbewegung|Zuzüge|[px-x-0103010200_121](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0103010200_121/-/px-x-0103010200_121.px/)
 Bevölkerung und Soziales|Bevölkerungsbewegung|Wegzüge|[px-x-0103010200_121](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0103010200_121/-/px-x-0103010200_121.px/)
-Bevölkerung und Soziales|Haushalte|Haushalte nach Haushaltsgrösse|[px-x-0102020000_402](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020000_402/-/px-x-0102020000_402.px/)
-Bevölkerung und Soziales|Haushalte|Haushalte insgesamt|[px-x-0102020000_402](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020000_402/-/px-x-0102020000_402.px/)
 Bevölkerung und Soziales|Sozialhilfe|Brutto Sozialhilfeausgaben je Einwohner|[sk-stat-54](https://data.tg.ch/explore/dataset/sk-stat-54/table/)
 Bevölkerung und Soziales|Sozialhilfe|Brutto Sozialhilfeausgaben total|[sk-stat-54](https://data.tg.ch/explore/dataset/sk-stat-54/table/)
 Bevölkerung und Soziales|Sozialhilfe|Netto Sozialhilfeausgaben je Einwohner|[sk-stat-55](https://data.tg.ch/explore/dataset/sk-stat-55/table/)
@@ -30,8 +27,6 @@ Wirtschaft und Arbeit|Arbeitsstätten|Veränderung Arbeitsstätten nach Sektor g
 Wirtschaft und Arbeit|Arbeitsstätten|Vorjahresveränderung Arbeitsstätten nach Sektor (in %)|[sk-stat-97](https://data.tg.ch/explore/dataset/sk-stat-97/table/)
 Wirtschaft und Arbeit|Arbeitsstätten|Arbeitsstätten total|[sk-stat-97](https://data.tg.ch/explore/dataset/sk-stat-97/table/)
 Wirtschaft und Arbeit|Arbeitsstätten|Arbeitsstätten nach Sektor|[sk-stat-97](https://data.tg.ch/explore/dataset/sk-stat-97/table/)
-Wirtschaft und Arbeit|Grenzgänger/innen|Grenzgänger/innen total|[px-x-0302010000_101](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0302010000_101/-/px-x-0302010000_101.px/)
-Wirtschaft und Arbeit|Grenzgänger/innen|Anteil Grenzgänger/innen am Total der Beschäftigten|[sk-stat-98](https://data.tg.ch/explore/dataset/sk-stat-98/table/), [px-x-0302010000_101](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0302010000_101/-/px-x-0302010000_101.px/)
 Wirtschaft und Arbeit|Pendler|Anzahl Binnenpendler|[https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master](https://data.tg.ch/explore/dataset/https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master/table/)
 Wirtschaft und Arbeit|Pendler|Anzahl Wegpendler|[https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master](https://data.tg.ch/explore/dataset/https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master/table/)
 Wirtschaft und Arbeit|Pendler|Anzahl Zupendler|[https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master](https://data.tg.ch/explore/dataset/https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master/table/)
@@ -44,20 +39,12 @@ Bauen und Wohnen|Bauinvestitionen|Bauinvestitionen nach Kategorie|[px-x-09040100
 Bauen und Wohnen|Bauinvestitionen|Bauinvestitionen nach Art der Auftraggeber|[px-x-0904010000_203](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0904010000_203/-/px-x-0904010000_203.px/)
 Bauen und Wohnen|Bauinvestitionen|Bauinvestitionen total|[px-x-0904010000_203](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0904010000_203/-/px-x-0904010000_203.px/)
 Bauen und Wohnen|Bauinvestitionen|Bauinvestitionen im Vorjahresvergleich|[px-x-0904010000_203](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0904010000_203/-/px-x-0904010000_203.px/)
-Bauen und Wohnen|Gebäude und Wohnungen|Wohngebäude total|[px-x-0902010000_103](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0902010000_103/-/px-x-0902010000_103.px/)
-Bauen und Wohnen|Gebäude und Wohnungen|Wohngebäude nach Bauperiode|[px-x-0902010000_103](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0902010000_103/-/px-x-0902010000_103.px/)
-Bauen und Wohnen|Gebäude und Wohnungen|Wohngebäude nach Kategorie des Gebäudes|[px-x-0902010000_103](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0902010000_103/-/px-x-0902010000_103.px/)
 Bauen und Wohnen|Gebäude und Wohnungen|Neu erstellte Wohngebäude|[px-x-0904030000_106](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0904030000_106/-/px-x-0904030000_106.px/)
 Bauen und Wohnen|Gebäude und Wohnungen|Wohnungen nach Zimmerzahl|[sk-stat-90](https://data.tg.ch/explore/dataset/sk-stat-90/table/)
 Bauen und Wohnen|Gebäude und Wohnungen|Wohnungen total|[sk-stat-90](https://data.tg.ch/explore/dataset/sk-stat-90/table/)
 Bauen und Wohnen|Gebäude und Wohnungen|Neu erstellte Wohnungen nach Zimmerzahl|[sk-stat-92](https://data.tg.ch/explore/dataset/sk-stat-92/table/)
 Bauen und Wohnen|Gebäude und Wohnungen|Neu erstellte Wohnungen total|[sk-stat-92](https://data.tg.ch/explore/dataset/sk-stat-92/table/)
 Bauen und Wohnen|Gebäude und Wohnungen|Anteil neu erstellter Wohnungen am Wohnungsbestand des Vorjahres|[sk-stat-92](https://data.tg.ch/explore/dataset/sk-stat-92/table/), [sk-stat-90](https://data.tg.ch/explore/dataset/sk-stat-90/table/)
-Bauen und Wohnen|Gebäude und Wohnungen|Wohngebäude nach Energiequelle der Heizung|[px-x-0902010000_104](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0902010000_104/-/px-x-0902010000_104.px/)
-Raum, Verkehr und Umwelt|Flächennutzung|Fläche nach Flächenart|[px-x-0202020000_102](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0202020000_102/-/px-x-0202020000_102.px/)
-Raum, Verkehr und Umwelt|Flächennutzung|Fläche total|[px-x-0202020000_102](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0202020000_102/-/px-x-0202020000_102.px/)
-Raum, Verkehr und Umwelt|Flächennutzung|Landfläche|[px-x-0202020000_102](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0202020000_102/-/px-x-0202020000_102.px/)
-Raum, Verkehr und Umwelt|Flächennutzung|Bevölkerungsdichte|[px-x-0202020000_102](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0202020000_102/-/px-x-0202020000_102.px/), [sk-stat-59](https://data.tg.ch/explore/dataset/sk-stat-59/table/)
 Raum, Verkehr und Umwelt|Personenwagenbestand|Motorisierungsgrad|[djs-stv-14](https://data.tg.ch/explore/dataset/djs-stv-14/table/), [sk-stat-59](https://data.tg.ch/explore/dataset/sk-stat-59/table/)
 Raum, Verkehr und Umwelt|Personenwagenbestand|Personenwagenbestand|[djs-stv-14](https://data.tg.ch/explore/dataset/djs-stv-14/table/)
 Staat und Politik|Grossratswahlen|Parteistärken nach Partei|[sk-stat-9](https://data.tg.ch/explore/dataset/sk-stat-9/table/)
@@ -365,19 +352,32 @@ Staat und Politik|Finanzkennzahlen|Verwaltungsvermögen per 31.12.|[dek-av-30](h
 
 ## Fehlerbericht Indikator-Erstellung
 
-Stand: 2026-06-23 15:14
+Stand: 2026-06-23 13:54
 
-- Erfolgreich erstellt: **362**
-- Fehlgeschlagen: **4**
+- Erfolgreich erstellt: **349**
+- Fehlgeschlagen: **17**
 
 ### Fehlgeschlagene Indikatoren
 
 | Indikator | Geo-Einheit | Fehler |
 |-----------|-------------|--------|
+| Bevölkerung und Soziales > Bevölkerungsbewegung > Lebendgeburten | gemeinde | object 'lebendgeburten' not found |
 | Bevölkerung und Soziales > Bevölkerungsbewegung > Todesfälle | gemeinde | object 'todesfaelle' not found |
 | Bevölkerung und Soziales > Bevölkerungsbewegung > Geburtensaldo | gemeinde | object 'todesfaelle' not found |
-| Bevölkerung und Soziales > Bevölkerungsbewegung > Heiraten | gemeinde | [38;5;232mHTTP 400 Bad Request.[39m |
-| Bevölkerung und Soziales > Bevölkerungsbewegung > Scheidungen | gemeinde | [38;5;232mHTTP 400 Bad Request.[39m |
+| Bevölkerung und Soziales > Bevölkerungsbewegung > Heiraten | gemeinde | HTTP 400 Bad Request. |
+| Bevölkerung und Soziales > Bevölkerungsbewegung > Scheidungen | gemeinde | HTTP 400 Bad Request. |
+| Bevölkerung und Soziales > Haushalte > Haushalte nach Haushaltsgrösse | gemeinde | object 'haushalte' not found |
+| Bevölkerung und Soziales > Haushalte > Haushalte insgesamt | gemeinde | object 'haushalte' not found |
+| Wirtschaft und Arbeit > Grenzgänger/innen > Grenzgänger/innen total | gemeinde | object 'grenzgaenger_data' not found |
+| Wirtschaft und Arbeit > Grenzgänger/innen > Anteil Grenzgänger/innen am Total der Beschäftigten | gemeinde | object 'grenzgaenger_data' not found |
+| Bauen und Wohnen > Gebäude und Wohnungen > Wohngebäude total | gemeinde | object 'geb_data' not found |
+| Bauen und Wohnen > Gebäude und Wohnungen > Wohngebäude nach Bauperiode | gemeinde | object 'geb_data' not found |
+| Bauen und Wohnen > Gebäude und Wohnungen > Wohngebäude nach Kategorie des Gebäudes | gemeinde | object 'geb_data' not found |
+| Bauen und Wohnen > Gebäude und Wohnungen > Wohngebäude nach Energiequelle der Heizung | gemeinde | could not find function "bfs_get_sse_data" |
+| Raum, Verkehr und Umwelt > Flächennutzung > Fläche nach Flächenart | gemeinde | object 'flaeche_data' not found |
+| Raum, Verkehr und Umwelt > Flächennutzung > Fläche total | gemeinde | object 'flaeche_data' not found |
+| Raum, Verkehr und Umwelt > Flächennutzung > Landfläche | gemeinde | object 'landflaeche' not found |
+| Raum, Verkehr und Umwelt > Flächennutzung > Bevölkerungsdichte | gemeinde | object 'landflaeche' not found |
 
 <details><summary>Erfolgreich erstellte Indikatoren</summary>
 
@@ -391,12 +391,9 @@ Stand: 2026-06-23 15:14
 | Bevölkerung und Soziales > Bevölkerungsstand > Bevölkerungsverteilung nach Nationalität | gemeinde |
 | Bevölkerung und Soziales > Bevölkerungsstand > Gesamtbevölkerung | gemeinde |
 | Bevölkerung und Soziales > Bevölkerungsentwicklung > Bevölkerungsentwicklung (Vorjahr/5 Jahre) | gemeinde |
-| Bevölkerung und Soziales > Bevölkerungsbewegung > Lebendgeburten | gemeinde |
 | Bevölkerung und Soziales > Bevölkerungsbewegung > Wanderungssaldo | gemeinde |
 | Bevölkerung und Soziales > Bevölkerungsbewegung > Zuzüge | gemeinde |
 | Bevölkerung und Soziales > Bevölkerungsbewegung > Wegzüge | gemeinde |
-| Bevölkerung und Soziales > Haushalte > Haushalte nach Haushaltsgrösse | gemeinde |
-| Bevölkerung und Soziales > Haushalte > Haushalte insgesamt | gemeinde |
 | Bevölkerung und Soziales > Sozialhilfe > Brutto Sozialhilfeausgaben je Einwohner | gemeinde |
 | Bevölkerung und Soziales > Sozialhilfe > Brutto Sozialhilfeausgaben total | gemeinde |
 | Bevölkerung und Soziales > Sozialhilfe > Netto Sozialhilfeausgaben je Einwohner | gemeinde |
@@ -414,8 +411,6 @@ Stand: 2026-06-23 15:14
 | Wirtschaft und Arbeit > Arbeitsstätten > Vorjahresveränderung Arbeitsstätten nach Sektor (in %) | gemeinde |
 | Wirtschaft und Arbeit > Arbeitsstätten > Arbeitsstätten total | gemeinde |
 | Wirtschaft und Arbeit > Arbeitsstätten > Arbeitsstätten nach Sektor | gemeinde |
-| Wirtschaft und Arbeit > Grenzgänger/innen > Grenzgänger/innen total | gemeinde |
-| Wirtschaft und Arbeit > Grenzgänger/innen > Anteil Grenzgänger/innen am Total der Beschäftigten | gemeinde |
 | Wirtschaft und Arbeit > Pendler > Anzahl Binnenpendler | gemeinde |
 | Wirtschaft und Arbeit > Pendler > Anzahl Wegpendler | gemeinde |
 | Wirtschaft und Arbeit > Pendler > Anzahl Zupendler | gemeinde |
@@ -428,20 +423,12 @@ Stand: 2026-06-23 15:14
 | Bauen und Wohnen > Bauinvestitionen > Bauinvestitionen nach Art der Auftraggeber | gemeinde |
 | Bauen und Wohnen > Bauinvestitionen > Bauinvestitionen total | gemeinde |
 | Bauen und Wohnen > Bauinvestitionen > Bauinvestitionen im Vorjahresvergleich | gemeinde |
-| Bauen und Wohnen > Gebäude und Wohnungen > Wohngebäude total | gemeinde |
-| Bauen und Wohnen > Gebäude und Wohnungen > Wohngebäude nach Bauperiode | gemeinde |
-| Bauen und Wohnen > Gebäude und Wohnungen > Wohngebäude nach Kategorie des Gebäudes | gemeinde |
 | Bauen und Wohnen > Gebäude und Wohnungen > Neu erstellte Wohngebäude | gemeinde |
 | Bauen und Wohnen > Gebäude und Wohnungen > Wohnungen nach Zimmerzahl | gemeinde |
 | Bauen und Wohnen > Gebäude und Wohnungen > Wohnungen total | gemeinde |
 | Bauen und Wohnen > Gebäude und Wohnungen > Neu erstellte Wohnungen nach Zimmerzahl | gemeinde |
 | Bauen und Wohnen > Gebäude und Wohnungen > Neu erstellte Wohnungen total | gemeinde |
 | Bauen und Wohnen > Gebäude und Wohnungen > Anteil neu erstellter Wohnungen am Wohnungsbestand des Vorjahres | gemeinde |
-| Bauen und Wohnen > Gebäude und Wohnungen > Wohngebäude nach Energiequelle der Heizung | gemeinde |
-| Raum, Verkehr und Umwelt > Flächennutzung > Fläche nach Flächenart | gemeinde |
-| Raum, Verkehr und Umwelt > Flächennutzung > Fläche total | gemeinde |
-| Raum, Verkehr und Umwelt > Flächennutzung > Landfläche | gemeinde |
-| Raum, Verkehr und Umwelt > Flächennutzung > Bevölkerungsdichte | gemeinde |
 | Raum, Verkehr und Umwelt > Personenwagenbestand > Motorisierungsgrad | gemeinde |
 | Raum, Verkehr und Umwelt > Personenwagenbestand > Personenwagenbestand | gemeinde |
 | Staat und Politik > Grossratswahlen > Parteistärken nach Partei | gemeinde |
