@@ -91,7 +91,8 @@ register_sektor_indicators <- function(ent, label, source_id, bezirk_data) {
   topic <- "Wirtschaft und Arbeit"
 
   # Daten einmalig auswerten; schlägt der Datenbezug fehl, werden alle sechs
-  # Indikatoren als Fehler protokolliert, statt das Skript abzubrechen.
+  # Indikatoren als Fehler registriert (bestehende Daten bleiben beim Speichern
+  # erhalten), statt das Skript abzubrechen.
   ent <- tryCatch(force(ent), error = function(e) e)
   if (inherits(ent, "error")) {
     indicators <- c(
@@ -103,8 +104,8 @@ register_sektor_indicators <- function(ent, label, source_id, bezirk_data) {
       sprintf("%s nach Sektor", label)
     )
     for (ind in indicators) {
-      .record(paste(topic, label, ind, sep = " > "), "gemeinde",
-              "Fehler", conditionMessage(ent))
+      register_failed("gemeinde", c(topic, label, ind),
+                      source_ids = source_id, message = conditionMessage(ent))
     }
     return(invisible(NULL))
   }
@@ -232,11 +233,12 @@ register_abstimmungen <- function(prepared, label, source_id) {
   topic <- "Staat und Politik"
 
   # Datenbezug auswerten; bei Fehler kann nicht je Vorlage aufgeschlüsselt
-  # werden, daher ein Sammel-Fehlereintrag für die Abstimmungsreihe.
+  # werden (die einzelnen Indikatoren entstehen erst aus den Daten). Daher wird
+  # die ganze Abstimmungsreihe als fehlgeschlagene Gruppe markiert; beim
+  # Speichern bleiben alle bestehenden Datensätze dieser Reihe erhalten.
   prepared <- tryCatch(force(prepared), error = function(e) e)
   if (inherits(prepared, "error")) {
-    .record(paste(topic, label, sep = " > "), "gemeinde",
-            "Fehler", conditionMessage(prepared))
+    register_failed_group(topic, label, message = conditionMessage(prepared))
     return(invisible(NULL))
   }
 
@@ -273,8 +275,6 @@ register_abstimmungen <- function(prepared, label, source_id) {
 register_sg_indicator <- function(sg_type, geo_unit, variable, data,
                                   topic, subtopic, indicator,
                                   source_id = "dek-av-30") {
-  name <- paste(topic, subtopic, indicator, sep = " > ")
-
   temp <- tryCatch(
     data %>%
       filter(sgtyp2 == sg_type) %>%
@@ -284,7 +284,8 @@ register_sg_indicator <- function(sg_type, geo_unit, variable, data,
   )
 
   if (inherits(temp, "error")) {
-    .record(name, geo_unit, "Fehler", conditionMessage(temp))
+    register_failed(geo_unit, c(topic, subtopic, indicator),
+                    source_ids = source_id, message = conditionMessage(temp))
     return(invisible(NULL))
   }
 

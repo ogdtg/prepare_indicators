@@ -1199,6 +1199,10 @@ for (sg_type in names(sg_geo_units)) {
 # vorhandenen Mapping), neue Indikatoren erhalten fortlaufende neue IDs. Zudem
 # werden die neu bezogenen Daten mit dem bestehenden Datensatz zusammengeführt,
 # sodass nicht mehr gelieferte (z.B. ältere) Jahre erhalten bleiben.
+# Schlug ein Datenbezug fehl, werden die bereits vorliegenden Daten unverändert
+# beibehalten; der Fehlerbericht (RDS + README) hält fest, welche Indikatoren
+# aktualisiert, welche mit Altdaten beibehalten und welche gar nicht erstellt
+# werden konnten.
 print("## Speichern ------------------------------------------------------------")
 
 tryCatch(save_indicators(base_dir = "nested_data", catalog = catalog),
