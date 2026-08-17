@@ -8,9 +8,16 @@ Bevölkerung und Soziales|Bevölkerungsstand|Bevölkerungsverteilung nach Konfes
 Bevölkerung und Soziales|Bevölkerungsstand|Bevölkerungsverteilung nach Nationalität|[sk-stat-59](https://data.tg.ch/explore/dataset/sk-stat-59/table/)
 Bevölkerung und Soziales|Bevölkerungsstand|Gesamtbevölkerung|[sk-stat-59](https://data.tg.ch/explore/dataset/sk-stat-59/table/)
 Bevölkerung und Soziales|Bevölkerungsentwicklung|Bevölkerungsentwicklung (Vorjahr/5 Jahre)|[sk-stat-56](https://data.tg.ch/explore/dataset/sk-stat-56/table/)
+Bevölkerung und Soziales|Bevölkerungsbewegung|Lebendgeburten|[DF_BEVNAT_NAISSANCES_1](https://data.tg.ch/explore/dataset/DF_BEVNAT_NAISSANCES_1/table/)
+Bevölkerung und Soziales|Bevölkerungsbewegung|Todesfälle|[DF_BEVNAT_DECES_1](https://data.tg.ch/explore/dataset/DF_BEVNAT_DECES_1/table/)
+Bevölkerung und Soziales|Bevölkerungsbewegung|Geburtensaldo|[px-x-0102020206_102](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020206_102/-/px-x-0102020206_102.px/), [px-x-0102020204_102](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020204_102/-/px-x-0102020204_102.px/)
+Bevölkerung und Soziales|Bevölkerungsbewegung|Heiraten|[DF_BEVNAT_MARIAGES_2](https://data.tg.ch/explore/dataset/DF_BEVNAT_MARIAGES_2/table/)
+Bevölkerung und Soziales|Bevölkerungsbewegung|Scheidungen|[DF_BEVNAT_DIVORCES_3](https://data.tg.ch/explore/dataset/DF_BEVNAT_DIVORCES_3/table/)
 Bevölkerung und Soziales|Bevölkerungsbewegung|Wanderungssaldo|[px-x-0103010200_121](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0103010200_121/-/px-x-0103010200_121.px/)
 Bevölkerung und Soziales|Bevölkerungsbewegung|Zuzüge|[px-x-0103010200_121](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0103010200_121/-/px-x-0103010200_121.px/)
 Bevölkerung und Soziales|Bevölkerungsbewegung|Wegzüge|[px-x-0103010200_121](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0103010200_121/-/px-x-0103010200_121.px/)
+Bevölkerung und Soziales|Haushalte|Haushalte nach Haushaltsgrösse|[DF_STATPOP_PHH](https://data.tg.ch/explore/dataset/DF_STATPOP_PHH/table/)
+Bevölkerung und Soziales|Haushalte|Haushalte insgesamt|[DF_STATPOP_PHH](https://data.tg.ch/explore/dataset/DF_STATPOP_PHH/table/)
 Bevölkerung und Soziales|Sozialhilfe|Brutto Sozialhilfeausgaben je Einwohner|[sk-stat-54](https://data.tg.ch/explore/dataset/sk-stat-54/table/)
 Bevölkerung und Soziales|Sozialhilfe|Brutto Sozialhilfeausgaben total|[sk-stat-54](https://data.tg.ch/explore/dataset/sk-stat-54/table/)
 Bevölkerung und Soziales|Sozialhilfe|Netto Sozialhilfeausgaben je Einwohner|[sk-stat-55](https://data.tg.ch/explore/dataset/sk-stat-55/table/)
@@ -349,12 +356,6 @@ Staat und Politik|Finanzkennzahlen|Verwaltungsvermögen per 31.12.|[dek-av-30](h
 Staat und Politik|2026: Eidg. Abstimmungen|14.06.2026: Volksinitiative 'Keine 10-Millionen-Schweiz! (Nachhaltigkeitsinitiative)»|[sk-stat-50](https://data.tg.ch/explore/dataset/sk-stat-50/table/)
 Staat und Politik|2026: Eidg. Abstimmungen|14.06.2026: Änderung vom 26. September 2025 des Bundesgesetzes über den zivilen Ersatzdienst (Zivildienstgesetz, ZDG)|[sk-stat-50](https://data.tg.ch/explore/dataset/sk-stat-50/table/)
 Staat und Politik|2026: Kantonale Abstimmungen|14.06.2026: Anpassung der Finanzkompetenzen|[sk-stat-52](https://data.tg.ch/explore/dataset/sk-stat-52/table/)
-Bevölkerung und Soziales|Bevölkerungsbewegung|Todesfälle|[DF_BEVNAT_DECES_1](https://data.tg.ch/explore/dataset/DF_BEVNAT_DECES_1/table/)
-Bevölkerung und Soziales|Bevölkerungsbewegung|Geburtensaldo|[px-x-0102020206_102](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020206_102/-/px-x-0102020206_102.px/), [px-x-0102020204_102](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020204_102/-/px-x-0102020204_102.px/)
-Bevölkerung und Soziales|Bevölkerungsbewegung|Heiraten|[DF_BEVNAT_MARIAGES_2](https://data.tg.ch/explore/dataset/DF_BEVNAT_MARIAGES_2/table/)
-Bevölkerung und Soziales|Bevölkerungsbewegung|Scheidungen|[DF_BEVNAT_DIVORCES_3](https://data.tg.ch/explore/dataset/DF_BEVNAT_DIVORCES_3/table/)
-Bevölkerung und Soziales|Haushalte|Haushalte nach Haushaltsgrösse|[DF_STATPOP_PHH](https://data.tg.ch/explore/dataset/DF_STATPOP_PHH/table/)
-Bevölkerung und Soziales|Haushalte|Haushalte insgesamt|[DF_STATPOP_PHH](https://data.tg.ch/explore/dataset/DF_STATPOP_PHH/table/)
 Wirtschaft und Arbeit|Grenzgänger/innen|Grenzgänger/innen total|[px-x-0302010000_101](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0302010000_101/-/px-x-0302010000_101.px/)
 Bauen und Wohnen|Gebäude und Wohnungen|Wohngebäude total|[px-x-0902010000_103](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0902010000_103/-/px-x-0902010000_103.px/)
 Bauen und Wohnen|Gebäude und Wohnungen|Wohngebäude nach Bauperiode|[px-x-0902010000_103](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0902010000_103/-/px-x-0902010000_103.px/)
@@ -364,12 +365,11 @@ Raum, Verkehr und Umwelt|Flächennutzung|Fläche nach Flächenart|[px-x-02020200
 Raum, Verkehr und Umwelt|Flächennutzung|Fläche total|[px-x-0202020000_102](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0202020000_102/-/px-x-0202020000_102.px/)
 Raum, Verkehr und Umwelt|Flächennutzung|Landfläche|[px-x-0202020000_102](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0202020000_102/-/px-x-0202020000_102.px/)
 Raum, Verkehr und Umwelt|Flächennutzung|Bevölkerungsdichte|[px-x-0202020000_102](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0202020000_102/-/px-x-0202020000_102.px/), [sk-stat-59](https://data.tg.ch/explore/dataset/sk-stat-59/table/)
-Bevölkerung und Soziales|Bevölkerungsbewegung|Lebendgeburten|[DF_BEVNAT_NAISSANCES_1](https://data.tg.ch/explore/dataset/DF_BEVNAT_NAISSANCES_1/table/)
 Wirtschaft und Arbeit|Grenzgänger/innen|Anteil Grenzgänger/innen am Total der Beschäftigten|[sk-stat-98](https://data.tg.ch/explore/dataset/sk-stat-98/table/), [px-x-0302010000_101](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0302010000_101/-/px-x-0302010000_101.px/)
 
 ## Fehlerbericht Indikator-Erstellung
 
-Stand: 2026-08-17 11:43
+Stand: 2026-08-17 16:50
 
 - Erfolgreich aktualisiert: **366**
 - Fehlgeschlagen, bestehende Daten beibehalten: **0**
