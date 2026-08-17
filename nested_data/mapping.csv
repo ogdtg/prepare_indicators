@@ -1,5 +1,6 @@
 id,geo_unit,level_1,level_2,level_3,source_ids,source_urls
 ds_0001,gemeinde,Bevölkerung und Soziales,Bevölkerungsstand,Durchschnittsalter der Bevölkerung,sk-stat-57,https://data.tg.ch/explore/dataset/sk-stat-57/table/
+ds_0002,gemeinde,Bevölkerung und Soziales,Bevölkerungsstand,Durchschnittsalter der Rentnerinnen und Rentner,sk-stat-57,https://data.tg.ch/explore/dataset/sk-stat-57/table/
 ds_0003,gemeinde,Bevölkerung und Soziales,Bevölkerungsstand,Bevölkerungsverteilung nach Geschlecht,sk-stat-59,https://data.tg.ch/explore/dataset/sk-stat-59/table/
 ds_0004,gemeinde,Bevölkerung und Soziales,Bevölkerungsstand,Bevölkerungsverteilung nach Altersklasse,sk-stat-57,https://data.tg.ch/explore/dataset/sk-stat-57/table/
 ds_0005,gemeinde,Bevölkerung und Soziales,Bevölkerungsstand,Bevölkerungsverteilung nach Konfession,sk-stat-62,https://data.tg.ch/explore/dataset/sk-stat-62/table/
@@ -196,8 +197,6 @@ ds_0212,gemeinde,Staat und Politik,2025: Eidg. Abstimmungen,30.11.2025: Volksini
 ds_0213,gemeinde,Staat und Politik,2025: Eidg. Abstimmungen,28.09.2025: Bundesbeschluss vom 20. Dezember 2024 über die kantonalen Liegenschaftssteuern auf Zweitliegenschaften,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
 ds_0214,gemeinde,Staat und Politik,2025: Eidg. Abstimmungen,"28.09.2025: Bundesgesetz vom 20. Dezember 2024 über den elektronischen Identitätsnachweis und andere elektronische Nachweise (E-ID-Gesetz, BGEID)",sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
 ds_0215,gemeinde,Staat und Politik,2025: Eidg. Abstimmungen,09.02.2025: Volksinitiative 'Für eine verantwortungsvolle Wirtschaft innerhalb der planetaren Grenzen (Umweltverantwortungsinitiative)',sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
-ds_0364,gemeinde,Staat und Politik,2026: Eidg. Abstimmungen,14.06.2026: Volksinitiative 'Keine 10-Millionen-Schweiz! (Nachhaltigkeitsinitiative)»,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
-ds_0365,gemeinde,Staat und Politik,2026: Eidg. Abstimmungen,"14.06.2026: Änderung vom 26. September 2025 des Bundesgesetzes über den zivilen Ersatzdienst (Zivildienstgesetz, ZDG)",sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
 ds_0216,gemeinde,Staat und Politik,2026: Eidg. Abstimmungen,"08.03.2026: Volksinitiative 'Ja zu einer unabhängigen, freien Schweizer Währung mit Münzen oder Banknoten (Bargeld ist Freiheit)»",sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
 ds_0217,gemeinde,Staat und Politik,2026: Eidg. Abstimmungen,08.03.2026: Bundesbeschluss über die schweizerische Währung und die Bargeldversorgung (Gegenvorschlag zur Bargeldinitiative),sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
 ds_0218,gemeinde,Staat und Politik,2026: Eidg. Abstimmungen,08.03.2026: Bargeldinitiative und Gegenvorschlag: Stichfrage,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
@@ -237,14 +236,12 @@ ds_0251,gemeinde,Staat und Politik,2023: Kantonale Abstimmungen,18.06.2023: Änd
 ds_0252,gemeinde,Staat und Politik,2023: Kantonale Abstimmungen,18.06.2023: Kreditbegehren über 127.2 Mio. Franken (Fr. 127'203'243.85) betreffend die Verwendung des Agios aus der Ausgabe von Partizipationsscheinen der Thurgauer Kantonalbank (TKB),sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
 ds_0253,gemeinde,Staat und Politik,2025: Kantonale Abstimmungen,28.09.2025: Ruhetagsgesetz,sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
 ds_0254,gemeinde,Staat und Politik,2025: Kantonale Abstimmungen,18.05.2025: Abschaffung der Liegenschaftensteuer,sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
-ds_0366,gemeinde,Staat und Politik,2026: Kantonale Abstimmungen,14.06.2026: Anpassung der Finanzkompetenzen,sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
 ds_0255,gemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Gesamtsteuerfuss,sk-stat-70,https://data.tg.ch/explore/dataset/sk-stat-70/table/
 ds_0256,gemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Gemeindesteuerfuss,sk-stat-69,https://data.tg.ch/explore/dataset/sk-stat-69/table/
 ds_0257,gemeinde,Staat und Politik,Steuerkraft und Steuerfüsse,Veränderung der Gemeindesteuerfüsse im Vergleich zu vor 10 Jahren (%-Punkte),sk-stat-69,https://data.tg.ch/explore/dataset/sk-stat-69/table/
 ds_0258,gemeinde,Staat und Politik,Finanzausgleich,"Gesamtauswirkung Finanzausgleich (positive Werte: Abschöpfung, negative Werte: Auszahlung) (CHF)",sk-stat-1,https://data.tg.ch/explore/dataset/sk-stat-1/table/
 ds_0259,gemeinde,Staat und Politik,Finanzausgleich,"Gesamtauswirkung Finanzausgleich pro Einwohner (positive Werte: Abschöpfung, negative Werte: Auszahlung) (CHF)",sk-stat-1,https://data.tg.ch/explore/dataset/sk-stat-1/table/
 ds_0260,gemeinde,Staat und Politik,Gemeindefinanzkennzahlen,Gemeindefinanzkennzahlen,sk-stat-4,https://data.tg.ch/explore/dataset/sk-stat-4/table/
-ds_0002,gemeinde,Bevölkerung und Soziales,Bevölkerungsstand,Durchschnittsalter der Rentnerinnen und Rentner,sk-stat-57,https://data.tg.ch/explore/dataset/sk-stat-57/table/
 ds_0261,zusatzdaten,Bevölkerung und Soziales,Bevölkerung nach Altersklasse Geschlecht,NA,sk-stat-58,https://data.tg.ch/explore/dataset/sk-stat-58/table/
 ds_0262,primarschulgemeinde,Bevölkerung und Soziales,Bevölkerungsstand,Gesamtbevölkerung,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
 ds_0263,primarschulgemeinde,Bevölkerung und Soziales,Bildung,Anzahl Schülerinnen und Schüler im Durchschnitt der beiden Stichtage 15.2. und 15.9.,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
@@ -348,3 +345,23 @@ ds_0360,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Erfolgvorgewinnver
 ds_0361,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Erfolg im Rechnungsjahr in CHF,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
 ds_0362,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Bilanzüberschuss Kontogruppe 299,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
 ds_0363,volksschulgemeinde,Staat und Politik,Finanzkennzahlen,Verwaltungsvermögen per 31.12.,dek-av-30,https://data.tg.ch/explore/dataset/dek-av-30/table/
+ds_0364,gemeinde,Staat und Politik,2026: Eidg. Abstimmungen,14.06.2026: Volksinitiative 'Keine 10-Millionen-Schweiz! (Nachhaltigkeitsinitiative)»,sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0365,gemeinde,Staat und Politik,2026: Eidg. Abstimmungen,"14.06.2026: Änderung vom 26. September 2025 des Bundesgesetzes über den zivilen Ersatzdienst (Zivildienstgesetz, ZDG)",sk-stat-50,https://data.tg.ch/explore/dataset/sk-stat-50/table/
+ds_0366,gemeinde,Staat und Politik,2026: Kantonale Abstimmungen,14.06.2026: Anpassung der Finanzkompetenzen,sk-stat-52,https://data.tg.ch/explore/dataset/sk-stat-52/table/
+ds_0367,gemeinde,Bevölkerung und Soziales,Bevölkerungsbewegung,Todesfälle,DF_BEVNAT_DECES_1,https://data.tg.ch/explore/dataset/DF_BEVNAT_DECES_1/table/
+ds_0368,gemeinde,Bevölkerung und Soziales,Bevölkerungsbewegung,Geburtensaldo,"px-x-0102020206_102, px-x-0102020204_102","https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020206_102/-/px-x-0102020206_102.px/, https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020204_102/-/px-x-0102020204_102.px/"
+ds_0369,gemeinde,Bevölkerung und Soziales,Bevölkerungsbewegung,Heiraten,DF_BEVNAT_MARIAGES_2,https://data.tg.ch/explore/dataset/DF_BEVNAT_MARIAGES_2/table/
+ds_0370,gemeinde,Bevölkerung und Soziales,Bevölkerungsbewegung,Scheidungen,DF_BEVNAT_DIVORCES_3,https://data.tg.ch/explore/dataset/DF_BEVNAT_DIVORCES_3/table/
+ds_0371,gemeinde,Bevölkerung und Soziales,Haushalte,Haushalte nach Haushaltsgrösse,DF_STATPOP_PHH,https://data.tg.ch/explore/dataset/DF_STATPOP_PHH/table/
+ds_0372,gemeinde,Bevölkerung und Soziales,Haushalte,Haushalte insgesamt,DF_STATPOP_PHH,https://data.tg.ch/explore/dataset/DF_STATPOP_PHH/table/
+ds_0373,gemeinde,Wirtschaft und Arbeit,Grenzgänger/innen,Grenzgänger/innen total,px-x-0302010000_101,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0302010000_101/-/px-x-0302010000_101.px/
+ds_0374,gemeinde,Bauen und Wohnen,Gebäude und Wohnungen,Wohngebäude total,px-x-0902010000_103,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0902010000_103/-/px-x-0902010000_103.px/
+ds_0375,gemeinde,Bauen und Wohnen,Gebäude und Wohnungen,Wohngebäude nach Bauperiode,px-x-0902010000_103,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0902010000_103/-/px-x-0902010000_103.px/
+ds_0376,gemeinde,Bauen und Wohnen,Gebäude und Wohnungen,Wohngebäude nach Kategorie des Gebäudes,px-x-0902010000_103,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0902010000_103/-/px-x-0902010000_103.px/
+ds_0377,gemeinde,Bauen und Wohnen,Gebäude und Wohnungen,Wohngebäude nach Energiequelle der Heizung,px-x-0902010000_104,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0902010000_104/-/px-x-0902010000_104.px/
+ds_0378,gemeinde,"Raum, Verkehr und Umwelt",Flächennutzung,Fläche nach Flächenart,px-x-0202020000_102,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0202020000_102/-/px-x-0202020000_102.px/
+ds_0379,gemeinde,"Raum, Verkehr und Umwelt",Flächennutzung,Fläche total,px-x-0202020000_102,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0202020000_102/-/px-x-0202020000_102.px/
+ds_0380,gemeinde,"Raum, Verkehr und Umwelt",Flächennutzung,Landfläche,px-x-0202020000_102,https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0202020000_102/-/px-x-0202020000_102.px/
+ds_0381,gemeinde,"Raum, Verkehr und Umwelt",Flächennutzung,Bevölkerungsdichte,"px-x-0202020000_102, sk-stat-59","https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0202020000_102/-/px-x-0202020000_102.px/, https://data.tg.ch/explore/dataset/sk-stat-59/table/"
+ds_0382,gemeinde,Bevölkerung und Soziales,Bevölkerungsbewegung,Lebendgeburten,DF_BEVNAT_NAISSANCES_1,https://data.tg.ch/explore/dataset/DF_BEVNAT_NAISSANCES_1/table/
+ds_0390,gemeinde,Wirtschaft und Arbeit,Grenzgänger/innen,Anteil Grenzgänger/innen am Total der Beschäftigten,"sk-stat-98, px-x-0302010000_101","https://data.tg.ch/explore/dataset/sk-stat-98/table/, https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0302010000_101/-/px-x-0302010000_101.px/"

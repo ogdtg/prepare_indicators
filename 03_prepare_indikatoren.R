@@ -287,32 +287,86 @@ register_indicator(
 ## Bevölkerungsbewegung -------------------------------------------------------
 print("## Bevölkerungsbewegung -------------------------------------------------")
 
+
+lgb_metadata <- BFS::bfs_get_sse_metadata("DF_BEVNAT_NAISSANCES_1") %>%
+  select(code, value, valueText)
+
+
+lgb_geo <- lgb_metadata %>% filter(code == "GEO") %>%
+  select(-code) %>% rename(bfs_nr_gemeinde = "value")
+lgb_size <- lgb_metadata %>% filter(code == "P1_AGE_GRP") %>%
+  select(-code) %>% rename(filter1 = "value")
+
+lgb_gem <- BFS::bfs_get_sse_data("DF_BEVNAT_NAISSANCES_1", language = "de",
+                                   query = list(GEO = bezirk_data$bfs_nr_gemeinde,
+                                                P1_AGE_GRP = "_T",
+                                                SEX = "_T",
+                                                NAT_CAT = "_T")) %>%
+  left_join(lgb_geo,  by = c("GEO" = "valueText")) %>%
+  rename(jahr = "TIME_PERIOD") %>%
+  select(jahr, bfs_nr_gemeinde, value )
+
+
+lgb_bez <- BFS::bfs_get_sse_data("DF_BEVNAT_NAISSANCES_1", language = "de",
+                             query = list(GEO = unique(bezirk_data$bfs_nr_bezirk),
+                                          P1_AGE_GRP = "_T",
+                                          SEX = "_T",
+                                          NAT_CAT = "_T")) %>%
+  left_join(lgb_geo,  by = c("GEO" = "valueText")) %>%
+  rename(jahr = "TIME_PERIOD") %>%
+  select(jahr, bfs_nr_gemeinde, value )
+
+lgb_kt <- BFS::bfs_get_sse_data("DF_BEVNAT_NAISSANCES_1", language = "de",
+                                 query = list(GEO = "TG",
+                                              P1_AGE_GRP = "_T",
+                                              SEX = "_T",
+                                              NAT_CAT = "_T")) %>%
+  left_join(lgb_geo,  by = c("GEO" = "valueText")) %>%
+  rename(jahr = "TIME_PERIOD") %>%
+  mutate(bfs_nr_gemeinde="20") |>
+  select(jahr, bfs_nr_gemeinde, value )
+
+lgb <- lgb_gem |>
+  bind_rows(lgb_bez) |>
+  bind_rows(lgb_kt)
+
 ### Lebendgeburten
-lebendgeburten <- bfs_get_data(number_bfs = "px-x-0102020204_102", language = "de",
-    query = list(`Kanton (-) / Bezirk (>>) / Gemeinde (......)` = bezirk_data$bfs_nr_gemeinde)) %>%
-  mutate(bfs_nr_gemeinde = str_extract(`Kanton (-) / Bezirk (>>) / Gemeinde (......)`, "\\d\\d\\d\\d")) %>%
-  select(bfs_nr_gemeinde, Jahr, Lebendgeburten) %>%
-  rename(value = "Lebendgeburten", jahr = "Jahr") %>%
-  filter(jahr >= 2009) %>%
-  summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data)
+lebendgeburten <- lgb %>%
+  filter(jahr >= 2009)
 
 register_indicator(lebendgeburten,
   "Bevölkerung und Soziales", "Bevölkerungsbewegung", "Lebendgeburten",
-  source_ids = "px-x-0102020204_102")
+  source_ids = "DF_BEVNAT_NAISSANCES_1")
 
 ### Todesfälle
-todesfaelle <- bfs_get_data(number_bfs = "px-x-0102020206_102", language = "de",
-    query = list(`Kanton (-) / Bezirk (>>) / Gemeinde (......)` = bezirk_data$bfs_nr_gemeinde,
-                 `Staatsangehörigkeit (Kategorie)` = c("-99999"))) %>%
-  mutate(bfs_nr_gemeinde = str_extract(`Kanton (-) / Bezirk (>>) / Gemeinde (......)`, "\\d\\d\\d\\d")) %>%
-  select(bfs_nr_gemeinde, Jahr, Todesfälle) %>%
-  rename(value = "Todesfälle", jahr = "Jahr") %>%
-  filter(jahr >= 2009) %>%
-  summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data)
+
+tdf_metadata <- BFS::bfs_get_sse_metadata("DF_BEVNAT_DECES_1") %>%
+  select(code, value, valueText)
+
+
+tdf_geo <- tdf_metadata %>% filter(code == "GEO") %>%
+  select(-code) %>% rename(bfs_nr_gemeinde = "value")
+
+
+tdf <- BFS::bfs_get_sse_data("DF_BEVNAT_DECES_1", language = "de",
+                             query = list(GEO = c(unique(bezirk_data$bfs_nr_bezirk),bezirk_data$bfs_nr_gemeinde,"TG"),
+                                          AGE_CLASS = "_T",
+                                          MARITAL_STATUS_CLASS = "_T",
+                                          NAT_CAT = "_T",
+                                          SEX= "_T")) |>
+  left_join(tdf_geo,  by = c("GEO" = "valueText")) %>%
+  rename(jahr = "TIME_PERIOD") %>%
+  mutate(bfs_nr_gemeinde = case_when(GEO=="TG"~ "20",
+                                     TRUE ~ bfs_nr_gemeinde)) |>
+  select(jahr, bfs_nr_gemeinde, value )
+
+
+todesfaelle <- tdf %>%
+  filter(jahr >= 2009)
 
 register_indicator(todesfaelle,
   "Bevölkerung und Soziales", "Bevölkerungsbewegung", "Todesfälle",
-  source_ids = "px-x-0102020206_102")
+  source_ids = "DF_BEVNAT_DECES_1")
 
 ### Geburtensaldo
 register_indicator(
@@ -324,28 +378,55 @@ register_indicator(
   source_ids = c("px-x-0102020206_102", "px-x-0102020204_102"))
 
 ### Heiraten
+heir_metadata <- BFS::bfs_get_sse_metadata("DF_BEVNAT_MARIAGES_2") %>%
+  select(code, value, valueText)
+
+
+heir_geo <- heir_metadata %>% filter(code == "GEO") %>%
+  select(-code) %>% rename(bfs_nr_gemeinde = "value")
+
+
+heir <- BFS::bfs_get_sse_data("DF_BEVNAT_MARIAGES_2", language = "de",
+                             query = list(GEO = c(unique(bezirk_data$bfs_nr_bezirk),bezirk_data$bfs_nr_gemeinde,"TG"),
+                                          GENDER_CONST = "_T",
+                                          P1_NAT_CAT = "_T")) |>
+  left_join(tdf_geo,  by = c("GEO" = "valueText")) %>%
+  rename(jahr = "TIME_PERIOD") %>%
+  mutate(bfs_nr_gemeinde = case_when(GEO=="TG"~ "20",
+                                     TRUE ~ bfs_nr_gemeinde)) |>
+  select(jahr, bfs_nr_gemeinde, value ) |>
+  filter(jahr >= 2009)
+
+
+
 register_indicator(
-  bfs_get_data(number_bfs = "px-x-0102020202_102", language = "de",
-      query = list(`Kanton (-) / Bezirk (>>) / Gemeinde (......)` = bezirk_data$bfs_nr_gemeinde)) %>%
-    mutate(bfs_nr_gemeinde = str_extract(`Kanton (-) / Bezirk (>>) / Gemeinde (......)`, "\\d\\d\\d\\d")) %>%
-    select(bfs_nr_gemeinde, Jahr, Heiraten) %>%
-    rename(value = "Heiraten", jahr = "Jahr") %>%
-    filter(jahr >= 2009) %>%
-    summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data),
+  heir,
   "Bevölkerung und Soziales", "Bevölkerungsbewegung", "Heiraten",
-  source_ids = "px-x-0102020202_102")
+  source_ids = "DF_BEVNAT_MARIAGES_2")
 
 ### Scheidungen
+
+schei_metadata <- BFS::bfs_get_sse_metadata("DF_BEVNAT_DIVORCES_3") %>%
+  select(code, value, valueText)
+
+schei <- BFS::bfs_get_sse_data("DF_BEVNAT_DIVORCES_3", language = "de",
+                              query = list(GEO = c(unique(bezirk_data$bfs_nr_bezirk),bezirk_data$bfs_nr_gemeinde,"TG"),
+                                           MAR_DUR = "_T",
+                                           P1_NAT_CAT = "_T"),column_name_type = "code") |>
+  left_join(tdf_geo,  by = c("GEO" = "valueText")) %>%
+  rename(jahr = "TIME_PERIOD") %>%
+  mutate(bfs_nr_gemeinde = case_when(GEO=="TG"~ "20",
+                                     TRUE ~ bfs_nr_gemeinde)) |>
+  select(jahr, bfs_nr_gemeinde, value ) |>
+  filter(jahr >= 2009)
+
+
+
+
 register_indicator(
-  bfs_get_data(number_bfs = "px-x-0102020203_103", language = "de",
-      query = list(`Kanton (-) / Bezirk (>>) / Gemeinde (......)` = bezirk_data$bfs_nr_gemeinde)) %>%
-    mutate(bfs_nr_gemeinde = str_extract(`Kanton (-) / Bezirk (>>) / Gemeinde (......)`, "\\d\\d\\d\\d")) %>%
-    select(bfs_nr_gemeinde, Jahr, Scheidungen) %>%
-    rename(value = "Scheidungen", jahr = "Jahr") %>%
-    filter(jahr >= 2009) %>%
-    summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data),
+  schei,
   "Bevölkerung und Soziales", "Bevölkerungsbewegung", "Scheidungen",
-  source_ids = "px-x-0102020203_103")
+  source_ids = "DF_BEVNAT_DIVORCES_3")
 
 ### Wanderung (Saldo / Zuzüge / Wegzüge)
 wanderung_metadata  <- bfs_get_metadata("px-x-0103010200_121", language = "de")
@@ -440,7 +521,7 @@ haushalte <- BFS::bfs_get_sse_data("DF_STATPOP_PHH", language = "de",
 register_indicator(
   haushalte %>% summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data),
   "Bevölkerung und Soziales", "Haushalte", "Haushalte nach Haushaltsgrösse",
-  source_ids = "px-x-0102020000_402")
+  source_ids = "DF_STATPOP_PHH")
 
 register_indicator(
   haushalte %>%
@@ -449,7 +530,7 @@ register_indicator(
     ungroup() %>%
     summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data),
   "Bevölkerung und Soziales", "Haushalte", "Haushalte insgesamt",
-  source_ids = "px-x-0102020000_402")
+  source_ids = "DF_STATPOP_PHH")
 
 ## Sozialhilfe ----------------------------------------------------------------
 print("## Sozialhilfe ----------------------------------------------------------")

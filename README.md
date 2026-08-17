@@ -1,18 +1,16 @@
 | Hauptkategorie | Unterkategorie | Indikator | Datensatz ID |
 |---------------|---------------|-----------|----------------|
 Bevölkerung und Soziales|Bevölkerungsstand|Durchschnittsalter der Bevölkerung|[sk-stat-57](https://data.tg.ch/explore/dataset/sk-stat-57/table/)
+Bevölkerung und Soziales|Bevölkerungsstand|Durchschnittsalter der Rentnerinnen und Rentner|[sk-stat-57](https://data.tg.ch/explore/dataset/sk-stat-57/table/)
 Bevölkerung und Soziales|Bevölkerungsstand|Bevölkerungsverteilung nach Geschlecht|[sk-stat-59](https://data.tg.ch/explore/dataset/sk-stat-59/table/)
 Bevölkerung und Soziales|Bevölkerungsstand|Bevölkerungsverteilung nach Altersklasse|[sk-stat-57](https://data.tg.ch/explore/dataset/sk-stat-57/table/)
 Bevölkerung und Soziales|Bevölkerungsstand|Bevölkerungsverteilung nach Konfession|[sk-stat-62](https://data.tg.ch/explore/dataset/sk-stat-62/table/)
 Bevölkerung und Soziales|Bevölkerungsstand|Bevölkerungsverteilung nach Nationalität|[sk-stat-59](https://data.tg.ch/explore/dataset/sk-stat-59/table/)
 Bevölkerung und Soziales|Bevölkerungsstand|Gesamtbevölkerung|[sk-stat-59](https://data.tg.ch/explore/dataset/sk-stat-59/table/)
 Bevölkerung und Soziales|Bevölkerungsentwicklung|Bevölkerungsentwicklung (Vorjahr/5 Jahre)|[sk-stat-56](https://data.tg.ch/explore/dataset/sk-stat-56/table/)
-Bevölkerung und Soziales|Bevölkerungsbewegung|Lebendgeburten|[px-x-0102020204_102](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020204_102/-/px-x-0102020204_102.px/)
 Bevölkerung und Soziales|Bevölkerungsbewegung|Wanderungssaldo|[px-x-0103010200_121](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0103010200_121/-/px-x-0103010200_121.px/)
 Bevölkerung und Soziales|Bevölkerungsbewegung|Zuzüge|[px-x-0103010200_121](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0103010200_121/-/px-x-0103010200_121.px/)
 Bevölkerung und Soziales|Bevölkerungsbewegung|Wegzüge|[px-x-0103010200_121](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0103010200_121/-/px-x-0103010200_121.px/)
-Bevölkerung und Soziales|Haushalte|Haushalte nach Haushaltsgrösse|[px-x-0102020000_402](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020000_402/-/px-x-0102020000_402.px/)
-Bevölkerung und Soziales|Haushalte|Haushalte insgesamt|[px-x-0102020000_402](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020000_402/-/px-x-0102020000_402.px/)
 Bevölkerung und Soziales|Sozialhilfe|Brutto Sozialhilfeausgaben je Einwohner|[sk-stat-54](https://data.tg.ch/explore/dataset/sk-stat-54/table/)
 Bevölkerung und Soziales|Sozialhilfe|Brutto Sozialhilfeausgaben total|[sk-stat-54](https://data.tg.ch/explore/dataset/sk-stat-54/table/)
 Bevölkerung und Soziales|Sozialhilfe|Netto Sozialhilfeausgaben je Einwohner|[sk-stat-55](https://data.tg.ch/explore/dataset/sk-stat-55/table/)
@@ -30,8 +28,6 @@ Wirtschaft und Arbeit|Arbeitsstätten|Veränderung Arbeitsstätten nach Sektor g
 Wirtschaft und Arbeit|Arbeitsstätten|Vorjahresveränderung Arbeitsstätten nach Sektor (in %)|[sk-stat-97](https://data.tg.ch/explore/dataset/sk-stat-97/table/)
 Wirtschaft und Arbeit|Arbeitsstätten|Arbeitsstätten total|[sk-stat-97](https://data.tg.ch/explore/dataset/sk-stat-97/table/)
 Wirtschaft und Arbeit|Arbeitsstätten|Arbeitsstätten nach Sektor|[sk-stat-97](https://data.tg.ch/explore/dataset/sk-stat-97/table/)
-Wirtschaft und Arbeit|Grenzgänger/innen|Grenzgänger/innen total|[px-x-0302010000_101](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0302010000_101/-/px-x-0302010000_101.px/)
-Wirtschaft und Arbeit|Grenzgänger/innen|Anteil Grenzgänger/innen am Total der Beschäftigten|[sk-stat-98](https://data.tg.ch/explore/dataset/sk-stat-98/table/), [px-x-0302010000_101](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0302010000_101/-/px-x-0302010000_101.px/)
 Wirtschaft und Arbeit|Pendler|Anzahl Binnenpendler|[https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master](https://data.tg.ch/explore/dataset/https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master/table/)
 Wirtschaft und Arbeit|Pendler|Anzahl Wegpendler|[https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master](https://data.tg.ch/explore/dataset/https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master/table/)
 Wirtschaft und Arbeit|Pendler|Anzahl Zupendler|[https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master](https://data.tg.ch/explore/dataset/https://dam-api.bfs.admin.ch/hub/api/dam/assets/27885394/master/table/)
@@ -44,20 +40,12 @@ Bauen und Wohnen|Bauinvestitionen|Bauinvestitionen nach Kategorie|[px-x-09040100
 Bauen und Wohnen|Bauinvestitionen|Bauinvestitionen nach Art der Auftraggeber|[px-x-0904010000_203](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0904010000_203/-/px-x-0904010000_203.px/)
 Bauen und Wohnen|Bauinvestitionen|Bauinvestitionen total|[px-x-0904010000_203](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0904010000_203/-/px-x-0904010000_203.px/)
 Bauen und Wohnen|Bauinvestitionen|Bauinvestitionen im Vorjahresvergleich|[px-x-0904010000_203](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0904010000_203/-/px-x-0904010000_203.px/)
-Bauen und Wohnen|Gebäude und Wohnungen|Wohngebäude total|[px-x-0902010000_103](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0902010000_103/-/px-x-0902010000_103.px/)
-Bauen und Wohnen|Gebäude und Wohnungen|Wohngebäude nach Bauperiode|[px-x-0902010000_103](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0902010000_103/-/px-x-0902010000_103.px/)
-Bauen und Wohnen|Gebäude und Wohnungen|Wohngebäude nach Kategorie des Gebäudes|[px-x-0902010000_103](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0902010000_103/-/px-x-0902010000_103.px/)
 Bauen und Wohnen|Gebäude und Wohnungen|Neu erstellte Wohngebäude|[px-x-0904030000_106](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0904030000_106/-/px-x-0904030000_106.px/)
 Bauen und Wohnen|Gebäude und Wohnungen|Wohnungen nach Zimmerzahl|[sk-stat-90](https://data.tg.ch/explore/dataset/sk-stat-90/table/)
 Bauen und Wohnen|Gebäude und Wohnungen|Wohnungen total|[sk-stat-90](https://data.tg.ch/explore/dataset/sk-stat-90/table/)
 Bauen und Wohnen|Gebäude und Wohnungen|Neu erstellte Wohnungen nach Zimmerzahl|[sk-stat-92](https://data.tg.ch/explore/dataset/sk-stat-92/table/)
 Bauen und Wohnen|Gebäude und Wohnungen|Neu erstellte Wohnungen total|[sk-stat-92](https://data.tg.ch/explore/dataset/sk-stat-92/table/)
 Bauen und Wohnen|Gebäude und Wohnungen|Anteil neu erstellter Wohnungen am Wohnungsbestand des Vorjahres|[sk-stat-92](https://data.tg.ch/explore/dataset/sk-stat-92/table/), [sk-stat-90](https://data.tg.ch/explore/dataset/sk-stat-90/table/)
-Bauen und Wohnen|Gebäude und Wohnungen|Wohngebäude nach Energiequelle der Heizung|[px-x-0902010000_104](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0902010000_104/-/px-x-0902010000_104.px/)
-Raum, Verkehr und Umwelt|Flächennutzung|Fläche nach Flächenart|[px-x-0202020000_102](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0202020000_102/-/px-x-0202020000_102.px/)
-Raum, Verkehr und Umwelt|Flächennutzung|Fläche total|[px-x-0202020000_102](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0202020000_102/-/px-x-0202020000_102.px/)
-Raum, Verkehr und Umwelt|Flächennutzung|Landfläche|[px-x-0202020000_102](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0202020000_102/-/px-x-0202020000_102.px/)
-Raum, Verkehr und Umwelt|Flächennutzung|Bevölkerungsdichte|[px-x-0202020000_102](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0202020000_102/-/px-x-0202020000_102.px/), [sk-stat-59](https://data.tg.ch/explore/dataset/sk-stat-59/table/)
 Raum, Verkehr und Umwelt|Personenwagenbestand|Motorisierungsgrad|[djs-stv-14](https://data.tg.ch/explore/dataset/djs-stv-14/table/), [sk-stat-59](https://data.tg.ch/explore/dataset/sk-stat-59/table/)
 Raum, Verkehr und Umwelt|Personenwagenbestand|Personenwagenbestand|[djs-stv-14](https://data.tg.ch/explore/dataset/djs-stv-14/table/)
 Staat und Politik|Grossratswahlen|Parteistärken nach Partei|[sk-stat-9](https://data.tg.ch/explore/dataset/sk-stat-9/table/)
@@ -210,8 +198,6 @@ Staat und Politik|2025: Eidg. Abstimmungen|30.11.2025: Volksinitiative 'Für ein
 Staat und Politik|2025: Eidg. Abstimmungen|28.09.2025: Bundesbeschluss vom 20. Dezember 2024 über die kantonalen Liegenschaftssteuern auf Zweitliegenschaften|[sk-stat-50](https://data.tg.ch/explore/dataset/sk-stat-50/table/)
 Staat und Politik|2025: Eidg. Abstimmungen|28.09.2025: Bundesgesetz vom 20. Dezember 2024 über den elektronischen Identitätsnachweis und andere elektronische Nachweise (E-ID-Gesetz, BGEID)|[sk-stat-50](https://data.tg.ch/explore/dataset/sk-stat-50/table/)
 Staat und Politik|2025: Eidg. Abstimmungen|09.02.2025: Volksinitiative 'Für eine verantwortungsvolle Wirtschaft innerhalb der planetaren Grenzen (Umweltverantwortungsinitiative)'|[sk-stat-50](https://data.tg.ch/explore/dataset/sk-stat-50/table/)
-Staat und Politik|2026: Eidg. Abstimmungen|14.06.2026: Volksinitiative 'Keine 10-Millionen-Schweiz! (Nachhaltigkeitsinitiative)»|[sk-stat-50](https://data.tg.ch/explore/dataset/sk-stat-50/table/)
-Staat und Politik|2026: Eidg. Abstimmungen|14.06.2026: Änderung vom 26. September 2025 des Bundesgesetzes über den zivilen Ersatzdienst (Zivildienstgesetz, ZDG)|[sk-stat-50](https://data.tg.ch/explore/dataset/sk-stat-50/table/)
 Staat und Politik|2026: Eidg. Abstimmungen|08.03.2026: Volksinitiative 'Ja zu einer unabhängigen, freien Schweizer Währung mit Münzen oder Banknoten (Bargeld ist Freiheit)»|[sk-stat-50](https://data.tg.ch/explore/dataset/sk-stat-50/table/)
 Staat und Politik|2026: Eidg. Abstimmungen|08.03.2026: Bundesbeschluss über die schweizerische Währung und die Bargeldversorgung (Gegenvorschlag zur Bargeldinitiative)|[sk-stat-50](https://data.tg.ch/explore/dataset/sk-stat-50/table/)
 Staat und Politik|2026: Eidg. Abstimmungen|08.03.2026: Bargeldinitiative und Gegenvorschlag: Stichfrage|[sk-stat-50](https://data.tg.ch/explore/dataset/sk-stat-50/table/)
@@ -251,14 +237,12 @@ Staat und Politik|2023: Kantonale Abstimmungen|18.06.2023: Änderung des Gesetze
 Staat und Politik|2023: Kantonale Abstimmungen|18.06.2023: Kreditbegehren über 127.2 Mio. Franken (Fr. 127'203'243.85) betreffend die Verwendung des Agios aus der Ausgabe von Partizipationsscheinen der Thurgauer Kantonalbank (TKB)|[sk-stat-52](https://data.tg.ch/explore/dataset/sk-stat-52/table/)
 Staat und Politik|2025: Kantonale Abstimmungen|28.09.2025: Ruhetagsgesetz|[sk-stat-52](https://data.tg.ch/explore/dataset/sk-stat-52/table/)
 Staat und Politik|2025: Kantonale Abstimmungen|18.05.2025: Abschaffung der Liegenschaftensteuer|[sk-stat-52](https://data.tg.ch/explore/dataset/sk-stat-52/table/)
-Staat und Politik|2026: Kantonale Abstimmungen|14.06.2026: Anpassung der Finanzkompetenzen|[sk-stat-52](https://data.tg.ch/explore/dataset/sk-stat-52/table/)
 Staat und Politik|Steuerkraft und Steuerfüsse|Gesamtsteuerfuss|[sk-stat-70](https://data.tg.ch/explore/dataset/sk-stat-70/table/)
 Staat und Politik|Steuerkraft und Steuerfüsse|Gemeindesteuerfuss|[sk-stat-69](https://data.tg.ch/explore/dataset/sk-stat-69/table/)
 Staat und Politik|Steuerkraft und Steuerfüsse|Veränderung der Gemeindesteuerfüsse im Vergleich zu vor 10 Jahren (%-Punkte)|[sk-stat-69](https://data.tg.ch/explore/dataset/sk-stat-69/table/)
 Staat und Politik|Finanzausgleich|Gesamtauswirkung Finanzausgleich (positive Werte: Abschöpfung, negative Werte: Auszahlung) (CHF)|[sk-stat-1](https://data.tg.ch/explore/dataset/sk-stat-1/table/)
 Staat und Politik|Finanzausgleich|Gesamtauswirkung Finanzausgleich pro Einwohner (positive Werte: Abschöpfung, negative Werte: Auszahlung) (CHF)|[sk-stat-1](https://data.tg.ch/explore/dataset/sk-stat-1/table/)
 Staat und Politik|Gemeindefinanzkennzahlen|Gemeindefinanzkennzahlen|[sk-stat-4](https://data.tg.ch/explore/dataset/sk-stat-4/table/)
-Bevölkerung und Soziales|Bevölkerungsstand|Durchschnittsalter der Rentnerinnen und Rentner|[sk-stat-57](https://data.tg.ch/explore/dataset/sk-stat-57/table/)
 Bevölkerung und Soziales||Bevölkerung nach Altersklasse Geschlecht|[sk-stat-58](https://data.tg.ch/explore/dataset/sk-stat-58/table/)
 Bevölkerung und Soziales|Bevölkerungsstand|Gesamtbevölkerung|[dek-av-30](https://data.tg.ch/explore/dataset/dek-av-30/table/)
 Bevölkerung und Soziales|Bildung|Anzahl Schülerinnen und Schüler im Durchschnitt der beiden Stichtage 15.2. und 15.9.|[dek-av-30](https://data.tg.ch/explore/dataset/dek-av-30/table/)
@@ -362,22 +346,36 @@ Staat und Politik|Finanzkennzahlen|Erfolgvorgewinnverwendung|[dek-av-30](https:/
 Staat und Politik|Finanzkennzahlen|Erfolg im Rechnungsjahr in CHF|[dek-av-30](https://data.tg.ch/explore/dataset/dek-av-30/table/)
 Staat und Politik|Finanzkennzahlen|Bilanzüberschuss Kontogruppe 299|[dek-av-30](https://data.tg.ch/explore/dataset/dek-av-30/table/)
 Staat und Politik|Finanzkennzahlen|Verwaltungsvermögen per 31.12.|[dek-av-30](https://data.tg.ch/explore/dataset/dek-av-30/table/)
+Staat und Politik|2026: Eidg. Abstimmungen|14.06.2026: Volksinitiative 'Keine 10-Millionen-Schweiz! (Nachhaltigkeitsinitiative)»|[sk-stat-50](https://data.tg.ch/explore/dataset/sk-stat-50/table/)
+Staat und Politik|2026: Eidg. Abstimmungen|14.06.2026: Änderung vom 26. September 2025 des Bundesgesetzes über den zivilen Ersatzdienst (Zivildienstgesetz, ZDG)|[sk-stat-50](https://data.tg.ch/explore/dataset/sk-stat-50/table/)
+Staat und Politik|2026: Kantonale Abstimmungen|14.06.2026: Anpassung der Finanzkompetenzen|[sk-stat-52](https://data.tg.ch/explore/dataset/sk-stat-52/table/)
+Bevölkerung und Soziales|Bevölkerungsbewegung|Todesfälle|[DF_BEVNAT_DECES_1](https://data.tg.ch/explore/dataset/DF_BEVNAT_DECES_1/table/)
+Bevölkerung und Soziales|Bevölkerungsbewegung|Geburtensaldo|[px-x-0102020206_102](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020206_102/-/px-x-0102020206_102.px/), [px-x-0102020204_102](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020204_102/-/px-x-0102020204_102.px/)
+Bevölkerung und Soziales|Bevölkerungsbewegung|Heiraten|[DF_BEVNAT_MARIAGES_2](https://data.tg.ch/explore/dataset/DF_BEVNAT_MARIAGES_2/table/)
+Bevölkerung und Soziales|Bevölkerungsbewegung|Scheidungen|[DF_BEVNAT_DIVORCES_3](https://data.tg.ch/explore/dataset/DF_BEVNAT_DIVORCES_3/table/)
+Bevölkerung und Soziales|Haushalte|Haushalte nach Haushaltsgrösse|[DF_STATPOP_PHH](https://data.tg.ch/explore/dataset/DF_STATPOP_PHH/table/)
+Bevölkerung und Soziales|Haushalte|Haushalte insgesamt|[DF_STATPOP_PHH](https://data.tg.ch/explore/dataset/DF_STATPOP_PHH/table/)
+Wirtschaft und Arbeit|Grenzgänger/innen|Grenzgänger/innen total|[px-x-0302010000_101](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0302010000_101/-/px-x-0302010000_101.px/)
+Bauen und Wohnen|Gebäude und Wohnungen|Wohngebäude total|[px-x-0902010000_103](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0902010000_103/-/px-x-0902010000_103.px/)
+Bauen und Wohnen|Gebäude und Wohnungen|Wohngebäude nach Bauperiode|[px-x-0902010000_103](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0902010000_103/-/px-x-0902010000_103.px/)
+Bauen und Wohnen|Gebäude und Wohnungen|Wohngebäude nach Kategorie des Gebäudes|[px-x-0902010000_103](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0902010000_103/-/px-x-0902010000_103.px/)
+Bauen und Wohnen|Gebäude und Wohnungen|Wohngebäude nach Energiequelle der Heizung|[px-x-0902010000_104](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0902010000_104/-/px-x-0902010000_104.px/)
+Raum, Verkehr und Umwelt|Flächennutzung|Fläche nach Flächenart|[px-x-0202020000_102](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0202020000_102/-/px-x-0202020000_102.px/)
+Raum, Verkehr und Umwelt|Flächennutzung|Fläche total|[px-x-0202020000_102](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0202020000_102/-/px-x-0202020000_102.px/)
+Raum, Verkehr und Umwelt|Flächennutzung|Landfläche|[px-x-0202020000_102](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0202020000_102/-/px-x-0202020000_102.px/)
+Raum, Verkehr und Umwelt|Flächennutzung|Bevölkerungsdichte|[px-x-0202020000_102](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0202020000_102/-/px-x-0202020000_102.px/), [sk-stat-59](https://data.tg.ch/explore/dataset/sk-stat-59/table/)
+Bevölkerung und Soziales|Bevölkerungsbewegung|Lebendgeburten|[DF_BEVNAT_NAISSANCES_1](https://data.tg.ch/explore/dataset/DF_BEVNAT_NAISSANCES_1/table/)
+Wirtschaft und Arbeit|Grenzgänger/innen|Anteil Grenzgänger/innen am Total der Beschäftigten|[sk-stat-98](https://data.tg.ch/explore/dataset/sk-stat-98/table/), [px-x-0302010000_101](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0302010000_101/-/px-x-0302010000_101.px/)
 
 ## Fehlerbericht Indikator-Erstellung
 
-Stand: 2026-06-23 16:09
+Stand: 2026-08-17 11:43
 
-- Erfolgreich erstellt: **362**
-- Fehlgeschlagen: **4**
+- Erfolgreich aktualisiert: **366**
+- Fehlgeschlagen, bestehende Daten beibehalten: **0**
+- Fehlgeschlagen, keine Daten vorhanden: **0**
 
-### Fehlgeschlagene Indikatoren
-
-| Indikator | Geo-Einheit | Fehler |
-|-----------|-------------|--------|
-| Bevölkerung und Soziales > Bevölkerungsbewegung > Todesfälle | gemeinde | object 'todesfaelle' not found |
-| Bevölkerung und Soziales > Bevölkerungsbewegung > Geburtensaldo | gemeinde | object 'todesfaelle' not found |
-| Bevölkerung und Soziales > Bevölkerungsbewegung > Heiraten | gemeinde | [38;5;232mHTTP 400 Bad Request.[39m |
-| Bevölkerung und Soziales > Bevölkerungsbewegung > Scheidungen | gemeinde | [38;5;232mHTTP 400 Bad Request.[39m |
+Alle Indikatoren konnten erfolgreich aktualisiert werden.
 
 <details><summary>Erfolgreich erstellte Indikatoren</summary>
 
@@ -392,6 +390,10 @@ Stand: 2026-06-23 16:09
 | Bevölkerung und Soziales > Bevölkerungsstand > Gesamtbevölkerung | gemeinde |
 | Bevölkerung und Soziales > Bevölkerungsentwicklung > Bevölkerungsentwicklung (Vorjahr/5 Jahre) | gemeinde |
 | Bevölkerung und Soziales > Bevölkerungsbewegung > Lebendgeburten | gemeinde |
+| Bevölkerung und Soziales > Bevölkerungsbewegung > Todesfälle | gemeinde |
+| Bevölkerung und Soziales > Bevölkerungsbewegung > Geburtensaldo | gemeinde |
+| Bevölkerung und Soziales > Bevölkerungsbewegung > Heiraten | gemeinde |
+| Bevölkerung und Soziales > Bevölkerungsbewegung > Scheidungen | gemeinde |
 | Bevölkerung und Soziales > Bevölkerungsbewegung > Wanderungssaldo | gemeinde |
 | Bevölkerung und Soziales > Bevölkerungsbewegung > Zuzüge | gemeinde |
 | Bevölkerung und Soziales > Bevölkerungsbewegung > Wegzüge | gemeinde |
@@ -610,11 +612,11 @@ Stand: 2026-06-23 16:09
 | Staat und Politik > 2009: Kantonale Abstimmungen > 08.02.2009: Gesetz betreffend die Änderung der Verfassung des Kantons Thurgau | gemeinde |
 | Staat und Politik > 2010: Kantonale Abstimmungen > 07.03.2010: Thurgauische Volksinitiative 'Ja! Freie Schulwahl für alle.' | gemeinde |
 | Staat und Politik > 2011: Kantonale Abstimmungen > 23.10.2011: Gesetz betreffend die Änderung der Verfassung des Kantons Thurgau (Abschaffung der Volkswahlen für die Grundbuchämter und Notariate) | gemeinde |
-| Staat und Politik > 2011: Kantonale Abstimmungen > 15.05.2011: Gegenvorschlag zur Volksinitiative 'Abschaffung der Pauschalbesteuerung - Schweizer und Ausländer gleich behandeln' | gemeinde |
 | Staat und Politik > 2011: Kantonale Abstimmungen > 15.05.2011: Stichfrage zur Volksinitiative mit Gegenvorschlag 'Abschaffung der Pauschalbesteuerung - Schweizer und Ausländer gleich behandeln' | gemeinde |
 | Staat und Politik > 2011: Kantonale Abstimmungen > 15.05.2011: Volksinitiative 'Abschaffung der Pauschalbesteuerung - Schweizer und Ausländer gleich behandeln' | gemeinde |
 | Staat und Politik > 2011: Kantonale Abstimmungen > 15.05.2011: Volksinitiative 'Faires Wahlsystem für die Grossratswahlen' | gemeinde |
 | Staat und Politik > 2011: Kantonale Abstimmungen > 15.05.2011: Volksinitiative 'Ja zu effizienter und erneuerbarer Energie - natürlich Thurgau!' | gemeinde |
+| Staat und Politik > 2011: Kantonale Abstimmungen > 15.05.2011: Gegenvorschlag zur Volksinitiative 'Abschaffung der Pauschalbesteuerung - Schweizer und Ausländer gleich behandeln' | gemeinde |
 | Staat und Politik > 2011: Kantonale Abstimmungen > 13.02.2011: Gesetz betreffend die Änderung der Verfassung des Kantons Thurgau | gemeinde |
 | Staat und Politik > 2011: Kantonale Abstimmungen > 13.02.2011: Kreditbegehren von 4'800'000 Franken als Baubeitrag des Kantons Thurgau an den Neubau der Dreifachsporthalle Arbon | gemeinde |
 | Staat und Politik > 2011: Kantonale Abstimmungen > 13.02.2011: Kreditbegehren von 7'630'000 Franken für die Aufstockung des Berufsbildungszentrums Weinfelden | gemeinde |
