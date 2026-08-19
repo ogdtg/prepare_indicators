@@ -352,15 +352,18 @@ tdf_metadata <- BFS::bfs_get_sse_metadata("DF_BEVNAT_DECES_1") %>%
 
 
 tdf_geo <- tdf_metadata %>% filter(code == "GEO") %>%
-  select(-code) %>% rename(bfs_nr_gemeinde = "value")
+  select(-code) %>% rename(bfs_nr_gemeinde = "value") |>
+  mutate(bfs_nr_gemeinde = stringr::str_remove(bfs_nr_gemeinde,"B_"))
+
 
 
 tdf <- BFS::bfs_get_sse_data("DF_BEVNAT_DECES_1", language = "de",
-                             query = list(GEO = c(unique(bezirk_data$bfs_nr_bezirk),bezirk_data$bfs_nr_gemeinde,"TG"),
+                             query = list(GEO = c(paste0("B_",unique(bezirk_data$bfs_nr_bezirk)),bezirk_data$bfs_nr_gemeinde,"TG"),
                                           AGE_CLASS = "_T",
                                           MARITAL_STATUS_CLASS = "_T",
                                           NAT_CAT = "_T",
                                           SEX= "_T")) |>
+  mutate(GEO = stringr::str_remove(GEO,"B_")) |>
   left_join(tdf_geo,  by = c("GEO" = "valueText")) %>%
   rename(jahr = "TIME_PERIOD") %>%
   mutate(bfs_nr_gemeinde = case_when(GEO=="TG"~ "20",
