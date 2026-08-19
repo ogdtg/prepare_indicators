@@ -8,7 +8,6 @@ Bevölkerung und Soziales|Bevölkerungsstand|Bevölkerungsverteilung nach Konfes
 Bevölkerung und Soziales|Bevölkerungsstand|Bevölkerungsverteilung nach Nationalität|[sk-stat-59](https://data.tg.ch/explore/dataset/sk-stat-59/table/)
 Bevölkerung und Soziales|Bevölkerungsstand|Gesamtbevölkerung|[sk-stat-59](https://data.tg.ch/explore/dataset/sk-stat-59/table/)
 Bevölkerung und Soziales|Bevölkerungsentwicklung|Bevölkerungsentwicklung (Vorjahr/5 Jahre)|[sk-stat-56](https://data.tg.ch/explore/dataset/sk-stat-56/table/)
-Bevölkerung und Soziales|Bevölkerungsentwicklung|Bevölkerungsentwicklung (Vorjahr/5 Jahre)|[sk-stat-56](https://data.tg.ch/explore/dataset/sk-stat-56/table/)
 Bevölkerung und Soziales|Bevölkerungsbewegung|Lebendgeburten|[DF_BEVNAT_NAISSANCES_1](https://data.tg.ch/explore/dataset/DF_BEVNAT_NAISSANCES_1/table/)
 Bevölkerung und Soziales|Bevölkerungsbewegung|Todesfälle|[DF_BEVNAT_DECES_1](https://data.tg.ch/explore/dataset/DF_BEVNAT_DECES_1/table/)
 Bevölkerung und Soziales|Bevölkerungsbewegung|Geburtensaldo|[px-x-0102020206_102](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020206_102/-/px-x-0102020206_102.px/), [px-x-0102020204_102](https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020204_102/-/px-x-0102020204_102.px/)
@@ -370,9 +369,9 @@ Wirtschaft und Arbeit|Grenzgänger/innen|Anteil Grenzgänger/innen am Total der 
 
 ## Fehlerbericht Indikator-Erstellung
 
-Stand: 2026-08-19 15:19
+Stand: 2026-08-19 15:32
 
-- Erfolgreich aktualisiert: **367**
+- Erfolgreich aktualisiert: **366**
 - Fehlgeschlagen, bestehende Daten beibehalten: **0**
 - Fehlgeschlagen, keine Daten vorhanden: **0**
 
@@ -748,6 +747,5 @@ Alle Indikatoren konnten erfolgreich aktualisiert werden.
 | Staat und Politik > Finanzkennzahlen > Erfolg im Rechnungsjahr in CHF | volksschulgemeinde |
 | Staat und Politik > Finanzkennzahlen > Bilanzüberschuss Kontogruppe 299 | volksschulgemeinde |
 | Staat und Politik > Finanzkennzahlen > Verwaltungsvermögen per 31.12. | volksschulgemeinde |
-| Bevölkerung und Soziales > Bevölkerungsentwicklung > Bevölkerungsentwicklung (Vorjahr/5 Jahre) | gemeinde |
 
 </details>
