@@ -369,7 +369,7 @@ Wirtschaft und Arbeit|Grenzgänger/innen|Anteil Grenzgänger/innen am Total der 
 
 ## Fehlerbericht Indikator-Erstellung
 
-Stand: 2026-08-19 07:16
+Stand: 2026-08-19 10:18
 
 - Erfolgreich aktualisiert: **366**
 - Fehlgeschlagen, bestehende Daten beibehalten: **0**
@@ -612,11 +612,11 @@ Alle Indikatoren konnten erfolgreich aktualisiert werden.
 | Staat und Politik > 2009: Kantonale Abstimmungen > 08.02.2009: Gesetz betreffend die Änderung der Verfassung des Kantons Thurgau | gemeinde |
 | Staat und Politik > 2010: Kantonale Abstimmungen > 07.03.2010: Thurgauische Volksinitiative 'Ja! Freie Schulwahl für alle.' | gemeinde |
 | Staat und Politik > 2011: Kantonale Abstimmungen > 23.10.2011: Gesetz betreffend die Änderung der Verfassung des Kantons Thurgau (Abschaffung der Volkswahlen für die Grundbuchämter und Notariate) | gemeinde |
-| Staat und Politik > 2011: Kantonale Abstimmungen > 15.05.2011: Gegenvorschlag zur Volksinitiative 'Abschaffung der Pauschalbesteuerung - Schweizer und Ausländer gleich behandeln' | gemeinde |
 | Staat und Politik > 2011: Kantonale Abstimmungen > 15.05.2011: Stichfrage zur Volksinitiative mit Gegenvorschlag 'Abschaffung der Pauschalbesteuerung - Schweizer und Ausländer gleich behandeln' | gemeinde |
 | Staat und Politik > 2011: Kantonale Abstimmungen > 15.05.2011: Volksinitiative 'Abschaffung der Pauschalbesteuerung - Schweizer und Ausländer gleich behandeln' | gemeinde |
 | Staat und Politik > 2011: Kantonale Abstimmungen > 15.05.2011: Volksinitiative 'Faires Wahlsystem für die Grossratswahlen' | gemeinde |
 | Staat und Politik > 2011: Kantonale Abstimmungen > 15.05.2011: Volksinitiative 'Ja zu effizienter und erneuerbarer Energie - natürlich Thurgau!' | gemeinde |
+| Staat und Politik > 2011: Kantonale Abstimmungen > 15.05.2011: Gegenvorschlag zur Volksinitiative 'Abschaffung der Pauschalbesteuerung - Schweizer und Ausländer gleich behandeln' | gemeinde |
 | Staat und Politik > 2011: Kantonale Abstimmungen > 13.02.2011: Gesetz betreffend die Änderung der Verfassung des Kantons Thurgau | gemeinde |
 | Staat und Politik > 2011: Kantonale Abstimmungen > 13.02.2011: Kreditbegehren von 4'800'000 Franken als Baubeitrag des Kantons Thurgau an den Neubau der Dreifachsporthalle Arbon | gemeinde |
 | Staat und Politik > 2011: Kantonale Abstimmungen > 13.02.2011: Kreditbegehren von 7'630'000 Franken für die Aufstockung des Berufsbildungszentrums Weinfelden | gemeinde |

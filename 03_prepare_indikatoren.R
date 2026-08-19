@@ -27,7 +27,7 @@ ensure_packages <- function(packages) {
         } else {
         install.packages(pkg, dependencies = TRUE)
         }
-      
+
     }
   }
 }
@@ -1407,6 +1407,7 @@ for (id in report_ids) {
 # den kombinierten Gesamtdatensatz (full.rds).
 full_report <- dplyr::bind_rows(combined)
 saveRDS(full_report, file.path(OUTPUT_DIR, "full_report.rds"))
+saveRDS(mapping, file.path(OUTPUT_DIR, "mapping_report.rds"))
 
 message(sprintf("Fertig: %d Datensätze als <id>_report aufbereitet (%d Zeilen).",
                 length(report_ids), nrow(full_report)))
@@ -1426,3 +1427,4 @@ message(sprintf("Fertig: %d Datensätze als <id>_report aufbereitet (%d Zeilen).
 # - Neu erstellte Wohnungen: 2020/2021 teils Duplikate
 # - Fläche: Bodensee-Anteil, Unterschiede in Siedlungsfläche
 # - Steuerkraft: Berechnung via statistik.tg.ch
+
