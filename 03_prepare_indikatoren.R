@@ -518,12 +518,11 @@ haushalte <- BFS::bfs_get_sse_data("DF_STATPOP_PHH", language = "de",
     query = list(GEO_UNIT = bezirk_data$bfs_nr_gemeinde,
                  HH_SIZE  = c("1", "2", "3", "4", "5", "60"))) %>%
   left_join(hh_geo,  by = c("GEO_UNIT" = "valueText")) %>%
-  left_join(hh_size, by = c("HH_SIZE"  = "valueText")) %>%
   group_by(TIME_PERIOD, bfs_nr_gemeinde) %>%
   mutate(share = value / sum(value) * 100) %>%
   ungroup() %>%
   rename(jahr = "TIME_PERIOD") %>%
-  select(jahr, bfs_nr_gemeinde, filter1, value, share)
+  select(jahr, bfs_nr_gemeinde, filter1=HH_SIZE, value, share)
 
 register_indicator(
   haushalte %>% summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data),
