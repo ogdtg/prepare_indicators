@@ -369,7 +369,7 @@ Wirtschaft und Arbeit|Grenzgänger/innen|Anteil Grenzgänger/innen am Total der 
 
 ## Fehlerbericht Indikator-Erstellung
 
-Stand: 2026-08-19 12:13
+Stand: 2026-08-19 12:22
 
 - Erfolgreich aktualisiert: **366**
 - Fehlgeschlagen, bestehende Daten beibehalten: **0**
