@@ -516,24 +516,120 @@ indicator_report <- function() {
   dplyr::bind_rows(lapply(rep, tibble::as_tibble))
 }
 
+#' GitHub-Issue für fehlgeschlagene Indikatoren eröffnen
+#'
+#' Erstellt (via GitHub REST API) ein Issue, das alle Indikatoren auflistet,
+#' deren Status ungleich "Erfolg" ist. Gibt es keine fehlgeschlagenen
+#' Indikatoren, wird kein Issue erstellt.
+#'
+#' Benötigt ein Token mit `issues:write`-Berechtigung sowie das Ziel-Repo
+#' (`owner/repo`). In GitHub Actions stehen dafür `GITHUB_TOKEN` und
+#' `GITHUB_REPOSITORY` als Umgebungsvariablen automatisch zur Verfügung,
+#' sofern sie an den entsprechenden Schritt weitergereicht werden.
+#'
+#' @param report Bericht-Tibble wie von `indicator_report()` (Default: aktueller Bericht)
+#' @param repo Ziel-Repo im Format "owner/repo" (Default: `GITHUB_REPOSITORY`)
+#' @param token GitHub-Token (Default: `GITHUB_TOKEN`)
+#' @param run_url URL des auslösenden Workflow-Laufs (optional, für Kontext im Issue)
+#' @return (unsichtbar) die Antwort der GitHub-API bzw. `NULL`, falls kein Issue nötig/möglich war
+create_failed_indicators_issue <- function(report  = indicator_report(),
+                                           repo    = Sys.getenv("GITHUB_REPOSITORY"),
+                                           token   = Sys.getenv("GITHUB_TOKEN"),
+                                           run_url = NULL) {
+
+  if (is.null(run_url)) {
+    server_url <- Sys.getenv("GITHUB_SERVER_URL")
+    run_url    <- if (nzchar(server_url) && nzchar(repo) && nzchar(Sys.getenv("GITHUB_RUN_ID"))) {
+      paste(server_url, repo, "actions/runs", Sys.getenv("GITHUB_RUN_ID"), sep = "/")
+    } else {
+      ""
+    }
+  }
+
+  failed_tbl <- report[report$status != "Erfolg", , drop = FALSE]
+
+  if (nrow(failed_tbl) == 0) {
+    message("create_failed_indicators_issue: keine fehlgeschlagenen Indikatoren, kein Issue erstellt.")
+    return(invisible(NULL))
+  }
+
+  if (!nzchar(repo) || !nzchar(token)) {
+    message("create_failed_indicators_issue: kein Repo/Token vorhanden, Issue wird übersprungen.")
+    return(invisible(NULL))
+  }
+
+  clean <- function(x) gsub("\\|", "/", gsub("[\r\n]+", " ", x))
+
+  body_lines <- c(
+    sprintf("Beim Indikator-Update vom %s sind **%d** Indikator(en) fehlgeschlagen.",
+            format(Sys.time(), "%Y-%m-%d %H:%M"), nrow(failed_tbl)),
+    "",
+    "| Indikator | Geo-Einheit | Status | Fehler |",
+    "|-----------|-------------|--------|--------|",
+    sprintf("| %s | %s | %s | %s |",
+            clean(failed_tbl$name), clean(failed_tbl$geo_unit),
+            clean(failed_tbl$status), clean(failed_tbl$message))
+  )
+
+  if (nzchar(run_url)) {
+    body_lines <- c(body_lines, "", sprintf("Workflow-Lauf: %s", run_url))
+  }
+
+  body_txt <- paste(body_lines, collapse = "\n")
+  title    <- sprintf("Fehlgeschlagene Indikatoren beim Update vom %s",
+                      format(Sys.Date(), "%Y-%m-%d"))
+
+  resp <- httr::POST(
+    url    = sprintf("https://api.github.com/repos/%s/issues", repo),
+    config = httr::add_headers(
+      Authorization = paste("token", token),
+      Accept        = "application/vnd.github+json"
+    ),
+    body   = jsonlite::toJSON(
+      list(title = title, body = body_txt, labels = list("indikatoren-fehler")),
+      auto_unbox = TRUE
+    ),
+    encode = "json"
+  )
+
+  if (httr::http_error(resp)) {
+    message("create_failed_indicators_issue: GitHub-API-Fehler (",
+            httr::status_code(resp), "): ", httr::content(resp, "text", encoding = "UTF-8"))
+    return(invisible(NULL))
+  }
+
+  message("create_failed_indicators_issue: Issue erstellt (",
+          httr::content(resp)$html_url, ")")
+  invisible(httr::content(resp))
+}
+
 #' Fehlerbericht speichern (RDS) und ans README anhängen
 #'
 #' Hält fest, welche Indikatoren erfolgreich erstellt werden konnten und welche
 #' nicht (inkl. Fehlermeldung). Die fehlgeschlagenen Indikatoren werden als
 #' Tabelle prominent ausgewiesen, die erfolgreichen in einem aufklappbaren
 #' Abschnitt. `write_readme()` sollte vorher laufen, da diese Funktion den
-#' Bericht an das bestehende README anhängt.
+#' Bericht an das bestehende README anhängt. Gibt es fehlgeschlagene
+#' Indikatoren, wird zudem ein GitHub-Issue eröffnet (siehe
+#' `create_failed_indicators_issue()`).
 #'
 #' @param rds_path Zielpfad des RDS-Berichts
 #' @param readme_path README, an das der Bericht angehängt wird (NULL = kein README)
+#' @param create_issue Bei fehlgeschlagenen Indikatoren ein GitHub-Issue eröffnen?
 #' @return (unsichtbar) die Bericht-Tabelle
-save_indicator_report <- function(rds_path    = "nested_data/indicator_report.rds",
-                                   readme_path = "README.md") {
+save_indicator_report <- function(rds_path     = "nested_data/indicator_report.rds",
+                                   readme_path  = "README.md",
+                                   create_issue = TRUE) {
 
   report <- indicator_report()
 
   dir.create(dirname(rds_path), recursive = TRUE, showWarnings = FALSE)
   saveRDS(report, rds_path)
+
+  if (create_issue && nrow(report) > 0 && any(report$status != "Erfolg")) {
+    tryCatch(create_failed_indicators_issue(report),
+             error = function(e) message("create_failed_indicators_issue: ", conditionMessage(e)))
+  }
 
   if (is.null(readme_path)) return(invisible(report))
 
