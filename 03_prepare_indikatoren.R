@@ -380,7 +380,7 @@ register_indicator(
   todesfaelle %>%
     left_join(lebendgeburten, c("jahr", "bfs_nr_gemeinde")) %>%
     mutate(value = value.y - value.x) %>%
-    select(bfs_nr_gemeinde, jahr, value),
+    select(bfs_nr_gemeinde, jahr, value) ,
   "Bevölkerung und Soziales", "Bevölkerungsbewegung", "Geburtensaldo",
   source_ids = c("px-x-0102020206_102", "px-x-0102020204_102"))
 
