@@ -363,10 +363,9 @@ tdf <- BFS::bfs_get_sse_data("DF_BEVNAT_DECES_1", language = "de",
                                           MARITAL_STATUS_CLASS = "_T",
                                           NAT_CAT = "_T",
                                           SEX= "_T")) |>
-  mutate(GEO = stringr::str_remove(GEO,"B_")) |>
   left_join(tdf_geo,  by = c("GEO" = "valueText")) %>%
   rename(jahr = "TIME_PERIOD") %>%
-  mutate(bfs_nr_gemeinde = case_when(GEO=="TG"~ "20",
+  mutate(bfs_nr_gemeinde = case_when(bfs_nr_gemeinde=="TG"~ "20",
                                      TRUE ~ bfs_nr_gemeinde)) |>
   select(jahr, bfs_nr_gemeinde, value )
 
