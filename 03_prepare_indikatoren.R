@@ -266,11 +266,11 @@ bevent_id <- lookup_dataset_id("Ständige Wohnbevölkerung der Thurgauer Gemeind
 
 bevent_join <- themenatlas_long[[bevent_id]] %>%
   select(bfs_nr_gemeinde, jahr, value) %>%
-  mutate(jahr = as.numeric(jahr), value = as.numeric(value))
+  mutate(jahr = as.numeric(jahr), value = as.numeric(value)) |>
+  summarise_bezirk_kanton(type = "sum", bezirk_data = bezirk_data)
 
 register_indicator(
-  themenatlas_long[[bevent_id]] %>%
-    mutate(jahr = as.numeric(jahr), value = as.numeric(value)) %>%
+  bevent_join %>%
     mutate(fuenf_jahr = ifelse((jahr - 5) >= min(jahr), jahr - 5, NA),
            ein_jahr   = ifelse((jahr - 1) >= min(jahr), jahr - 1, NA)) %>%
     left_join(bevent_join %>% rename(value_fuenf = "value"),
@@ -279,14 +279,13 @@ register_indicator(
               by = c("bfs_nr_gemeinde", "ein_jahr" = "jahr")) %>%
     mutate(change_fuenf = (value - value_fuenf) / value_fuenf * 100,
            change_ein   = (value - value_ein) / value_ein * 100) %>%
-    select(bfs_nr_gemeinde, name_gemeinde, jahr, change_fuenf, change_ein) %>%
+    select(bfs_nr_gemeinde, jahr, change_fuenf, change_ein) %>%
     pivot_longer(cols = c(change_fuenf, change_ein)) %>%
     mutate(name = case_when(
       name == "change_fuenf" ~ "im Vergleich zu vor 5 Jahren",
       TRUE                   ~ "im Vorjahresvergleich"
     )) %>%
-    rename(filter1 = "name") %>%
-    select(-name_gemeinde),
+    rename(filter1 = "name"),
   "Bevölkerung und Soziales", "Bevölkerungsentwicklung",
   "Bevölkerungsentwicklung (Vorjahr/5 Jahre)", source_ids = "sk-stat-56"
 )
