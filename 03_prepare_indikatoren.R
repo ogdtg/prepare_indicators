@@ -22,13 +22,20 @@
 ensure_packages <- function(packages) {
   for (pkg in packages) {
     if (!requireNamespace(pkg, quietly = TRUE)) {
-      install.packages(pkg, dependencies = TRUE)
+      if (pkg=="BFS"){
+        remotes::install_github("lgnbhl/BFS")
+        } else {
+        install.packages(pkg, dependencies = TRUE)
+        }
+      
     }
   }
 }
 
-ensure_packages(c("dplyr", "httr", "jsonlite", "tidyr", "BFS", "stringr",
-                  "purrr", "lubridate", "glue", "readr", "tibble","readxl"))
+ensure_packages(c("dplyr", "httr", "jsonlite", "tidyr", "remotes", "stringr",
+                  "purrr", "lubridate", "glue", "readr", "tibble","readxl","BFS"))
+
+
 
 library(dplyr)
 library(httr)
